@@ -1,0 +1,10 @@
+version: '3.8'
+
+
+services:
+  mysqldb:
+    image: mysql:9.0.1
+    env_file:
+      - mysql.env
+    ports:
+      - 3306:3306
