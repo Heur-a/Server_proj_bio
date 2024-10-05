@@ -1,39 +1,27 @@
-import express from 'express' 
-import { createPool } from 'mysql2/promise'
-import second from 'dotenv/config'
+import express from 'express';
+import medicionesRoutes from './routes/medicionesRoutes.js';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+import 'dotenv/config';
 
-const app = express()
+const app = express();
+const swaggerDocument = YAML.load('./doc/api.yaml');
 
-console.log(
-    {
-        host: process.env.MYSQLDB_HOST,
-        user: process.env.MYSQLDB_USER,
-        password: process.env.MYSQLDB_PASSWORD,
-        port: process.env.MYSQLDB_PORT
-    }
-)
+// Middleware per a JSON
+app.use(express.json());
 
+// Documentació Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-const pool = createPool({
-    host: process.env.MYSQLDB_HOST,
-    user: process.env.MYSQLDB_USER,
-    password: process.env.MYSQLDB_PASSWORD,
-    port: 3306
-})
+// Carrega de rutes per a "mediciones"
+app.use('/api/mediciones', medicionesRoutes);
 
-app.get('/', (req, res) => 
-    {
-    res.send('Hello World!')
-    }
-)
+// Ruta principal
+app.get('/', (req, res) => {
+    res.send('Servidor web i API REST en funcionament!');
+});
 
-app.get('/ping', async (req, res) =>
-    {
-        const result = await pool.query('SELECT NOW()')
-        res.json(result[0])
-    }
-)
-
-
-app.listen(80)
-console.log('Server listening on port 3000')
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

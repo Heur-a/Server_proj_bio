@@ -14,5 +14,8 @@
     "express": "^4.21.0",
     "mysql2": "^3.11.3",
     "server_proj_bio": "file:"
+  },
+  "devDependencies": {
+    "eslint": "^9.12.0"
   }
 }
