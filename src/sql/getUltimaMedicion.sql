@@ -1,1 +1,1 @@
-SELECT * FROM mediciones ORDER BY hora DESC LIMIT 1;
+SELECT * FROM Mediciones ORDER BY hora DESC LIMIT 1;
