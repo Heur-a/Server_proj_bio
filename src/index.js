@@ -2,7 +2,6 @@ import express from 'express';
 import medicionesRoutes from './routes/medicionesRoutes.js';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
-import pool from './config/db_conection.js';
 import { config } from 'dotenv';
 
 const app = express();
@@ -17,7 +16,7 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Carrega de rutes per a "mediciones"
-app.use('/api/mediciones', medicionesRoutes);
+app.use('/mediciones', medicionesRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {
