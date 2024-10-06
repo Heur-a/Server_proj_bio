@@ -1,1 +1,1 @@
-INSERT INTO mediciones (medida, lugar, tipo_gas, hora) VALUES (?, ?, ?, ?);
+INSERT INTO Mediciones (medida, lugar, tipo_gas, hora) VALUES (?, ?, ?, ?);
