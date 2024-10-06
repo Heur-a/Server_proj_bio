@@ -1,5 +1,8 @@
+
 import { createPool } from 'mysql2/promise';
-import 'dotenv/config';
+import { config } from 'dotenv';
+
+config();
 
 // Crear la connexió al pool amb les variables d'entorn
 const pool = createPool({
