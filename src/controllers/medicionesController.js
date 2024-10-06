@@ -1,3 +1,16 @@
+/*
+ * @Author: Alex Escrivà Caravaca 
+ * @Date: 2024-10-06 16:52:55 
+ * @Last Modified by: Alex Escrivà Caravaca
+ * @Last Modified time: 2024-10-06 17:06:16
+ */
+
+/**
+ * API request export file
+ * @module medicionesController
+ * @requires express
+ * @requires fs
+ */
 import pool from '../config/db_conection.js';
 import { readFile } from 'fs/promises';
 
