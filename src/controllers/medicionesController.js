@@ -1,10 +1,12 @@
 import pool from '../config/db_conection.js';
 import { readFile } from 'fs/promises';
 
+
+
 // Obtenir totes les medicions amb opcions de filtratge
 export const getMediciones = async (req, res) => {
     try {
-        let query = await readFile('./src/models/queries/getMediciones.sql', 'utf-8');
+        let query = await readFile('./src/sql/getMediciones.sql', 'utf-8');
         const [rows] = await pool.query(query);
         res.json(rows);
     } catch (error) {
@@ -16,24 +18,34 @@ export const getMediciones = async (req, res) => {
 // Enviar una nova medició
 export const postMedicion = async (req, res) => {
     try {
-        const { medida, lugar, tipo_gas, hora } = req.body;
+        const { medida,lugar,tipo_gas,hora } = req.body; // Llegeix les dades del cos de la petició JSON
+        
+        console.log(req.body);
+            console.log(medida);
+            console.log(lugar);
+            console.log(tipo_gas);
+            console.log(hora);
+
         if (!medida || !lugar || !tipo_gas || !hora) {
+            console.error('Incomplete data');
+            // Mostra les dades rebudes
             return res.status(400).send('Incomplete data');
         }
 
-        const query = await readFile('./src/models/queries/insertMedicion.sql', 'utf-8');
-        await pool.query(query, [medida, lugar, tipo_gas, hora]);
-        res.status(201).send('Reading created successfully');
+        const query = await readFile('./src/sql/insertMedicion.sql', 'utf-8');
+        const result = await pool.query(query, [medida, lugar, tipo_gas, hora]);
+        result[0].affectedRows === 1 ? res.status(201).send('Reading created') : res.status(500).send('Error creating reading');
     } catch (error) {
         console.error('Error sending reading', error);
         res.status(500).send('Error sending reading');
     }
 };
 
+
 // Obtenir la última medició
 export const getUltimaMedicion = async (req, res) => {
     try {
-        const query = await readFile('./src/models/queries/getUltimaMedicion.sql', 'utf-8');
+        const query = await readFile('./src/sql/getUltimaMedicion.sql', 'utf-8');
         const [rows] = await pool.query(query);
         
         if (rows.length === 0) {

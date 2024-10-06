@@ -14,13 +14,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema MeidcionesGas
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `MeidcionesGas` DEFAULT CHARACTER SET utf8 ;
-USE `MeidcionesGas` ;
+CREATE SCHEMA IF NOT EXISTS `MedicionesGas` DEFAULT CHARACTER SET utf8 ;
+USE `MedicionesGas` ;
 
 -- -----------------------------------------------------
--- Table `MeidcionesGas`.`Mediciones`
+-- Table `MedicionesGas`.`Mediciones`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `MeidcionesGas`.`Mediciones` (
+CREATE TABLE IF NOT EXISTS `MedicionesGas`.`Mediciones` (
   `idMediciones` INT NOT NULL AUTO_INCREMENT,
   `medida` DOUBLE ZEROFILL NOT NULL,
   `lugar` VARCHAR(45) NOT NULL,
