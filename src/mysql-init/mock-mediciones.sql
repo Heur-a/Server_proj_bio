@@ -6,9 +6,9 @@
  */
 
 
--- -----------------------------------------------------
+
 -- Mock Data for table MedicionesGas.Mediciones
--- -----------------------------------------------------
+
 
 insert into MedicionesGas.Mediciones (medida, lugar, tipo_gas, hora) values (8.142, 'Teryayevo', 'co2', '2024-06-28 17:03:03');
 insert into MedicionesGas.Mediciones (medida, lugar, tipo_gas, hora) values (20.875, 'Jiyang', 'ozone', '2024-08-22 13:41:45');
