@@ -4,6 +4,11 @@ import { readFile } from 'fs/promises';
 
 
 // Obtenir totes les medicions amb opcions de filtratge
+/**
+ * Retrieves all readings
+ * @param {*} req not used
+ * @param {Response} res HTTP response with a JSON object if successfull
+ */
 export const getMediciones = async (req, res) => {
     try {
         let query = await readFile('./src/sql/getMediciones.sql', 'utf-8');
@@ -15,7 +20,12 @@ export const getMediciones = async (req, res) => {
     }
 };
 
-// Enviar una nova medició
+/**
+ * Adds a new reading 
+ * @param {JSON} req JSON with the API schema
+ * @param {Response} res HTTP response
+ * @returns 
+ */
 export const postMedicion = async (req, res) => {
     try {
         const { medida,lugar,tipo_gas,hora } = req.body; // Llegeix les dades del cos de la petició JSON
@@ -42,7 +52,12 @@ export const postMedicion = async (req, res) => {
 };
 
 
-// Obtenir la última medició
+/**
+ * Retrieves the last reading
+ * @param {*} req not used
+ * @param {Response} res  HTTP response with a JSON object if successfull
+ * @returns 
+ */
 export const getUltimaMedicion = async (req, res) => {
     try {
         const query = await readFile('./src/sql/getUltimaMedicion.sql', 'utf-8');
