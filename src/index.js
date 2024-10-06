@@ -1,3 +1,10 @@
+/*
+ * @Author: Alex Escrivà Caravaca 
+ * @Date: 2024-10-06 16:52:16 
+ * @Last Modified by: Alex Escrivà Caravaca
+ * @Last Modified time: 2024-10-06 17:00:41
+ */
+
 import express from 'express';
 import medicionesRoutes from './routes/medicionesRoutes.js';
 import swaggerUi from 'swagger-ui-express';

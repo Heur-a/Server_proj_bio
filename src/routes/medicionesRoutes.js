@@ -1,3 +1,9 @@
+/*
+ * @Author: Alex Escrivà Caravaca 
+ * @Date: 2024-10-06 16:52:59 
+ * @Last Modified by:   Alex Escrivà Caravaca 
+ * @Last Modified time: 2024-10-06 16:52:59 
+ */
 import { Router } from 'express';
 import { getMediciones, postMedicion, getUltimaMedicion } from '../controllers/medicionesController.js';
 
