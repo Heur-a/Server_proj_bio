@@ -4,7 +4,7 @@ import { readFile } from 'fs/promises';
 // Obtenir totes les medicions amb opcions de filtratge
 export const getMediciones = async (req, res) => {
     try {
-        let query = await readFile('./src/models/queries/getMediciones.sql', 'utf-8');
+        let query = await readFile('./src/sql/getMediciones.sql', 'utf-8');
         const [rows] = await pool.query(query);
         res.json(rows);
     } catch (error) {
@@ -21,7 +21,7 @@ export const postMedicion = async (req, res) => {
             return res.status(400).send('Incomplete data');
         }
 
-        const query = await readFile('./src/models/queries/insertMedicion.sql', 'utf-8');
+        const query = await readFile('./src/sql/insertMedicion.sql', 'utf-8');
         await pool.query(query, [medida, lugar, tipo_gas, hora]);
         res.status(201).send('Reading created successfully');
     } catch (error) {
@@ -33,7 +33,7 @@ export const postMedicion = async (req, res) => {
 // Obtenir la última medició
 export const getUltimaMedicion = async (req, res) => {
     try {
-        const query = await readFile('./src/models/queries/getUltimaMedicion.sql', 'utf-8');
+        const query = await readFile('./src/sql/getUltimaMedicion.sql', 'utf-8');
         const [rows] = await pool.query(query);
         
         if (rows.length === 0) {
