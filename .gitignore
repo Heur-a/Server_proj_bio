@@ -131,4 +131,4 @@ dist
 
 # db data
 db_data
-node_modules/.package-lock.json
+node_modules/.json
