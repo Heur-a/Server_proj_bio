@@ -1,1 +1,1 @@
-SELECT * FROM mediciones;
+SELECT * FROM Mediciones;
