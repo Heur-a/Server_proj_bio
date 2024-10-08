@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-06 16:52:55 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-06 17:06:16
+ * @Last Modified time: 2024-10-08 12:58:47
  */
 
 /**
@@ -49,10 +49,11 @@ export const postMedicion = async (req, res) => {
             console.log(tipo_gas);
             console.log(hora);
 
-        if (!medida || !lugar || !tipo_gas || !hora) {
+        if (medida === null || lugar=== null || tipo_gas === null || hora === null) {
             console.error('Incomplete data');
             // Mostra les dades rebudes
             return res.status(400).send('Incomplete data');
+            
         }
 
         const query = await readFile('./src/sql/insertMedicion.sql', 'utf-8');

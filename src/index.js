@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-06 16:52:16 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-06 17:00:41
+ * @Last Modified time: 2024-10-08 12:58:53
  */
 
 import express from 'express';
@@ -10,11 +10,12 @@ import medicionesRoutes from './routes/medicionesRoutes.js';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import { config } from 'dotenv';
+import  fetch  from 'node-fetch';
 
 const app = express();
 const swaggerDocument = YAML.load('./doc/api.yaml');
 config();
-
+const url = 'http://localhost/mediciones/ultima';
 
 // Middleware per a JSON
 app.use(express.json());
@@ -27,7 +28,19 @@ app.use('/mediciones', medicionesRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {
-    res.send('Servidor web i API REST en funcionament!');
+    
+    fetch(url)
+        .then(resGet => resGet.json()) // Convertir la resposta a JSON
+        .then(data => {
+            console.log(data);  
+            res.send('Servidor web i API REST en funcionament!' + JSON.stringify(data));
+
+        })
+        .catch(error => {
+            console.error('Error: ', error);
+            res.send('ALGO NO VA PELIGRO');
+        });
+
 });
 
 
