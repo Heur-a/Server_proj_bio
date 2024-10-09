@@ -5,13 +5,15 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "author": "Alex Escriva Caravaca",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "jsdoc": "^4.0.3",
     "mysql2": "^3.11.3",
     "node-fetch": "^3.2.0",
     "server_proj_bio": "file:",
