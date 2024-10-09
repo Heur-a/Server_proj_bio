@@ -10,7 +10,7 @@
     "opts": {
       "destination": "./doc", 
       "recurse": true,
-      "readme": "./doc/api/api.yaml"
+      "readme": "./README.md"
     },
     "templates": {
       "cleverLinks": true,

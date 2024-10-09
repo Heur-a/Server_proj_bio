@@ -43,116 +43,86 @@
 
 
     <section>
-        <article><p>openapi: 3.0.0
-info:
-title: API de Mediciones
-description: API para consultar y enviar datos a la tabla de mediciones
-version: 1.0.0
-servers:</p>
+        <article><div align="center" id="top"> 
+  <img src="./.github/app.gif" alt="Server_proj_bio" />
+<p> </p>
+  <!-- <a href="https://server_proj_bio.netlify.app">Demo</a> -->
+</div>
+<h1 align="center">Server_proj_bio</h1>
+<p align="center">
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/Heur-a/server_proj_bio?color=56BEB8">
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/Heur-a/server_proj_bio?color=56BEB8">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/Heur-a/server_proj_bio?color=56BEB8">
+  <img alt="License" src="https://img.shields.io/github/license/Heur-a/server_proj_bio?color=56BEB8">
+  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/Heur-a/server_proj_bio?color=56BEB8" /> -->
+  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/Heur-a/server_proj_bio?color=56BEB8" /> -->
+  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/Heur-a/server_proj_bio?color=56BEB8" /> -->
+</p>
+<!-- Status -->
+<!-- <h4 align="center"> 
+	🚧  Server_proj_bio 🚀 Under construction...  🚧
+</h4> 
+
+<hr> -->
+<p align="center">
+  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
+  <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
+  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
+  <a href="#memo-license">License</a> &#xa0; | &#xa0;
+  <a href="https://github.com/Heur-a" target="_blank">Author</a>
+</p>
+<br>
+<h2>:dart: About</h2>
+<p>This is an API REST server intended to get readings from a mobile gas detector and store them in a MySQL database</p>
+<p>This project includes a barebones web server only intended to show the container is running</p>
+<p>This repository is part of a project form the GTI 3A course</p>
+<h2>:memo: Documentation</h2>
+<p>The api documentation can be viewed either on the doc folder or when running the application under the <a href="https:%5C/%5C/localhost:PORT/api-docs">https://localhost:PORT/api-docs</a></p>
+<h2>:rocket: Technologies</h2>
+<p>The following tools were used in this project:</p>
 <ul>
-<li>
-<p>url: https://api.ejemplo.com/v1
-paths:
-/mediciones:
-get:
-summary: Obtiene todas las mediciones
-operationId: obtener_mediciones
-parameters:
-- name: lugar
-in: query
-description: Filtra por el lugar donde se tomó la medida
-required: false
-schema:
-type: string
-- name: tipo_gas
-in: query
-description: Filtra por el tipo de gas medido
-required: false
-schema:
-type: string
-- name: desde_hora
-in: query
-description: Filtra mediciones desde una hora específica
-required: false
-schema:
-type: string
-format: date-time
-- name: hasta_hora
-in: query
-description: Filtra mediciones hasta una hora específica
-required: false
-schema:
-type: string
-format: date-time
-responses:
-&quot;200&quot;:
-description: Lista de mediciones obtenida correctamente
-content:
-application/json:
-schema:
-type: array
-items:
-$ref: '#/components/schemas/Medicion'
-&quot;400&quot;:
-description: Parámetros de consulta inválidos
-post:
-summary: Envía una nueva medición
-operationId: enviar_medicion
-requestBody:
-description: Datos de la nueva medición
-required: true
-content:
-application/json:
-schema:
-$ref: '#/components/schemas/Medicion'
-responses:
-&quot;201&quot;:
-description: Medición creada correctamente
-&quot;400&quot;:
-description: Datos de medición inválidos</p>
-<p>/mediciones/ultima:
-get:
-summary: Obtiene la última medición registrada
-operationId: obtener_ultima_medicion
-responses:
-&quot;200&quot;:
-description: Última medición obtenida correctamente
-content:
-application/json:
-schema:
-$ref: '#/components/schemas/Medicion'
-&quot;404&quot;:
-description: No se encontró ninguna medición</p>
-</li>
+<li><a href="https://www.docker.com/">Docker</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a></li>
+<li><a href="https://www.mysql.com/">MySQL</a></li>
 </ul>
-<p>components:
-schemas:
-Medicion:
-type: object
-properties:
-medida:
-type: number
-description: Valor de la medida tomada por el sensor
-lugar:
-type: string
-description: Lugar donde se tomó la medida
-tipo_gas:
-type: string
-description: Tipo de gas que mide el sensor
-hora:
-type: string
-format: date-time
-description: Hora en la que se tomó la medida
-required:
-- medida
-- lugar
-- tipo_gas
-- hora
-example:
-medida: 50.5
-lugar: &quot;Zona Industrial&quot;
-tipo_gas: &quot;CO2&quot;
-hora: &quot;2024-09-26T14:30:00Z&quot;</p></article>
+<h2>:white_check_mark: Requirements</h2>
+<p>Before starting :checkered_flag:, you need to have <a href="https://git-scm.com">Git</a> and <a href="https://www.docker.com/">Docker</a> installed.</p>
+<p>A <code>.env</code> needs to be created in on the root folder of the project in order to get the container running, with these variables set:</p>
+<p><code>MYSQLDB_ROOT_PASSWORD</code> Password for the root user for mysql
+<code>MYSQLDB_USER</code>          Database user used by the node server
+<code>MYSQLDB_PASSWORD</code>       Database user password
+<code>MYSQLDB_PORT</code> Port where mysql will be listening externally
+<code>MYSQLDB_HOST</code> The name of the myql host. Should be <code>mysql</code>
+<code>MYSQLDB_DATABASE</code> Name of the database the node server will connect to
+<code>PORT</code> Port where the API REST and Web server will be listening to</p>
+<p>An example .env file named as <code>.env.example</code> can be found on the root folder of the project. If you want to use this file, rename the file as <code>.env</code> and the project will be able to run</p>
+<h2>:checkered_flag: Starting</h2>
+<pre class="prettyprint source lang-bash"><code># Clone this project
+$ git clone https://github.com/Heur-a/server_proj_bio
+
+# Access
+$ cd server_proj_bio
+
+# We create the .env file with the required parameters
+$ &lt;text-editor> .env
+
+# Build project
+$ docker compose build
+
+# Run the project
+$ docker compose up
+
+# The API REST server will initialize in the &lt;http://localhost:PORT>
+</code></pre>
+<p>The mysql instance will start with a database, mock entries and user priviliges set in the <code>src/mysql-init/</code> folder</p>
+<p>If changed, the API container won't be able to comunicate to the MySQL database. The SQL scripts containing each API request can be found on the <code>src/sql/</code> folder</p>
+<h2>:memo: License</h2>
+<p>This project is under license from MIT. For more details, see the <a href="LICENSE.md">LICENSE</a> file.</p>
+<p>Made with :heart: by <a href="https://github.com/Heur-a" target="_blank">Heura</a></p>
+<p> </p>
+<p><a href="#top">Back to top</a></p></article>
     </section>
 
 
@@ -176,7 +146,7 @@ hora: &quot;2024-09-26T14:30:00Z&quot;</p></article>
     <div class="container-overview">
     
         
-            <div class="description">index.js</div>
+            <div class="description">This file configures and starts the Express server, connects to the database, sets up middleware, and loads API documentation using Swagger UI.This file configures and starts the Express server, connects to the database, sets up middleware, and loads API documentation using Swagger UI.It defines the main route and handles requests to other routes through dedicated route modules.</div>
         
 
         
@@ -221,7 +191,128 @@ hora: &quot;2024-09-26T14:30:00Z&quot;</p></article>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line1">line 1</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:express</li>
+        
+            <li>module:path</li>
+        
+            <li>module:fileURLToPath</li>
+        
+            <li>module:medicionesRoutes</li>
+        
+            <li>module:swaggerUi</li>
+        
+            <li>module:YAML</li>
+        
+            <li>module:config</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>routes/medicionesRoutes.js</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">medicionesRoutes.js</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Alex Escrivà Caravaca</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_medicionesRoutes.js.html">routes/medicionesRoutes.js</a>, <a href="routes_medicionesRoutes.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -272,7 +363,7 @@ hora: &quot;2024-09-26T14:30:00Z&quot;</p></article>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Oct 09 2024 10:09:21 GMT+0200 (Hora d’estiu del Centre d’Europa)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Oct 09 2024 10:53:10 GMT+0200 (Hora d’estiu del Centre d’Europa)
 </footer>
 
 <script> prettyPrint(); </script>

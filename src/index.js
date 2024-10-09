@@ -2,11 +2,20 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-09 10:25:26
+ * @Last Modified time: 2024-10-09 10:56:03
  */
 /**
- * @file index.js
+ * @file index
  * @brief Entry point of the API application that initializes the Express server, sets up routes, and serves API documentation.
+ * @requires express
+ * @requires path
+ * @requires fileURLToPath
+ * @requires medicionesRoutes
+ * @requires swaggerUi
+ * @requires YAML
+ * @requires config
+ * @description This file configures and starts the Express server, connects to the database, sets up middleware, and loads API documentation using Swagger UI.
+ * 
  * 
  * This file configures and starts the Express server, connects to the database, sets up middleware, and loads API documentation using Swagger UI.
  * It defines the main route and handles requests to other routes through dedicated route modules.
