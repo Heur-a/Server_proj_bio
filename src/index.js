@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-21 18:03:05
+ * @Last Modified time: 2024-10-21 20:05:44
  */
 /**
  * @file index
@@ -35,6 +35,7 @@ import YAML from 'yamljs';  // To load the API documentation from a YAML file
 import { config } from 'dotenv';  // To load environment variables from a .env file
 import fetch from 'node-fetch';  // To perform HTTP requests
 import https from 'https';
+import fs from 'fs';
 
 // Initialize the Express app
 const app = express();
@@ -56,9 +57,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 //Configure https server
-const httpsServer = https.createServer({
-    key: fs.readFileSync('./certs/fake-key.pem'),
-    cert: fs.readFileSync('./certs/fake-cert.pem')
+https.createServer({
+    key: fs.readFileSync(path.join(__dirname,'./certs/fake-key.pem'), 'utf8'),
+    cert: fs.readFileSync(path.join(__dirname,'./certs/fake-cert.pem'), 'utf8'),
+    
 }, app);
 
 /**
@@ -90,7 +92,7 @@ app.use('/mediciones', medicionesRoutes);
  * @route /users
  * @see usersRoutes
  */
-app.use('/users', usersRoutes);
+//app.use('/users', usersRoutes);
 
 
 /**
@@ -106,22 +108,29 @@ app.use('/users', usersRoutes);
  */
 
 //todo: Hacer la ruta principal un servidor web con https y  que ponga una pagina html
+/**
+ * @brief Serves static HTML files from the "public" directory.
+ * 
+ * This middleware serves any static files (HTML, CSS, JS, images) located in the `public` directory.
+ * For example, requests to `/index.html` will serve `public/index.html`.
+ */
+app.use(express.static(path.join(__dirname, 'public')));
 
-
-
+/**
+ * @brief Main route for the web server.
+ * 
+ * The root route `/` serves the `index.html` file located in the `public` directory.
+ * 
+ * @param {Request} req - The HTTP request object.
+ * @param {Response} res - The HTTP response object.
+ * 
+ * @route /
+ */
 app.get('/', (req, res) => {
-    // Fetch the latest measurement from the /mediciones/ultima endpoint
-    fetch(url)
-        .then(resGet => resGet.json())  // Convert the response to JSON
-        .then(data => {
-            console.log(data);  // Log the fetched data
-            res.send('Web server and REST API running! Latest measurement: ' + JSON.stringify(data));  // Send a response including the fetched data
-        })
-        .catch(error => {
-            console.error('Error: ', error);  // Log any errors
-            res.send('Something went wrong, danger!');  // Send an error message if the request fails
-        });
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+
 
 
 
@@ -131,5 +140,8 @@ app.get('/', (req, res) => {
  * The server listens on the port specified in the environment variables (`PORT`) or defaults to port 3000.
  * When the server starts, it logs the MySQL database connection details from the environment variables.
  */
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`Server running on port ${process.env.PORT || 3000}`);
+    console.log(`Connected to MySQL database at ${process.env.DB_HOST}:${process.env.MYSQLDB_PORT}`);
+});
 
-export default app;  // Export the Express app for testing purposes
