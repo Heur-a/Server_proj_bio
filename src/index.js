@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-21 13:21:07
+ * @Last Modified time: 2024-10-21 18:03:05
  */
 /**
  * @file index
@@ -34,6 +34,7 @@ import swaggerUi from 'swagger-ui-express';  // Swagger UI for API documentation
 import YAML from 'yamljs';  // To load the API documentation from a YAML file
 import { config } from 'dotenv';  // To load environment variables from a .env file
 import fetch from 'node-fetch';  // To perform HTTP requests
+import https from 'https';
 
 // Initialize the Express app
 const app = express();
@@ -53,6 +54,12 @@ app.use(express.json());
 // Get the current directory (ES modules replacement for __dirname)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+//Configure https server
+const httpsServer = https.createServer({
+    key: fs.readFileSync('./certs/fake-key.pem'),
+    cert: fs.readFileSync('./certs/fake-cert.pem')
+}, app);
 
 /**
  * @brief Serves the Swagger API documentation.
@@ -124,14 +131,5 @@ app.get('/', (req, res) => {
  * The server listens on the port specified in the environment variables (`PORT`) or defaults to port 3000.
  * When the server starts, it logs the MySQL database connection details from the environment variables.
  */
-const PORT = process.env.PORT || 3000;  // Get the port from the environment variables or default to 3000
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);  // Log the port number
-    console.log(process.env.MYSQLDB_HOST);  // Log MySQL host
-    console.log(process.env.MYSQLDB_USER);  // Log MySQL user
-    console.log(process.env.MYSQLDB_PASSWORD);  // Log MySQL password
-    console.log(process.env.MYSQLDB_PORT);  // Log MySQL port
-    console.log(process.env.MYSQLDB_DATABASE);  // Log MySQL database
-    console.log('Press Ctrl+C to quit.');  // Log server quit instructions
-});
+
 export default app;  // Export the Express app for testing purposes
