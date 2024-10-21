@@ -1,8 +1,8 @@
 /*
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 09:51:26 
- * @Last Modified by:   Alex Escrivà Caravaca 
- * @Last Modified time: 2024-10-09 09:51:26 
+ * @Last Modified by: Alex Escrivà Caravaca
+ * @Last Modified time: 2024-10-21 12:49:12
  */
 
 /**
@@ -26,6 +26,7 @@ export const getMedicionesDB = async () => {
     try {
         const query = await readFile('./src/sql/getMediciones.sql', 'utf-8');
         const [rows] = await pool.query(query);
+        console.log(rows);
         return rows;
     } catch (error) {
         console.error('Error fetching all readings:', error);
@@ -72,3 +73,5 @@ export const getUltimaMedicionDB = async () => {
         throw new Error('Database query error');
     }
 };
+
+export default { getMedicionesDB, insertMedicionDB, getUltimaMedicionDB };

@@ -103,6 +103,6 @@ components:
         - hora
       example:
         medida: 50.5
-        lugar: "Zona Industrial"
-        tipo_gas: "CO2"
+        lugar: "Oliva"
+        tipo_gas: "03"
         hora: "2024-09-26T14:30:00Z"

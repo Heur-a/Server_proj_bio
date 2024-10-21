@@ -52,5 +52,7 @@ router.post('/', postMedicion);
  */
 router.get('/ultima', getUltimaMedicion);
 
+
+
 // Export the router to be used in other modules
 export default router;
