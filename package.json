@@ -24,9 +24,5 @@
     "server_proj_bio": "file:",
     "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0",
-    "supertest": "^7.0.0"
   }
 }
