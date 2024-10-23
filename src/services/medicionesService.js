@@ -2,9 +2,10 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 09:51:26 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-21 12:49:12
+ * @Last Modified time: 2024-10-21 20:32:54
  */
 
+//todo: CAMBIAR ESTO PARA QUE FUNCIONE CON BASE DE DATOS NUEVA YEY
 /**
  * @module medicionesService
  * @description Database logic for managing measurements.
