@@ -1,0 +1,87 @@
+/* Variables de color */
+:root {
+    --color-principal: #3b3b3b; /* Color de texto principal */
+    --fondo: #ddd2ba; /* Fondo beige */
+    --h1: #3a5335; /* Verde oscuro para encabezado h1 */
+    --h2: #3b3b3b; /* Gris oscuro para encabezado h2 */
+    --h3: #87a08b; /* Verde claro para encabezado h3 */
+    --texto-footer:#ddd2ba; /* Color de texto para el footer */
+    --boton-bg: #87a08b; /* Fondo verde para botones */
+    --boton-texto: #fff; /* Texto blanco para botones */
+    --section-bg: #ddd2ba; /* Beige claro para secciones */
+    --highlight: #000000; /* Color para elementos destacados */
+    --subtle: #87a08b; /* Verde claro para elementos sutiles */
+    --pagina-principal-sensores: #fff; /* Fondo blanco para la pagina de los datos del sensor */
+    --hover: #87a08b; /* Verde claro para el hover de los textos/botones */
+    --fondo-semitransparente-formularios: rgba(255, 255, 255, 0.3); /* Fondo blanco transparente */
+    --lineas-semitransparentes-formularios: rgba(135, 160, 139, 0.35); /* Lineas de los formularios */
+    --textos-placeholder: rgba(135, 160, 139, 0.5);
+}
+
+@font-face {
+    font-family: 'FONTSPRING DEMO - The Seasons';
+    src: url('/assets/fonts/transfonter.org-20241023-125212/FONTSPRINGDEMO-TheSeasonsRegular.woff2') format('woff2'),
+        url('/assets/fonts/transfonter.org-20241023-125212/FONTSPRINGDEMO-TheSeasonsRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--color-principal);
+    background-color: var(--fondo);
+}
+
+/* Encabezados */
+h1 {
+    font-family: 'FONTSPRING DEMO - The Seasons', serif;
+    font-size: 3rem;
+    color: var(--h1);
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--h2);
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--h3);
+}
+
+/* Botones */
+button {
+    background-color: var(--boton-bg);
+    color: var(--boton-texto);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color:var(--hover) ; 
+}
+
+/* Sección de contenido */
+.section {
+    background-color: var(--section-bg);
+    padding: 20px;
+}
+
+/* Otros elementos */
+.highlight {
+    color: var(--highlight);
+    font-weight: bold;
+}
+
+.subtle {
+    color: var(--subtle);
+}
+
+
