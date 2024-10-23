@@ -21,7 +21,7 @@ export const authenticateUser = async (email, password) => {
         }
 
         // Obtenir la contrasenya de l'usuari
-        const res =  await getUserPasswordById(user.idUsers);
+        const res =  await getUserPasswordById(user.id);
         console.log("authService.authenticateUser, res:",res);
         user.password = res.password;
 
@@ -32,8 +32,7 @@ export const authenticateUser = async (email, password) => {
         if (!isMatch) {
             throw new Error('Invalid credentials');
         }
-        user.id = user.idUsers;
-        user.email = user.mail;
+        
 
         // Genera el token JWT
         const token = jwt.sign({ id: user.id, email: user.email }, jwt_secret, {

@@ -47,6 +47,7 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
     try {
         const token = req.headers.authorization.split(' ')[1]; // Suposa que és un token Bearer
+        console.log("authController.logout, token:",token);
 
         // Afegeix el token a la blacklist utilitzant authService
         blacklistToken(token);
