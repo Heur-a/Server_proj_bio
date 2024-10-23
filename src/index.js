@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-23 19:11:05
+ * @Last Modified time: 2024-10-23 22:04:20
  */
 /**
  * @file index
@@ -31,6 +31,7 @@ import path from 'path';  // To resolve file paths
 import { fileURLToPath } from 'url';  // To work with ES modules
 import medicionesRoutes from './routes/medicionesRoutes.js';  // Route handling for measurement endpoints
 import usersRoutes from './routes/usersRoutes.js';  // Route handling for user endpoints
+import authRoutes from './routes/authRoutes.js';  // Route handling for authentication endpoints
 import swaggerUi from 'swagger-ui-express';  // Swagger UI for API documentation
 import YAML from 'yamljs';  // To load the API documentation from a YAML file
 import { config } from 'dotenv';  // To load environment variables from a .env file
@@ -95,18 +96,16 @@ app.use('/mediciones', medicionesRoutes);
  */
 app.use('/users', usersRoutes);
 
-
 /**
- * @brief Main route for the web server.
- * 
- * The root route `/` sends a message confirming the server's status.
- * It also makes a request to the `/mediciones/ultima` endpoint to fetch the latest measurement.
- * 
- * @param {Request} req - The HTTP request object.
- * @param {Response} res - The HTTP response object.
- * 
- * @route /
+*@brief auth api route
+*
+*This middleware uses the authRoutes module to handle all requests to /auth
+*The actual logic for these routes is managed in the corresponding controller
+*
+*@route /auth
+*@see authRoutes
  */
+app.use('/auth', authRoutes);
 
 //todo: Hacer la ruta principal un servidor web con https y  que ponga una pagina html
 /**
@@ -122,6 +121,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
         }
     }
 }));
+
 
 /**
  * @brief Main route for the web server.

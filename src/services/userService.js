@@ -20,7 +20,21 @@ export const getUserByEmail = async (email) => {
     try {
         const sql = await readFile('./src/sql/getUserByEmail.sql', 'utf-8');
         const [rows] = await pool.query(sql, [email]);
-        return rows.length ? rows[0] : null;
+        
+        // If a user is found, format the response to match the OpenAPI schema
+        if (rows.length) {
+            const user = rows[0];
+            return {
+                id: user.idUsers, // Assuming your SQL query returns 'id'
+                name: user.name, // Assuming 'name' is returned from SQL
+                surname_1: user.lastName1, // Adjust field names if necessary
+                surname_2: user.lastName2, // Adjust field names if necessary
+                email: user.mail, // Assuming the SQL returns 'mail'
+                telephone: user.tel // Assuming the SQL returns 'tel'
+            };
+        }
+
+        return null; // Return null if no user is found
     } catch (error) {
         throw new Error('Failed to fetch user: ' + error.message);
     }
@@ -57,7 +71,7 @@ export const createUser = async (userData) => {
         ]);
         return { id: result.insertId, ...userData };
     } catch (error) {
-        throw new Error('Failed to create user: ' + error.message);
+        throw new Error('Failed to create user');
     }
 };
 
@@ -139,5 +153,23 @@ export const deleteUser = async (email) => {
         return result.affectedRows > 0;
     } catch (error) {
         throw new Error('Failed to delete user: ' + error.message);
+    }
+};
+
+/**
+*Retrives a user password by their id
+*@async
+*@function getUserPasswordById
+*@param {number} id - The id of the user to retrieve.
+*@returns {Promise<Object|null>} Returns the user object or null if not found.
+*@throws Will throw an error if the SQL query fails.
+*/
+export const getUserPasswordById = async (id) => {
+    try {
+        const sql = await readFile('./src/sql/getUserPasswordById.sql', 'utf-8');
+        const [rows] = await pool.query(sql, [id]);
+        return rows.length ? rows[0] : null;
+    } catch (error) {
+        throw new Error('Failed to fetch user password: ' + error.message);
     }
 };
