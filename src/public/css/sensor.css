@@ -1,0 +1,38 @@
+/* sensor.css */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* La altura será igual a la pantalla completa */
+    background-color: var(--seccion-fondo); /* Si tienes definido un color de fondo */
+  }
+.sensor-form {
+    text-align: center;
+    background-color: rgba(250, 250, 250, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 40rem; /* Ancho del formulario */
+  }
+
+.sensor-form input {
+    all: unset;
+    width: 250px;
+    padding: 10px;
+    border-bottom: 1px solid var(--lineas-semitransparentes-formularios);
+    margin-bottom: 15px;
+    background-color: rgba(250, 250, 250, 0);
+}
+
+input::placeholder {
+    color: var(--textos-placeholder); 
+} 
+
+.sensor-form h2 {
+    color: var(--h2);
+    margin-bottom: 20px;
+}  
+

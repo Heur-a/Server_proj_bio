@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-21 12:57:37 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-21 13:01:18
+ * @Last Modified time: 2024-10-23 19:56:27
  */
 
 /**
@@ -11,8 +11,7 @@
  */
 
 import { Router } from 'express';  // Import the Router from Express
-
-import { getUsers, postUser, getUserById, deleteUserById, updateUser} from '../controllers/usersController.js';  // Import the controller functions
+import { createUser, deleteUser, getUserByEmail, updateUser } from '../controllers/userController.js';
 
 // Initialize the router
 const router = Router();
@@ -26,7 +25,7 @@ const router = Router();
  * @route GET /users
  * @see getUsers
  */
-router.get('/', getUsers);
+router.get('/', getUserByEmail);
 
 /**
  * @brief Route for posting a new user.
@@ -35,16 +34,10 @@ router.get('/', getUsers);
  *  @route POST /users
  * @see postUser
  */
-router.post('/', postUser);
+router.post('/', createUser);
 
-/**
- * @brief Route for fetching a user by username.
- * This route handles GET requests to the `/users/:id` endpoint. It invokes the
- * `getUserById` controller function to retrieve a user from the database.
- * @route GET /users/:id
- * @see getUserById
- */
-router.get('/:username', getUserById);
+
+
 
 /**
  * @brief Route for deleting a user by id.
@@ -54,7 +47,7 @@ router.get('/:username', getUserById);
  * @see deleteUserById
  */
 
-router.delete('/:username', deleteUserById);
+router.delete('/', deleteUser);
 
 /**
  * @brief Route for updating a user by id.
@@ -64,8 +57,7 @@ router.delete('/:username', deleteUserById);
  * @see updateUser
  */
 
-router.put('/:username', updateUser);
+router.put('/', updateUser);
 
 // Export the router to be used in other modules
 export default router;
-

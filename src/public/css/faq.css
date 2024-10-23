@@ -1,0 +1,62 @@
+/* Estilos específicos para la página FAQ */
+.faq-section {
+    padding: 40px;
+    background-color: var(--section-bg); /* Usando la variable de fondo de sección */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Contenedor de las preguntas */
+.faq-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna por defecto */
+    gap: 20px;
+}
+
+.faq-item {
+    border: 1px solid var(--h3); /* Usando la variable del verde claro */
+    padding-bottom: 10px;
+    padding: 10px 20px 10px 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 1rem;
+}
+
+.faq-question {
+    font-size: 1.5rem;
+    color: var(--color-principal); /* Usando la variable de texto principal */
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 15px 0;
+}
+
+.faq-answer {
+    display: none;
+    padding: 10px 0;
+    color: var(--color-principal); /* Usando la variable de texto principal */
+}
+
+.faq-question span {
+    font-size: 1.5rem;
+    color: var(--h1); /* Usando la variable del verde oscuro */
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}
+
+.faq-item.active .faq-question span {
+    transform: rotate(45deg); /* Rota el ícono de "+" a "x" */
+}
+
+/* Layout en columnas cuando la pantalla es ancha */
+@media (min-width: 768px) {
+    .faq-container {
+        grid-template-columns: 1fr 1fr; /* Dos columnas para pantallas más grandes */
+    }
+}

@@ -1,0 +1,18 @@
+
+footer{
+    background-color: var(--h1);
+    color: var(--texto-footer);
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    footer {
+      padding: 10px;
+      font-size: 14px;
+    }
+}

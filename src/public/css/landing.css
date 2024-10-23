@@ -1,0 +1,175 @@
+/* Variables de color */
+:root {
+    --color-principal: #3b3b3b; /* Color de texto principal */
+    --fondo: #ddd2ba; /* Fondo beige */
+    --h1: #3a5335; /* Verde oscuro para encabezado h1 */
+    --h2: #3b3b3b; /* Gris oscuro para encabezado h2 */
+    --h3: #87a08b; /* Verde claro para encabezado h3 */
+    --boton-bg: #5c715e; /* Fondo verde para botones */
+    --boton-texto: #fff; /* Texto blanco para botones */
+    --section-bg: #ddd2ba; /* Beige claro para secciones */
+    --highlight: #000000; /* Color para elementos destacados */
+    --subtle: #87a08b; /* Verde claro para elementos sutiles */
+    --pagina-principal-sensores: #fff; /* Fondo blanco para la pagina de los datos del sensor */
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--color-principal);
+    background-color: var(--fondo);
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos de la cabecera */
+header {
+    display: flex;
+    justify-content: space-between; /* Mantiene los elementos espaciados */
+    align-items: center;
+    background-color: var(--h1);
+    padding: 1rem;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo a {
+    display: inline-block;
+    cursor: pointer; /* Mostrar un cursor de mano al pasar por el logo */
+}
+
+header .logo img {
+    max-height: 5rem; /* Ajusta la altura máxima del logo */
+    width: auto; /* Mantén la proporción de la imagen */
+}
+
+header nav {
+    display: flex; /* Mostrar el nav en pantalla grande */
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li a {
+    color: var(--fondo); /* Color igual al fondo */
+    text-decoration: none;
+    font-size: 16px;
+}
+
+header nav ul li a.active {
+    font-weight: bold; /* Hacer el texto "PRINCIPAL" en negrita */
+}
+
+header .user-icon {
+    color: #000000;
+    font-size: 2rem;
+}
+
+/* Botón de menú hamburguesa */
+.menu-toggle {
+    display: none; /* Ocultar por defecto */
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: var(--fondo);
+    cursor: pointer;
+    margin-left: auto;
+}
+
+/* Encabezados */
+h1 {
+    font-family: 'The Seasons', serif;
+    font-size: 3rem;
+    color: var(--h1);
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--h2);
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--h3);
+}
+
+/* Botones */
+button {
+    background-color: var(--subtle);
+    color: var(--boton-texto);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Sección de contenido */
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+}
+
+/* Map Section */
+.map {
+    max-width: 100%;
+}
+
+.map img {
+    width: 100%;
+    border: 0px;
+}
+
+
+/* Footer más pequeño */
+footer {
+    text-align: center;
+    padding: 0.2rem;  /* Reducido el padding */
+    background-color: var(--h1);
+    color: var(--boton-texto);
+    font-size: 0.875rem;  /* Tamaño de fuente más pequeño */
+    font-family: 'Montserrat', sans-serif;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    line-height: 1.2;  /* Ajusta el espaciado entre líneas */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    header nav {
+        display: none; /* Ocultar nav por defecto */
+    }
+
+    header .menu-toggle {
+        display: block; /* Mostrar el botón de menú en pantallas pequeñas */
+    }
+
+    /* Mostrar menú al hacer clic */
+    nav.active {
+        display: block; /* Mostrar el menú cuando está activo */
+        position: absolute; /* Para que el menú se posicione */
+        top: 100px; /* Ajustar según la altura del header */
+        right: 0; /* Alinear a la izquierda */
+        width: 50%; /* Ancho completo */
+        background-color: var(--h1); /* Fondo del menú */
+    }
+
+    header nav ul {
+        flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+        padding: 0; /* Sin padding */
+    }
+
+    header nav ul li {
+        text-align: center; /* Centrar texto */
+        padding: 1rem; /* Espacio entre los elementos */
+    }
+}
