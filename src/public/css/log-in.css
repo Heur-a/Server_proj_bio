@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, sans-serif;
+    background: #3a5335;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 15%;
+}
+
+.logo {
+    width: 200px;
+    height: 100%;
+    position: relative;
+    top: -50%;
+}
+
+.logo img {
+    width: 100%;
+    height: auto;
+    padding-left: 10%;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+}
+
+.formulario {
+    width: 60%;
+    height: 110%;
+    position: relative;
+    top: -17.5%;
+    padding: 20px;
+    box-shadow: 10px 0px 10px rgba(0,0,0,.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formulario h1 {
+    color: white;
+    margin-bottom: 20px;
+    padding-left: 10%;
+}
+
+.formulario form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.escribir {
+    width: 80%;
+    margin: 10px 0;
+    border-bottom: 2px solid #87a08b;
+}
+
+.escribir label {
+    color: white;
+    font-size: 16px;
+}
+
+.escribir input {
+    width: 100%;
+    height: 30px;
+    font-size: 16px;
+    background: none;
+    outline: none;
+    color: white;
+    border: none;
+}
+
+.boton {
+    width: 70%;
+    height: 40px;
+    margin: 40px 0 20px 0;
+    background: #87a08b;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+.boton:hover {
+    background-color: #5c715e;
+    transition: .3s;
+}
+
+.recordar {
+    color: white;
+    cursor: pointer;
+}
+
+.recordar a {
+    color: white;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.recordar a:hover {
+    color: #87a08b;
+    transition: .3s;
+}
+
+.foto {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.foto img {
+    width: 70%;
+    position: relative;
+    top: -10%;
+}
+
+/* Media Queries */
+@media (max-width: 800px) {
+    .logo {
+        width: 175px;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .formulario {
+        width: 100%;
+        box-shadow: none;
+    }/*
+    .formulario h1 {
+        font-size: 25px;
+    }
+    .escribir label {
+        font-size: 14px;
+    }
+    .escribir input {
+        font-size: 14px;
+    }
+    .boton {
+        font-size: 16px;
+    }
+    .recordar {
+        font-size: 12px;
+    }*/
+    .foto img {
+        display: none;
+    }
+}
