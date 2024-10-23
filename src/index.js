@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-21 20:05:44
+ * @Last Modified time: 2024-10-22 11:40:11
  */
 /**
  * @file index
@@ -114,7 +114,13 @@ app.use('/mediciones', medicionesRoutes);
  * This middleware serves any static files (HTML, CSS, JS, images) located in the `public` directory.
  * For example, requests to `/index.html` will serve `public/index.html`.
  */
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+    setHeaders: (res, filePath) => {
+        if (path.extname(filePath) === '.html') {
+            res.setHeader('Content-Disposition', 'inline');
+        }
+    }
+}));
 
 /**
  * @brief Main route for the web server.
