@@ -30,6 +30,7 @@ import * as userService from '../services/userService.js';
  */
 export const getUserByEmail = async (req, res) => {
     const { email } = req.query;
+    console.log("Estamos en getUserByEmail, userController.js, email: ", email);
     if (!email) {
         return res.status(400).json({ message: 'The email parameter is required' });
     }
@@ -57,10 +58,10 @@ export const getUserByEmail = async (req, res) => {
  */
 export const createUser = async (req, res) => {
     const userData = req.body;
-
+    console.log("Estamos en createUser, userController.js, userData: ", userData);
     try {
         const user = await userService.createUser(userData);
-        return res.status(201).json(user);
+        return res.status(201).send();
     } catch (error) {
         return res.status(400).json({ message: 'Invalid user data', error: error.message });
     }
@@ -78,13 +79,19 @@ export const createUser = async (req, res) => {
  */
 export const updateUser = async (req, res) => {
     const userData = req.body;
-
+    const { email } = req.query;
+    console.log("Estamos en updateUser, userController.js, email: ", email);
+    console.log("Estamos en updateUser, userController.js, userData: ", userData);
+    if (!email) {
+        return res.status(400).json({ message: 'The email parameter is required' });
+    }
+    console.log("Estamos en updateUser, userController.js, userData: ", userData);
     try {
-        const user = await userService.updateUser(userData);
+        const user = await userService.updateUser(email, userData);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        return res.status(202).json(user);
+        return res.status(202).send();
     } catch (error) {
         return res.status(400).json({ message: 'Invalid user data', error: error.message });
     }
@@ -107,7 +114,7 @@ export const deleteUser = async (req, res) => {
     }
 
     try {
-        const result = await userService.deleteUserByEmail(email);
+        const result = await userService.deleteUser(email);
         if (!result) {
             return res.status(404).json({ message: 'No s\'ha trobat cap usuari' });
         }
@@ -116,3 +123,5 @@ export const deleteUser = async (req, res) => {
         return res.status(500).json({ message: 'Error en el servidor', error: error.message });
     }
 };
+
+export default { getUserByEmail, createUser, updateUser, deleteUser };
