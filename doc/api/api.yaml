@@ -77,6 +77,312 @@ paths:
                 $ref: '#/components/schemas/Medicion'
         "404":
           description: No se encontró ninguna medición
+  /users/email:
+    get:
+      summary: Obtiene un usuario por su email
+      operationId: get_user
+      parameters:
+        - name: email
+          in: query
+          description: Email del usuario a buscar
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista de usuarios obtenida correctamente
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/users'
+        "400":
+          description: Parámetros de consulta inválidos
+        "404":
+          description: No se encontró ningún usuario
+        "500":
+          description: Error en el servidor
+    post:
+      summary: Crea un nuevo usuario
+      operationId: create_user
+      requestBody:
+        description: Datos del nuevo usuario
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users'
+      responses:
+        "201":
+          description: Usuario creado correctamente
+        "400":
+          description: Datos de usuario inválidos
+        "500":
+          description: Error en el servidor
+    put:
+      summary: Actualiza un usuario
+      operationId: update_user
+      requestBody:
+        description: Datos del usuario a actualizar
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users'
+      responses:
+        "202":
+          description: Usuario actualizado correctamente
+        "400":
+          description: Datos de usuario inválidos
+        "404":
+          description: No se encontró ningún usuario
+        "500":
+          description: Error en el servidor
+    delete:
+      summary: Elimina un usuario
+      operationId: delete_user
+      parameters:
+        - name: email
+          in: query
+          description: Email del usuario a eliminar
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Usuario eliminado correctamente
+        "400":
+          description: Parámetros de consulta inválidos
+        "404":
+          description: No se encontró ningún usuario
+        "500":
+          description: Error en el servidor
+  /nodes/uuid:
+    get:
+      summary: Obtiene un nodo por su UUID
+      operationId: get_node
+      parameters:
+        - name: uuid
+          in: query
+          description: UUID del nodo a buscar
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista de nodos obtenida correctamente
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/nodes'
+        "400":
+          description: Parámetros de consulta inválidos
+        "404":
+          description: No se encontró ningún nodo
+        "500":
+          description: Error en el servidor
+    post:
+      summary: Crea un nuevo nodo
+      operationId: create_node
+      requestBody:
+        description: Datos del nuevo nodo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nodes'
+      responses:
+        "201":
+          description: Nodo creado correctamente
+        "400":
+          description: Datos de nodo inválidos
+        "500":
+          description: Error en el servidor
+    put:
+      summary: Actualiza un nodo
+      operationId: update_node
+      requestBody:
+        description: Datos del nodo a actualizar
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nodes'
+      responses:
+        "202":
+          description: Nodo actualizado correctamente
+        "400":
+          description: Datos de nodo inválidos
+        "404":
+          description: No se encontró ningún nodo
+        "500":
+          description: Error en el servidor
+    delete:
+      summary: Elimina un nodo
+      operationId: delete_node
+      parameters:
+        - name: uuid
+          in: query
+          description: UUID del nodo a eliminar
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Nodo eliminado correctamente
+        "400":
+          description: Parámetros de consulta inválidos
+        "404":
+          description: No se encontró ningún nodo
+        "500":
+          description: Error en el servidor
+  /nodes/user_id:
+    get:
+      summary: Obtiene un nodo por su user_id
+      operationId: get_node_user_id
+      parameters:
+        - name: user_id
+          in: query
+          description: user_id del nodo a buscar
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lista de nodos obtenida correctamente
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/nodes'
+        "400":
+          description: Parámetros de consulta inválidos
+        "404":
+          description: No se encontró ningún nodo
+        "500":
+          description: Error en el servidor
+    post:
+      summary: Crea un nuevo nodo
+      operationId: create_node
+      requestBody:
+        description: Datos del nuevo nodo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nodes'
+      responses:
+        "201":
+          description: Nodo creado correctamente
+        "400":
+          description: Datos de nodo inválidos
+        "500":
+          description: Error en el servidor
+    put:
+      summary: Actualiza un nodo
+      operationId: update_node
+      requestBody:
+        description: Datos del nodo a actualizar
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nodes'
+      responses:
+        "202":
+          description: Nodo actualizado correctamente
+        "400":
+          description: Datos de nodo inválidos
+        "404":
+          description: No se encontró ningún nodo
+        "500":
+          description: Error en el servidor
+    delete:
+      summary: Elimina un nodo
+      operationId: delete_node
+      parameters:
+        - name: user_id
+          in: query
+          description: user_id del nodo a eliminar
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Nodo eliminado correctamente
+        "400":
+          description: Parámetros de consulta inválidos
+        "404":
+          description: No se encontró ningún nodo
+        "500":
+          description: Error en el servidor
+
+  /daily_distance/user_id/date:
+    get:
+      summary: Obtiene la distancia recorrida por un usuario en una fecha
+      operationId: get_daily_distance
+      parameters:
+        - name: user_id
+          in: query
+          description: user_id del usuario
+          required: true
+          schema:
+            type: integer
+        - name: date
+          in: query
+          description: Fecha de la distancia diaria
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista de distancias diarias obtenida correctamente
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/daily_distance'
+        "400":
+          description: Parámetros de consulta inválidos
+        "404":
+          description: No se encontró ninguna distancia diaria
+        "500":
+          description: Error en el servidor
+  /daily_distance/user_id: 
+    post:
+      summary: Crea una nueva distancia diaria
+      operationId: create_daily_distance
+      requestBody:
+        description: Datos de la nueva distancia diaria
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/daily_distance'
+      responses:
+        "201":
+          description: Distancia diaria creada correctamente
+        "400":
+          description: Datos de distancia diaria inválidos
+        "500":
+          description: Error en el servidor
+    put:
+      summary: Actualiza una distancia diaria
+      operationId: update_daily_distance
+      requestBody:
+        description: Datos de la distancia diaria a actualizar
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/daily_distance'
+      responses:
+        "202":
+          description: Distancia diaria actualizada correctamente
+        "400":
+          description: Datos de distancia diaria inválidos
+        "404":
+          description: No se encontró ninguna distancia diaria
+        "500":
+          description: Error en el servidor
+   
 
 components:
   schemas:
@@ -86,9 +392,12 @@ components:
         medida:
           type: number
           description: Valor de la medida tomada por el sensor
-        lugar:
-          type: string
-          description: Lugar donde se tomó la medida
+        loc_x:
+          type: float
+          description: Coordenada x donde se tomó la medida
+        loc_y:
+          type: float
+          description: Coordenada y donde se tomó la medida
         tipo_gas:
           type: string
           description: Tipo de gas que mide el sensor
@@ -106,3 +415,74 @@ components:
         lugar: "Oliva"
         tipo_gas: "03"
         hora: "2024-09-26T14:30:00Z"
+    users:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Identificador del usuario
+        name:
+          type: string
+          description: Nombre del usuario
+        surname_1:
+          type: string
+          description: Primer apellido del usuario
+        surname_2:
+          type: string
+          description: Segundo apellido del usuario
+        email:
+          type: string
+          description: Email del usuario
+        telephone:
+          type: string
+          description: Teléfono del usuario
+      required:
+        - id
+        - email
+      example:
+        id: 1
+        name: "Juan"
+        surname_1: "Pérez"
+        surname_2: "García"
+        email: "juan@email.com"
+        telephone: "123456789"
+    nodes:
+      properties:
+        id:
+          type: integer
+          description: Identificador del nodo
+        uuid:
+          type: string
+          description: UUID del nodo
+        user_id:
+          type: integer
+          description: Identificador del usuario
+        email:
+          type: string
+          description: Email del usuario
+      example:
+        id: 1
+        uuid: "123456789"
+        user_id: 1
+        email: "juan@email.com"
+    daily_distance:
+      properties:
+        id:
+          type: integer
+          description: Identificador de la distancia diaria
+        date:
+          type: string
+          description: Fecha de la distancia diaria
+        distance:
+          type: float
+          description: Distancia recorrida en el día
+        user_id:
+          type: integer
+          description: Identificador del usuario
+      example:
+        id: 1
+        date: "2024-09-26"
+        distance: 10.5
+        user_id: 1
+    
+

@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-21 12:57:37 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-21 13:01:18
+ * @Last Modified time: 2024-10-23 18:06:47
  */
 
 /**
@@ -36,6 +36,7 @@ router.get('/', getUsers);
  * @see postUser
  */
 router.post('/', postUser);
+
 
 /**
  * @brief Route for fetching a user by username.
