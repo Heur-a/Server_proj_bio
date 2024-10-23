@@ -9,17 +9,11 @@ import { createUser } from '../services/userService.js'; // Utilitzem el servei 
  */
 export const register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-
-        // Crea l'usuari nou utilitzant el servei
-        const newUser = {
-            name,
-            password,
-            email,
-        };
+        const newUser = req.body;
         const createdUser = await createUser(newUser);
+        const email = createdUser.email;
 
-        res.status(201).json({ message: 'User registered successfully', user: createdUser });
+        res.status(201).json({ message: 'User registered successfully', user_email: email  });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -38,7 +32,7 @@ export const login = async (req, res) => {
         // Autentica l'usuari utilitzant el servei
         const { token} = await authenticateUser(email, password);
 
-        res.status(200).json({ token, user });
+        res.status(200).json({ token });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

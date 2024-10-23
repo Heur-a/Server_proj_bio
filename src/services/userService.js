@@ -57,7 +57,7 @@ export const createUser = async (userData) => {
         ]);
         return { id: result.insertId, ...userData };
     } catch (error) {
-        throw new Error('Failed to create user: ' + error.message);
+        throw new Error('Failed to create user');
     }
 };
 

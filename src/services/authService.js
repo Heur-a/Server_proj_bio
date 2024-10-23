@@ -4,6 +4,7 @@ import { getUserByEmail, getUserPasswordById } from './userService.js'; // Impor
 
 const blacklistedTokens = [];
 const jwt_secret = 'auth_token'
+const createdToken = "";
 
 /**
  * @brief Autentica un usuari comprovant les credencials.
@@ -39,6 +40,8 @@ export const authenticateUser = async (email, password) => {
             expiresIn: '90d', // Expira als 90 dies
         });
 
+
+
         return { token, user };
     } catch (error) {
         throw new Error(error.message);
@@ -52,15 +55,20 @@ export const authenticateUser = async (email, password) => {
  */
 export const verifyToken = (token) => {
     try {
+        console.log("authService.verifyToken, token:",token);
+        console.log("authService.verifyToken, createdToken:",createdToken);
+        console.log("authService.verifyToken, blacklistedTokens:",blacklistedTokens);
         // Comprova si el token ha estat posat en la blacklist
         if (blacklistedTokens.includes(token)) {
             throw new Error('Token has been blacklisted');
         }
 
         // Verifica i decodifica el token
-        const {decoded} = jwt.verify(token, jwt_secret);
+        const decoded = jwt.verify(token, jwt_secret);
+        console.log("authService.verifyToken, decoded:",decoded);
         return decoded;
     } catch (error) {
+        console.log("authService.verifyToken, error:",error);
         return false;
     }
 };
