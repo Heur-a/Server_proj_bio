@@ -110,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/users'
+              $ref: '#/components/schemas/users_post_put'
       responses:
         "201":
           description: Usuario creado correctamente
@@ -127,7 +127,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/users'
+              $ref: '#/components/schemas/users_post_put'
       responses:
         "202":
           description: Usuario actualizado correctamente
@@ -446,6 +446,38 @@ components:
         surname_2: "García"
         email: "juan@email.com"
         telephone: "123456789"
+    users_post_put:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del usuario
+        surname_1:
+          type: string
+          description: Primer apellido del usuario
+        surname_2:
+          type: string
+          description: Segundo apellido del usuario
+        email:
+          type: string
+          description: Email del usuario
+        telephone:
+          type: string
+          description: Teléfono del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+      required:
+        - email
+        - name
+        - password
+      example:
+        name: "Juan"
+        surname_1: "Pérez"
+        surname_2: "García"
+        email: "juan@email.com"
+        telephone: "123456789"
+        password: "123456"
     nodes:
       properties:
         id:
