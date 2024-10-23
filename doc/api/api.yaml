@@ -429,6 +429,21 @@ paths:
           description: Datos de usuario inválidos
         "500":
           description: Error en el servidor
+  /auth/checkAuth:
+    get:
+      summary: Comprueba si el usuario está autenticado
+      operationId: checkAuth
+      responses:
+        "200":
+          description: Usuario autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
+        "401":
+          description: Usuario no autenticado
+        "500":
+          description: Error en el servidor
    
 
 components:
@@ -440,10 +455,10 @@ components:
           type: number
           description: Valor de la medida tomada por el sensor
         loc_x:
-          type: float
+          type: number
           description: Coordenada x donde se tomó la medida
         loc_y:
-          type: float
+          type: number
           description: Coordenada y donde se tomó la medida
         tipo_gas:
           type: string
@@ -553,7 +568,7 @@ components:
           type: string
           description: Fecha de la distancia diaria
         distance:
-          type: float
+          type: number
           description: Distancia recorrida en el día
         user_id:
           type: integer
