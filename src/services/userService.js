@@ -141,3 +141,21 @@ export const deleteUser = async (email) => {
         throw new Error('Failed to delete user: ' + error.message);
     }
 };
+
+/**
+*Retrives a user password by their id
+*@async
+*@function getUserPasswordById
+*@param {number} id - The id of the user to retrieve.
+*@returns {Promise<Object|null>} Returns the user object or null if not found.
+*@throws Will throw an error if the SQL query fails.
+*/
+export const getUserPasswordById = async (id) => {
+    try {
+        const sql = await readFile('./src/sql/getUserPasswordById.sql', 'utf-8');
+        const [rows] = await pool.query(sql, [id]);
+        return rows.length ? rows[0] : null;
+    } catch (error) {
+        throw new Error('Failed to fetch user password: ' + error.message);
+    }
+};
