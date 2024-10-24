@@ -22,12 +22,21 @@ header {
     height: auto;
 }
 
-.logo img {
+.logo a{
+    display: inline-block;
+    cursor:pointer;
+}
+
+.logo a img {
     width: 100%;
     height: auto;
 }
 
-.menu ul {
+.nav{
+    display:flex;
+}
+
+.nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -35,11 +44,11 @@ header {
     align-items: center; 
 }
 
-.menu li {
+.nav ul li {
     margin-left: 20px;
 }
 
-.menu li a {
+.nav ul li a {
     display: block;
     color: #ddd2ba;
     text-align: center;
@@ -47,17 +56,31 @@ header {
     text-decoration: none;
 }
 
-.menu li a i {
+.user {
     font-size: 200%;
+    padding: 2%
+}
+
+.user a i{
     color: #ddd2ba;
 }
 
-header .menu li a:hover {
+header .nav ul li a:hover {
     color: #87a08b;
 }
 
-header .menu li a:hover i {
+header .nav ul li a:hover i {
     color: #87a08b; 
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color:#ddd2ba;
+    cursor:pointer;
+    margin-left:auto;
 }
 
 .formulario {
@@ -157,8 +180,44 @@ footer {
     }
 }
 
+@media (max-width: 959px){
+
+    .nav{
+        display:none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav.active{
+        display: block;
+        position: absolute;
+        top: 100px;
+        right: 0;
+        width: 50%;
+        background-color:#3a5335;
+        z-index:1000;
+    }
+
+    .nav ul{
+        flex-direction: column;
+        padding:0;
+    }
+
+    .nav ul li{
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .user{
+        padding-top: 2.6%;
+    }
+
+}
+
 @media (max-width: 959px) and (min-width: 735px){
-  
+
     .escribir {
         width: 36%;
     }
@@ -167,7 +226,6 @@ footer {
         width: 11%;
     }
 }
-
 
 @media (max-width: 734px) {
     .formulario form {

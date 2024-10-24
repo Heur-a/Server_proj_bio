@@ -110,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/users'
+              $ref: '#/components/schemas/users_post_put'
       responses:
         "201":
           description: Usuario creado correctamente
@@ -127,7 +127,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/users'
+              $ref: '#/components/schemas/users_post_put'
       responses:
         "202":
           description: Usuario actualizado correctamente
@@ -382,6 +382,68 @@ paths:
           description: No se encontró ninguna distancia diaria
         "500":
           description: Error en el servidor
+  /auth/login:
+    post:
+      summary: Inicia sesión
+      operationId: login
+      requestBody:
+        description: Datos de inicio de sesión
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_login'
+      responses:
+        "200":
+          description: Sesión iniciada correctamente
+        "400":
+          description: Datos de inicio de sesión inválidos
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error en el servidor
+  /auth/logout:
+    post:
+      summary: Cierra sesión
+      operationId: logout
+      responses:
+        "200":
+          description: Sesión cerrada correctamente
+        "500":
+          description: Error en el servidor
+  /auth/register:
+    post:
+      summary: Registra un nuevo usuario
+      operationId: register
+      requestBody:
+        description: Datos del nuevo usuario
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_post_put'
+      responses:
+        "201":
+          description: Usuario registrado correctamente
+        "400":
+          description: Datos de usuario inválidos
+        "500":
+          description: Error en el servidor
+  /auth/checkAuth:
+    get:
+      summary: Comprueba si el usuario está autenticado
+      operationId: checkAuth
+      responses:
+        "200":
+          description: Usuario autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
+        "401":
+          description: Usuario no autenticado
+        "500":
+          description: Error en el servidor
    
 
 components:
@@ -393,10 +455,10 @@ components:
           type: number
           description: Valor de la medida tomada por el sensor
         loc_x:
-          type: float
+          type: number
           description: Coordenada x donde se tomó la medida
         loc_y:
-          type: float
+          type: number
           description: Coordenada y donde se tomó la medida
         tipo_gas:
           type: string
@@ -446,6 +508,38 @@ components:
         surname_2: "García"
         email: "juan@email.com"
         telephone: "123456789"
+    users_post_put:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del usuario
+        surname_1:
+          type: string
+          description: Primer apellido del usuario
+        surname_2:
+          type: string
+          description: Segundo apellido del usuario
+        email:
+          type: string
+          description: Email del usuario
+        telephone:
+          type: string
+          description: Teléfono del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+      required:
+        - email
+        - name
+        - password
+      example:
+        name: "Juan"
+        surname_1: "Pérez"
+        surname_2: "García"
+        email: "juan@email.com"
+        telephone: "123456789"
+        password: "123456"
     nodes:
       properties:
         id:
@@ -474,7 +568,7 @@ components:
           type: string
           description: Fecha de la distancia diaria
         distance:
-          type: float
+          type: number
           description: Distancia recorrida en el día
         user_id:
           type: integer
@@ -484,5 +578,16 @@ components:
         date: "2024-09-26"
         distance: 10.5
         user_id: 1
+    user_login:
+      properties:
+        email:
+          type: string
+          description: Email del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+      example:
+        email: "juan@email.com"
+        password: "123456"
     
 
