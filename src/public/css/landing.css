@@ -1,86 +1,95 @@
-/* Variables de color */
-:root {
-    --color-principal: #3b3b3b; /* Color de texto principal */
-    --fondo: #ddd2ba; /* Fondo beige */
-    --h1: #3a5335; /* Verde oscuro para encabezado h1 */
-    --h2: #3b3b3b; /* Gris oscuro para encabezado h2 */
-    --h3: #87a08b; /* Verde claro para encabezado h3 */
-    --boton-bg: #5c715e; /* Fondo verde para botones */
-    --boton-texto: #fff; /* Texto blanco para botones */
-    --section-bg: #ddd2ba; /* Beige claro para secciones */
-    --highlight: #000000; /* Color para elementos destacados */
-    --subtle: #87a08b; /* Verde claro para elementos sutiles */
-    --pagina-principal-sensores: #fff; /* Fondo blanco para la pagina de los datos del sensor */
-}
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--color-principal);
-    background-color: var(--fondo);
     margin: 0;
     padding: 0;
+    font-family: Montserrat, sans-serif;
+    background: #ddd2ba;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Estilos de la cabecera */
 header {
+    height: 6.4rem;
+    width: 100%;
+    background: #3a5335;
     display: flex;
-    justify-content: space-between; /* Mantiene los elementos espaciados */
-    align-items: center;
-    background-color: var(--h1);
-    padding: 1rem;
-}
-
-header .logo {
-    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-header .logo a {
+.logo {
+    width: 200px;
+    height: auto;
+}
+
+.logo a{
     display: inline-block;
-    cursor: pointer; /* Mostrar un cursor de mano al pasar por el logo */
+    cursor:pointer;
 }
 
-header .logo img {
-    max-height: 5rem; /* Ajusta la altura máxima del logo */
-    width: auto; /* Mantén la proporción de la imagen */
+.logo a img {
+    width: 100%;
+    height: auto;
 }
 
-header nav {
-    display: flex; /* Mostrar el nav en pantalla grande */
+.nav{
+    display:flex;
 }
 
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
+.nav ul {
+    list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items: center; 
 }
 
-header nav ul li a {
-    color: var(--fondo); /* Color igual al fondo */
+.nav ul li {
+    margin-left: 20px;
+}
+
+.nav ul li a {
+    display: block;
+    color: #ddd2ba;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
-    font-size: 16px;
 }
 
-header nav ul li a.active {
-    font-weight: bold; /* Hacer el texto "PRINCIPAL" en negrita */
+.user {
+    font-size: 200%;
+    padding: 2%;
 }
 
-header .user-icon {
-    color: #000000;
-    font-size: 2rem;
+.user a i{
+    color: #ddd2ba;
 }
 
-/* Botón de menú hamburguesa */
+header .nav ul li a:hover {
+    color: #87a08b;
+}
+
+header .nav ul li a:hover i {
+    color: #87a08b; 
+}
+
 .menu-toggle {
-    display: none; /* Ocultar por defecto */
+    display: none;
     font-size: 2rem;
     background: none;
     border: none;
-    color: var(--fondo);
-    cursor: pointer;
-    margin-left: auto;
+    color:#ddd2ba;
+    cursor:pointer;
+    margin-left:auto;
+}
+
+.vacio{
+    background-color: #3a5335;
+    height: 10rem;
+    width: 100rem;
+    position: absolute;
+    top:5rem;
+    z-index: 1;
 }
 
 /* Encabezados */
@@ -90,86 +99,101 @@ h1 {
     color: var(--h1);
 }
 
-h2 {
-    font-size: 2rem;
-    color: var(--h2);
-}
-
-h3 {
-    font-size: 1.5rem;
-    color: var(--h3);
-}
-
-/* Botones */
-button {
-    background-color: var(--subtle);
-    color: var(--boton-texto);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
+.marron{
+    color: var(--fondo);
+    z-index:10;
+    position:relative;
 }
 
 /* Sección de contenido */
 main {
-    display: flex;
-    justify-content: space-between;
+    
     padding: 50px;
+}
+
+.grupo{
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Una columna por defecto */
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.grupo h1{
+    margin-bottom:0px;
+    margin-top:0px;
+    padding-top:23px;
+   }
+   
+.content{
+    max-width: 70%;
 }
 
 /* Map Section */
 .map {
-    max-width: 100%;
+    max-width: 60%;
+    z-index: 10;
 }
 
 .map img {
-    width: 100%;
+    width: 150%;
     border: 0px;
 }
 
+.botonSuscribirse{
+    width: 60%;
+    text-align: center;
+}
 
 /* Footer más pequeño */
 footer {
-    text-align: center;
-    padding: 0.2rem;  /* Reducido el padding */
-    background-color: var(--h1);
-    color: var(--boton-texto);
-    font-size: 0.875rem;  /* Tamaño de fuente más pequeño */
-    font-family: 'Montserrat', sans-serif;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    line-height: 1.2;  /* Ajusta el espaciado entre líneas */
+    background-color: #3a5335; /* Color de fondo del footer */
+    color: white; /* Color del texto */
+    text-align: center; /* Centrar el contenido */
+    padding: 10px 0; /* Espaciado interno */
+    width: 100%; /* Asegurar que ocupe todo el ancho de la página */
 }
 
 /* Media Queries */
-@media (max-width: 768px) {
-    header nav {
-        display: none; /* Ocultar nav por defecto */
+@media (max-width: 768px) and (min-width: 360px) {
+
+    .grupo{
+        grid-template-columns: 1fr;
+    }
+    
+}
+
+@media (max-width: 959px){
+
+    .nav{
+        display:none;
     }
 
-    header .menu-toggle {
-        display: block; /* Mostrar el botón de menú en pantallas pequeñas */
+    .menu-toggle {
+        display: block;
     }
 
-    /* Mostrar menú al hacer clic */
-    nav.active {
-        display: block; /* Mostrar el menú cuando está activo */
-        position: absolute; /* Para que el menú se posicione */
-        top: 100px; /* Ajustar según la altura del header */
-        right: 0; /* Alinear a la izquierda */
-        width: 50%; /* Ancho completo */
-        background-color: var(--h1); /* Fondo del menú */
+    .nav.active{
+        display: block;
+        position: absolute;
+        top: 100px;
+        right: 0;
+        width: 50%;
+        background-color:#3a5335;
+        z-index:1000;
     }
 
-    header nav ul {
-        flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
-        padding: 0; /* Sin padding */
+    .nav ul{
+        flex-direction: column;
+        padding:0;
     }
 
-    header nav ul li {
-        text-align: center; /* Centrar texto */
-        padding: 1rem; /* Espacio entre los elementos */
+    .nav ul li{
+        text-align: center;
+        padding: 1rem;
     }
+
+    .user{
+        padding-top: 2.6%;
+    }
+
 }
