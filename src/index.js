@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-23 22:04:20
+ * @Last Modified time: 2024-10-24 13:46:27
  */
 /**
  * @file index
@@ -115,12 +115,9 @@ app.use('/auth', authRoutes);
  * For example, requests to `/index.html` will serve `public/index.html`.
  */
 app.use(express.static(path.join(__dirname, 'public'), {
-    setHeaders: (res, filePath) => {
-        if (path.extname(filePath) === '.html') {
-            res.setHeader('Content-Disposition', 'inline');
-        }
-    }
 }));
+
+
 
 
 /**
