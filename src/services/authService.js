@@ -1,7 +1,16 @@
+/**
+ *@file authService.js
+ *@brief Servei per autenticar usuaris i gestionar els tokens JWT amb sessions redis
+*/
+
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { getUserByEmail, getUserPasswordById } from './userService.js'; // Importem el servei d'usuaris
 import { config } from 'dotenv';
+import {createClient} from 'redis';
+
+const redisClient = createClient();
+await redisClient.connect();
 
 config();
 
@@ -46,6 +55,8 @@ export const authenticateUser = async (email, password) => {
 
 
 
+
+
         return { token, user };
     } catch (error) {
         throw new Error(error.message);
@@ -58,7 +69,7 @@ export const authenticateUser = async (email, password) => {
  * @param {string} token - El token JWT a comprovar.
  * @returns {Object|boolean} Les dades del token si és vàlid o false si no ho és.
  */
-export const verifyToken = (token) => {
+export const decodeToken = (token) => {
     try {
         console.log("authService.verifyToken, token:",token);
         console.log("authService.verifyToken, createdToken:",createdToken);
@@ -85,5 +96,35 @@ export const verifyToken = (token) => {
  */
 export const blacklistToken = (token) => {
     blacklistedTokens.push(token);
+};
+
+/**
+ * @brief JWT token verification middleware.
+ * @param {object} req - The Express request object.
+ * @param {object} res - The Express response object.
+ */
+export const verifyIdentity = (req, res, next) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1]; // Assumes a Bearer token
+        console.log("authService.verifyToken, token:",token);
+        const decoded = decodeToken(token);
+        console.log("authService.verifyToken, decoded:",decoded);
+        if (!decoded) {
+            throw new Error('Invalid token');
+        }
+
+        return next();
+    }
+    catch (error) {
+        res.status(401).json({ message: "Not authorized", error: error.message });
+    }
+}
+
+/**
+*@brief Redis session saving function
+*@param {string} token - JWT token
+*/
+const saveSessionRedis = async (userId, token) => {
+    await redisClient.set(userId, token, { EX: 60 * 60 * 24 }); // Desa la sessió durant 24 hores
 };
 

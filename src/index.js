@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-24 13:46:27
+ * @Last Modified time: 2024-10-25 18:09:54
  */
 /**
  * @file index
@@ -38,6 +38,8 @@ import { config } from 'dotenv';  // To load environment variables from a .env f
 import fetch from 'node-fetch';  // To perform HTTP requests
 import https from 'https';
 import fs from 'fs';
+import { verifyIdentity } from './services/authService.js';
+import {redisClient} from './services/redisService.js';
 
 // Initialize the Express app
 const app = express();
@@ -53,6 +55,7 @@ const url = 'http://localhost/mediciones/ultima';
 
 // Middleware for parsing JSON requests
 app.use(express.json());
+
 
 // Get the current directory (ES modules replacement for __dirname)
 const __filename = fileURLToPath(import.meta.url);
@@ -107,7 +110,17 @@ app.use('/users', usersRoutes);
  */
 app.use('/auth', authRoutes);
 
-//todo: Hacer la ruta principal un servidor web con https y  que ponga una pagina html
+/**
+ * @brief user route for the web server.
+ *
+ * This middleware serves any static files (HTML, CSS, JS, images) located in the `public/user` directory.
+ * Needs user authentication to access this route.   
+ */
+app.use('/user',verifyIdentity, express.static(path.join(__dirname, 'public/'), {
+    }));
+
+//todo: No se como hacer esto en otro archivo, así que aquí se quedda
+//todo: Hay que preguntar cómo
 /**
  * @brief Serves static HTML files from the "public" directory.
  * 
@@ -116,6 +129,7 @@ app.use('/auth', authRoutes);
  */
 app.use(express.static(path.join(__dirname, 'public'), {
 }));
+
 
 
 

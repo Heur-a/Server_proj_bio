@@ -1,4 +1,4 @@
-import { authenticateUser, blacklistToken, verifyToken } from '../services/authService.js'; // Importem authService
+import { authenticateUser, blacklistToken, decodeToken } from '../services/authService.js'; // Importem authService
 import { getUserByEmail,createUser } from '../services/userService.js'; // Utilitzem el servei per crear l'usuari
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
@@ -119,7 +119,7 @@ export const checkAuthentication = (req, res) => {
         return res.status(401).json({ message: 'No token provided' });
     }
 
-    const decoded = verifyToken(token);
+    const decoded = decodeToken(token);
 
     if (!decoded) {
         return res.status(401).json({ message: 'Invalid or expired token' });

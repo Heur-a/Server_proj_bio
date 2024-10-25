@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
     "node-fetch": "^3.2.0",
+    "redis": "4.7.0",
     "server_proj_bio": "file:",
     "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0"
