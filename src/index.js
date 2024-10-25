@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-25 18:09:54
+ * @Last Modified time: 2024-10-25 19:04:10
  */
 /**
  * @file index
@@ -15,7 +15,6 @@
  * @requires YAML
  * @requires config
  * @description This file configures and starts the Express server, connects to the database, sets up middleware, and loads API documentation using Swagger UI.
- * 
  * 
  * This file configures and starts the Express server, connects to the database, sets up middleware, and loads API documentation using Swagger UI.
  * It defines the main route and handles requests to other routes through dedicated route modules.
@@ -35,20 +34,21 @@ import authRoutes from './routes/authRoutes.js';  // Route handling for authenti
 import swaggerUi from 'swagger-ui-express';  // Swagger UI for API documentation
 import YAML from 'yamljs';  // To load the API documentation from a YAML file
 import { config } from 'dotenv';  // To load environment variables from a .env file
-import fetch from 'node-fetch';  // To perform HTTP requests
 import https from 'https';
 import fs from 'fs';
-import { verifyIdentity } from './services/authService.js';
-import {redisClient} from './services/redisService.js';
+import { sessionMiddleware, verifyIdentity } from './services/authService.js'; // Import session middleware
 
 // Initialize the Express app
 const app = express();
 
+// Load environment variables from .env file
+config();
+
 // Load Swagger API documentation from YAML file
 const swaggerDocument = YAML.load('./doc/api/api.yaml');
 
-// Load environment variables from .env file
-config();
+// Configure Express to use sessions with MemoryStore (default)
+app.use(sessionMiddleware); // Use session middleware from authService
 
 // URL to fetch the latest measurement
 const url = 'http://localhost/mediciones/ultima';
@@ -56,16 +56,14 @@ const url = 'http://localhost/mediciones/ultima';
 // Middleware for parsing JSON requests
 app.use(express.json());
 
-
 // Get the current directory (ES modules replacement for __dirname)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-//Configure https server
+// Configure https server
 https.createServer({
-    key: fs.readFileSync(path.join(__dirname,'./certs/fake-key.pem'), 'utf8'),
-    cert: fs.readFileSync(path.join(__dirname,'./certs/fake-cert.pem'), 'utf8'),
-    
+    key: fs.readFileSync(path.join(__dirname, './certs/fake-key.pem'), 'utf8'),
+    cert: fs.readFileSync(path.join(__dirname, './certs/fake-cert.pem'), 'utf8'),
 }, app);
 
 /**
@@ -100,39 +98,31 @@ app.use('/mediciones', medicionesRoutes);
 app.use('/users', usersRoutes);
 
 /**
-*@brief auth api route
-*
-*This middleware uses the authRoutes module to handle all requests to /auth
-*The actual logic for these routes is managed in the corresponding controller
-*
-*@route /auth
-*@see authRoutes
+ * @brief Auth API route
+ *
+ * This middleware uses the authRoutes module to handle all requests to /auth.
+ * The actual logic for these routes is managed in the corresponding controller.
+ *
+ * @route /auth
+ * @see authRoutes
  */
 app.use('/auth', authRoutes);
 
 /**
- * @brief user route for the web server.
+ * @brief User route for the web server with authentication check.
  *
  * This middleware serves any static files (HTML, CSS, JS, images) located in the `public/user` directory.
- * Needs user authentication to access this route.   
+ * It requires user authentication to access this route.   
  */
-app.use('/user',verifyIdentity, express.static(path.join(__dirname, 'public/'), {
-    }));
+app.use('/user', verifyIdentity, express.static(path.join(__dirname, 'public/user')));
 
-//todo: No se como hacer esto en otro archivo, así que aquí se quedda
-//todo: Hay que preguntar cómo
 /**
  * @brief Serves static HTML files from the "public" directory.
  * 
  * This middleware serves any static files (HTML, CSS, JS, images) located in the `public` directory.
  * For example, requests to `/index.html` will serve `public/index.html`.
  */
-app.use(express.static(path.join(__dirname, 'public'), {
-}));
-
-
-
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 /**
  * @brief Main route for the web server.
@@ -148,10 +138,6 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-
-
-
-
 /**
  * @brief Starts the Express server and listens on a specific port.
  * 
@@ -162,4 +148,3 @@ app.listen(process.env.PORT || 3000, () => {
     console.log(`Server running on port ${process.env.PORT || 3000}`);
     console.log(`Connected to MySQL database at ${process.env.DB_HOST}:${process.env.MYSQLDB_PORT}`);
 });
-
