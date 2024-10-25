@@ -1,130 +1,124 @@
-/**
- *@file authService.js
- *@brief Servei per autenticar usuaris i gestionar els tokens JWT amb sessions redis
-*/
-
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { getUserByEmail, getUserPasswordById } from './userService.js'; // Importem el servei d'usuaris
+import { getUserByEmail, getUserPasswordById, createUser } from './userService.js';
 import { config } from 'dotenv';
-import {createClient} from 'redis';
+import session from 'express-session';
 
-const redisClient = createClient();
-await redisClient.connect();
-
+// Load environment variables from .env file
 config();
 
-const blacklistedTokens = [];
-const jwt_secret = process.env.JWT_SECRET;
-const createdToken = "";
-
-
+// Middleware for session configuration
+export const sessionMiddleware = session({
+    secret: process.env.SESSION_SECRET, // Secret key for signing the session ID
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 }, // 2 days
+});
 
 /**
- * @brief Autentica un usuari comprovant les credencials.
- * @param {string} email - Correu electrònic de l'usuari.
- * @param {string} password - Contrasenya de l'usuari.
- * @returns {Promise<Object>} Un objecte que conté el token JWT i les dades de l'usuari o un missatge d'error.
+ * @brief Authenticates a user with email and password, and saves the session.
+ * @param {string} email - User's email.
+ * @param {string} password - User's password.
+ * @param {object} session - User's session.
+ * @returns {Promise<string>} A success or error message.
  */
-export const authenticateUser = async (email, password) => {
+export const loginUser = async (email, password, session) => {
     try {
-        // Troba l'usuari pel correu utilitzant el servei
         const user = await getUserByEmail(email);
         if (!user) {
             throw new Error('User not found');
         }
 
-        // Obtenir la contrasenya de l'usuari
-        const res =  await getUserPasswordById(user.id);
-        console.log("authService.authenticateUser, res:",res);
-        user.password = res.password;
-
-        console.log("authService.authenticateUser, user:",user);
-
-        // Compara les contrasenyes
-        const isMatch = await bcrypt.compare(password, user.password);
+        const res = await getUserPasswordById(user.id);
+        const isMatch = await bcrypt.compare(password, res.password);
         if (!isMatch) {
             throw new Error('Invalid credentials');
         }
-        
 
-        // Genera el token JWT
-        const token = jwt.sign({ id: user.id, email: user.email }, jwt_secret, {
-            expiresIn: '90d', // Expira als 90 dies
-        });
-
-
-
-
-
-        return { token, user };
+        // Store user in session
+        session.user = { id: user.id, email: user.email };
+        return 'Logged in successfully';
     } catch (error) {
         throw new Error(error.message);
     }
 };
 
-
 /**
- * @brief Comprova si el token JWT és vàlid.
- * @param {string} token - El token JWT a comprovar.
- * @returns {Object|boolean} Les dades del token si és vàlid o false si no ho és.
+ * @brief Logs out the user.
+ * @param {object} session - Express session.
+ * @returns {Promise<string>} A success or error message.
  */
-export const decodeToken = (token) => {
-    try {
-        console.log("authService.verifyToken, token:",token);
-        console.log("authService.verifyToken, createdToken:",createdToken);
-        console.log("authService.verifyToken, blacklistedTokens:",blacklistedTokens);
-        // Comprova si el token ha estat posat en la blacklist
-        if (blacklistedTokens.includes(token)) {
-            throw new Error('Token has been blacklisted');
-        }
-
-        // Verifica i decodifica el token
-        const decoded = jwt.verify(token, jwt_secret);
-        console.log("authService.verifyToken, decoded:",decoded);
-        return decoded;
-    } catch (error) {
-        console.log("authService.verifyToken, error:",error);
-        return false;
+export const logoutUser = (session) => {
+    //check if session exists
+    if (!session) {
+        return new Promise((resolve, reject) => {
+            reject(new Error('No session found'));
+        });
     }
+    return new Promise((resolve, reject) => {
+        session.destroy((err) => {
+            if (err) {
+                reject(new Error('Could not log out'));
+            }
+            resolve('Logged out successfully');
+        });
+    });
 };
 
 /**
- * @brief Afegeix el token a la blacklist per evitar el seu ús posterior.
- * @param {string} token - El token JWT a posar en la blacklist.
- * @returns {void}
+ * @brief Checks if the user is already authenticated.
+ * @param {object} session - Express session.
+ * @returns {object|boolean} Returns the user if authenticated or false if not.
  */
-export const blacklistToken = (token) => {
-    blacklistedTokens.push(token);
+export const isAuthenticated = (session) => {
+    return session.user || false;
 };
 
 /**
- * @brief JWT token verification middleware.
- * @param {object} req - The Express request object.
- * @param {object} res - The Express response object.
+ * @brief Registers a new user in the database.
+ * @param {object} newUser - Object with new user data.
+ * @returns {Promise<string>} Success message.
+ */
+export const registerUser = async (newUser) => {
+    // User validations
+    if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
+        throw new Error('All fields are required');
+    }
+
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(newUser.email)) {
+        throw new Error('Invalid email');
+    }
+
+    const telephoneRegex = /^[679]\d{8}$/;
+    if (!telephoneRegex.test(newUser.telephone)) {
+        throw new Error('Invalid telephone');
+    }
+
+    if (newUser.password.length < 6) {
+        throw new Error('Password must have at least 6 characters');
+    }
+
+    newUser.userTypeId = 2;
+
+    const userExists = await getUserByEmail(newUser.email);
+    if (userExists) {
+        throw new Error('User already exists');
+    }
+
+    await createUser(newUser);
+    return 'User registered successfully';
+};
+
+/**
+ * @brief Middleware to verify user identity.
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @param {function} next - Next middleware function.
  */
 export const verifyIdentity = (req, res, next) => {
-    try {
-        const token = req.headers.authorization.split(' ')[1]; // Assumes a Bearer token
-        console.log("authService.verifyToken, token:",token);
-        const decoded = decodeToken(token);
-        console.log("authService.verifyToken, decoded:",decoded);
-        if (!decoded) {
-            throw new Error('Invalid token');
-        }
-
-        return next();
+    if (req.session.user) {
+        next(); // User is authenticated, proceed to the next middleware
+    } else {
+        res.status(401).json({ message: 'Unauthorized access' }); // User is not authenticated
     }
-    catch (error) {
-        res.status(401).json({ message: "Not authorized", error: error.message });
-    }
-}
-
-/**
-*@brief Redis session saving function
-*@param {string} token - JWT token
-*/
-const saveSessionRedis = async (userId, token) => {
-    await redisClient.set(userId, token, { EX: 60 * 60 * 24 }); // Desa la sessió durant 24 hores
 };
-

@@ -117,7 +117,8 @@ async function registerUser(userData) {
     })
     .then(response => {
         if (response.ok) {
-            return response.json();
+           //redirect to user profile
+           window.location.href = '/user/user-profile.html';
         } else if (response.status === 409) {
             throw new Error('El usuario ya existe');
         } 
@@ -125,23 +126,4 @@ async function registerUser(userData) {
             throw new Error('Error en el registre: ', response.statusText);
         }
     })
-    .then(data => {
-        localStorage.setItem('token', data.token);
-        fetch('/user/user-profile.html', {
-            headers: {
-                'Authorization' : `Bearer ${data.token}`
-            }
-        }
-        ).then(response => {
-            if (response.ok) {
-                window.location.href = '/user/user-profile.html';
-            } else {
-                throw new Error('Error en la redirecció: ', response.statusText);
-            }
-        })
-    })
-    .catch(error => {
-        // Handle error (e.g., display error message)
-        alert('Error: ' + error.message);
-    });
 }
