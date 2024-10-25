@@ -20,39 +20,54 @@ document.querySelector('form').addEventListener('submit', async function(event) 
 
     // Validació del nom: comprovar si no està buit
     if (name === '') {
-        showError('name', 'El nom no pot estar buit');
+        showError('name', 'El nombre no puede estar vacío');
         isValid = false;
     }
 
     // Validació del primer cognom: comprovar si no està buit
     if (surname_1 === '') {
-        showError('surname_1', 'El primer cognom no pot estar buit');
+        showError('surname_1', 'El primer apellido no puede estar vacío');
         isValid = false;
     }
 
     // Validació del segon cognom: opcional, però comprovar si és correcte si està omplert
-    if (surname_2 !== '' && surname_2.length < 2) {
-        showError('surname_2', 'El segon cognom és massa curt');
+    if (surname_2 === '') {
+        showError('surname_2', 'El segundo apellido no puede estar vacío');
         isValid = false;
     }
 
     // Validació de l'email
     const emailPattern = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
-        showError('email', 'El correu electrònic no és vàlid');
+        showError('email', 'El correo electrónico no es válido');
         isValid = false;
     }
 
     // Validació del telèfon: format espanyol (9 dígits, començant per 6, 7 o 9)
     const telephonePattern = /^[679]\d{8}$/;
     if (!telephonePattern.test(telephone)) {
-        showError('telephone', 'El telèfon ha de tenir 9 dígits i començar amb 6, 7 o 9');
+        showError('telephone', 'El teléfono ha de tener 9 zifras y empezar por 6, 7 o 9');
         isValid = false;
     }
 
-    // Validació de la contrasenya: mínim 6 caràcters
-    if (password.length < 6) {
-        showError('password', 'La contrasenya ha de tenir almenys 6 caràcters');
+    // Contraseña: min 6 caracteres, 1 mayúscula, 1 minúscula, 1 número
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+    //Contraseña: sin caracteres especiales
+    const passwordPattern2 = /^[a-zA-Z0-9]*$/;
+    if (!passwordPattern2.test(password)) {
+        showError('password', 'La contraseña no puede tener caracteres especiales');
+        isValid = false;
+    }
+    else if (!passwordPattern.test(password)) {
+        showError('password', 'La contraseña debe tener al menos 6 caracteres, 1 mayúscula, 1 minúscula y 1 número');
+        isValid = false;
+    }
+    
+
+    //Repetir contraseña, comprobar si es igual
+    const password2 = document.getElementById('password2').value.trim();
+    if (password !== password2) {
+        showError('password2', 'Las contraseñas no coinciden');
         isValid = false;
     }
 
