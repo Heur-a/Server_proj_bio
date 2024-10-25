@@ -1,10 +1,15 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { getUserByEmail, getUserPasswordById } from './userService.js'; // Importem el servei d'usuaris
+import { config } from 'dotenv';
+
+config();
 
 const blacklistedTokens = [];
-const jwt_secret = 'auth_token'
+const jwt_secret = process.env.JWT_SECRET;
 const createdToken = "";
+
+
 
 /**
  * @brief Autentica un usuari comprovant les credencials.
@@ -46,6 +51,7 @@ export const authenticateUser = async (email, password) => {
         throw new Error(error.message);
     }
 };
+
 
 /**
  * @brief Comprova si el token JWT és vàlid.

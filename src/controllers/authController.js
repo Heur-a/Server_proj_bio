@@ -1,5 +1,18 @@
 import { authenticateUser, blacklistToken, verifyToken } from '../services/authService.js'; // Importem authService
-import { createUser } from '../services/userService.js'; // Utilitzem el servei per crear l'usuari
+import { getUserByEmail,createUser } from '../services/userService.js'; // Utilitzem el servei per crear l'usuari
+import jwt from 'jsonwebtoken';
+import { config } from 'dotenv';
+
+//ENUMERACIÓ DE TIPUS D'USUARIS
+// 1: Admin
+// 2: User
+const userType = {
+    ADMIN: 1,
+    USER: 2
+}
+config();
+const jwt_secret = process.env.JWT_SECRET;
+
 
 /**
  * @brief Registra un nou usuari.
@@ -10,10 +23,45 @@ import { createUser } from '../services/userService.js'; // Utilitzem el servei 
 export const register = async (req, res) => {
     try {
         const newUser = req.body;
-        const createdUser = await createUser(newUser);
-        const email = createdUser.email;
+        //check every field is filled
+        if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+        //check email is valid
+        const emailRegex = /\S+@\S+\.\S+/;
+        if (!emailRegex.test(newUser.email)) {
+            return res.status(400).json({ message: 'Invalid email' });
+        }
+        //check telephone is valid
+        const telephoneRegex = /^[679]\d{8}$/;
+        if (!telephoneRegex.test(newUser.telephone)) {
+            return res.status(400).json({ message: 'Invalid telephone' });
+        }
+        //check password is valid
+        if (newUser.password.length < 6) {
+            return res.status(400).json({ message: 'Password must have at least 6 characters' });
+        }
+        // add usertypeId
+        newUser.userTypeId = 2;
+        console.log("authController.register, newUser:",newUser);
 
-        res.status(201).json({ message: 'User registered successfully', user_email: email  });
+        //check if user already exists
+        const user = await getUserByEmail(newUser.email);
+        if (user) {
+            return res.status(409).message({ message: 'User already exists' });
+        }
+
+
+        const createdUser = await createUser(newUser);
+        
+        const token = jwt.sign({ id: createdUser.id, email: createdUser.email }, jwt_secret, {
+            expiresIn: '90d', // Expira als 90 dies
+        });
+
+        const email = createdUser.email;
+    
+
+        res.status(201).json({ message: 'User registered successfully', token: token });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
