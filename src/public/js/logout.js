@@ -1,10 +1,17 @@
 // Funció de logout universal
 function logout() {
-    // Esborra el token de localStorage
-    localStorage.removeItem('token');
-
-    // Redirigeix l'usuari a la pàgina d'inici de sessió
-    window.location.href = '/index.html';  // Modifica aquest camí si cal
+   fetch('/auth/logout', {
+       method: 'POST',
+       headers: {
+           'Content-Type': 'application/json',
+       },
+   }).then(response => {
+       if (response.ok) {
+           window.location.href = '/index.html';
+       } else {
+           throw new Error('Error al tancar la sessió');
+       }
+   }).catch(error => alert(error.message));
     
 }
 
