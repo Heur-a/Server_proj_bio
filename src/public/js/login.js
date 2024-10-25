@@ -1,9 +1,3 @@
-// Comprova si l'usuari ja està autenticat tan aviat com es carrega el codi
-const token = localStorage.getItem('token');
-if (token) {
-    checkIfAuthenticated(token);
-}
-
 const loginHref = '/user/login.html';  // Modifica aquest camí si cal
 
 // Escolta l'esdeveniment DOMContentLoaded per inicialitzar el formulari
@@ -30,15 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.ok) {
                 throw new Error('Error en l\'inici de sessió. Comprova les teves credencials.');
+            } else {
+                window.location.href = response.headers.get('Location');
             }
-
-            const data = await response.json();
-
-            // Desa el token JWT a `localStorage`
-            localStorage.setItem('token', data.token);
-
-            // Redirigeix l'usuari a la pàgina de perfil
-            window.location.href = '/user/user-profile.html';
 
         } catch (error) {
             alert(error.message);

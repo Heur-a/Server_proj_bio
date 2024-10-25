@@ -7,10 +7,10 @@ import { loginUser, logoutUser, isAuthenticated, registerUser } from '../service
  */
 export const register = async (req, res) => {
     try {
-        const message = await registerUser(req.body);
-        res.status(201).json({ message });
+        res.session = await registerUser(req.body);
+        res.redirect(200,'/user/user-profile.html');
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(error.statusCode).json({ message: error.message });
     }
 };
 
@@ -21,10 +21,10 @@ export const register = async (req, res) => {
  */
 export const login = async (req, res) => {
     try {
-        const message = await loginUser(req.body.email, req.body.password, req.session);
-        res.status(200).json({ message });
+        res.session = await loginUser(req.body.email, req.body.password, req.session);
+        res.redirect(200,'/user/user-profile.html');
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(error.statusCode).json({ message: error.message });
     }
 };
 
@@ -37,9 +37,9 @@ export const logout = async (req, res) => {
     try {
         const message = await logoutUser(req.session);
         res.clearCookie('connect.sid'); // Opcional: elimina la cookie de sessió
-        res.status(200).json({ message });
+        res.redirect(201,'/index.html');
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(error.statusCode).json({ message: error.message });
     }
 };
 
@@ -55,5 +55,5 @@ export const checkAuthentication = (req, res) => {
         return res.status(401).json({ message: 'Not authenticated' });
     }
 
-    res.status(200).json({ message: 'User is authenticated', user });
+    res.status(error.statusCode).json({ message: 'User is authenticated', user });
 };

@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import { getUserByEmail, getUserPasswordById, createUser } from './userService.js';
 import { config } from 'dotenv';
 import session from 'express-session';
+import { HttpError } from '../components/HttpErrorClass.js';
 
 // Load environment variables from .env file
 config();
@@ -25,20 +26,21 @@ export const loginUser = async (email, password, session) => {
     try {
         const user = await getUserByEmail(email);
         if (!user) {
-            throw new Error('User not found');
+            throw new HttpError(404,'User not found');
         }
 
         const res = await getUserPasswordById(user.id);
         const isMatch = await bcrypt.compare(password, res.password);
         if (!isMatch) {
-            throw new Error('Invalid credentials');
+            throw new HttpError(400,'Invalid credentials');
         }
 
         // Store user in session
         session.user = { id: user.id, email: user.email };
-        return 'Logged in successfully';
+        console.log('User is now logged in', session.user );
+        return session;
     } catch (error) {
-        throw new Error(error.message);
+        throw new HttpError(error.statusCode, error.message);
     }
 };
 
@@ -51,13 +53,13 @@ export const logoutUser = (session) => {
     //check if session exists
     if (!session) {
         return new Promise((resolve, reject) => {
-            reject(new Error('No session found'));
+            reject(new HttpError(401,'No session found'));
         });
     }
     return new Promise((resolve, reject) => {
         session.destroy((err) => {
             if (err) {
-                reject(new Error('Could not log out'));
+                reject(new HttpError(500,'Could not log out'));
             }
             resolve('Logged out successfully');
         });
@@ -76,37 +78,50 @@ export const isAuthenticated = (session) => {
 /**
  * @brief Registers a new user in the database.
  * @param {object} newUser - Object with new user data.
- * @returns {Promise<string>} Success message.
+ * @returns {session} user session to respond with
  */
+//todo: Hacer que todos los errores 400, si hay mas de uno, se envien todos y no solo uno !!!
 export const registerUser = async (newUser) => {
+
     // User validations
     if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
-        throw new Error('All fields are required');
+        throw new HttpError(400,'All fields are required');
     }
 
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(newUser.email)) {
-        throw new Error('Invalid email');
+        throw new HttpError(400,'Invalid email');
     }
 
     const telephoneRegex = /^[679]\d{8}$/;
     if (!telephoneRegex.test(newUser.telephone)) {
-        throw new Error('Invalid telephone');
+        throw new HttpError(400,'Invalid telephone');
+    }
+    //Hacer que la contraseña tenga al menos 6 caracteres, 1 mayúscula, 1 minúscula y 1 número
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+    if (!passwordPattern.test(newUser.password)) {
+        throw new HttpError(400,'Password must have at least 6 characters, 1 uppercase, 1 lowercase and 1 number');
     }
 
-    if (newUser.password.length < 6) {
-        throw new Error('Password must have at least 6 characters');
-    }
-
-    newUser.userTypeId = 2;
 
     const userExists = await getUserByEmail(newUser.email);
     if (userExists) {
-        throw new Error('User already exists');
+        throw new HttpError(409,'User already exists');
     }
 
-    await createUser(newUser);
-    return 'User registered successfully';
+    //add the user type to the newUser object
+    newUser.userTypeId = 2;
+
+    try {
+        const createdUser = await createUser(newUser);
+        session.user = { id: createdUser.id, email: createdUser.email };
+        return session;
+    } catch (error) {
+        throw new HttpError(500,error.message);
+    }
+
+    
 };
 
 /**
@@ -117,8 +132,11 @@ export const registerUser = async (newUser) => {
  */
 export const verifyIdentity = (req, res, next) => {
     if (req.session.user) {
+        console.log('User is authenticated');
         next(); // User is authenticated, proceed to the next middleware
     } else {
         res.status(401).json({ message: 'Unauthorized access' }); // User is not authenticated
     }
 };
+
+

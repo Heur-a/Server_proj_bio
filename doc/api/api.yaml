@@ -409,6 +409,8 @@ paths:
       responses:
         "200":
           description: Sesión cerrada correctamente
+        "401": 
+          description: Usuario no autenticado
         "500":
           description: Error en el servidor
   /auth/register:
@@ -427,6 +429,8 @@ paths:
           description: Usuario registrado correctamente
         "400":
           description: Datos de usuario inválidos
+        "409":
+          description: Email ya registrado
         "500":
           description: Error en el servidor
   /auth/checkAuth:

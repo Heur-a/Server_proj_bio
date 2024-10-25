@@ -15,6 +15,7 @@ document.querySelector('form').addEventListener('submit', async function(event) 
     const email = document.getElementById('email').value.trim();
     const telephone = document.getElementById('telephone').value.trim();
     const password = document.getElementById('password').value.trim();
+    const password2 = document.getElementById('password2').value.trim();
 
     let isValid = true;
 
@@ -65,7 +66,6 @@ document.querySelector('form').addEventListener('submit', async function(event) 
     
 
     //Repetir contraseña, comprobar si es igual
-    const password2 = document.getElementById('password2').value.trim();
     if (password !== password2) {
         showError('password2', 'Las contraseñas no coinciden');
         isValid = false;
@@ -118,7 +118,7 @@ async function registerUser(userData) {
     .then(response => {
         if (response.ok) {
            //redirect to user profile
-           window.location.href = '/user/user-profile.html';
+           window.location.href = response.headers.get('Location');
         } else if (response.status === 409) {
             throw new Error('El usuario ya existe');
         } 
