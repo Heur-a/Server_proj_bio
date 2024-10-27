@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-27 16:49:33
+ * @Last Modified time: 2024-10-27 19:22:45
  */
 /**
  * @file index
@@ -31,6 +31,7 @@ import { fileURLToPath } from 'url';  // To work with ES modules
 import medicionesRoutes from './routes/medicionesRoutes.js';  // Route handling for measurement endpoints
 import usersRoutes from './routes/usersRoutes.js';  // Route handling for user endpoints
 import authRoutes from './routes/authRoutes.js';  // Route handling for authentication endpoints
+import nodeRoutes from './routes/nodeRoutes.js'; // Route handling for node endpoints
 import swaggerUi from 'swagger-ui-express';  // Swagger UI for API documentation
 import YAML from 'yamljs';  // To load the API documentation from a YAML file
 import { config } from 'dotenv';  // To load environment variables from a .env file
@@ -107,6 +108,17 @@ app.use('/users', usersRoutes);
  * @see authRoutes
  */
 app.use('/auth', authRoutes);
+
+/**
+*@brief Node API route
+*
+*This middleware uses the nodeRoutes module to handle all requests to /node.
+*The actual logic for these routes is managed in the corresponding controller.
+*
+*@route /node
+*@see nodeRoutes
+*/
+app.use('/node', nodeRoutes);
 
 /**
  * @brief User route for the web server with authentication check.
