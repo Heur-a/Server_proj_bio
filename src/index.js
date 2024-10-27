@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 10:23:28 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-25 19:04:10
+ * @Last Modified time: 2024-10-27 16:49:33
  */
 /**
  * @file index
@@ -61,7 +61,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configure https server
-https.createServer({
+const server = https.createServer({
     key: fs.readFileSync(path.join(__dirname, './certs/fake-key.pem'), 'utf8'),
     cert: fs.readFileSync(path.join(__dirname, './certs/fake-cert.pem'), 'utf8'),
 }, app);
@@ -146,5 +146,10 @@ app.get('/', (req, res) => {
  */
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Server running on port ${process.env.PORT || 3000}`);
+    console.log(`Connected to MySQL database at ${process.env.DB_HOST}:${process.env.MYSQLDB_PORT}`);
+});
+
+server.listen(443, () => {
+    console.log('Server running on port 443');
     console.log(`Connected to MySQL database at ${process.env.DB_HOST}:${process.env.MYSQLDB_PORT}`);
 });
