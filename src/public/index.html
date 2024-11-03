@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -9,7 +10,9 @@
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -29,32 +32,31 @@
             </ul>
         </nav>
         <div class="user"><a href="./log-in.html"><i class="bi bi-person-circle"></i></a></div>
-
     </header>
-    
+
     <main>
         <div class="grupo">
             <section class="content">
                 <h1 class="marron">Monitoriza<br></h1>
-                <h1>Controla</h1>
-
+                <h1>Visualiza</h1>
                 <p>¡Descubre las zonas más contaminadas gratis! Accede a nuestro mapa interactivo y consulta niveles generales. Para <strong>datos detallados</strong> y en tiempo real sobre la calidad del aire, <strong>¡hazte suscriptor!</strong> Al suscribirte, recibirás un <strong>sensor personalizado</strong> con información precisa y actualizada. Mejora tu conocimiento del aire y toma decisiones informadas. ¡Empieza ahora!</p>
                 <a href="compra.html">
                     <button class="botonSuscribirse">Ver suscripción</button>
                 </a>
             </section>
             <section class="map">
-                <img src="images/mapa.png" alt="Mapa de España">
+                <div id="map" style="height: 500px; width: 100%;"></div>
             </section>
         </div>
     </main>
     <div class="vacio"></div>
 
-    
     <footer>
         <label>© 2024 Ozone. Todos los derechos reservados.</label>
     </footer>
 
-    <script src="/js/script.js"></script> <!-- Enlace al archivo JS para el menú -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="js/mapa.js"></script>
 </body>
+
 </html>
