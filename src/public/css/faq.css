@@ -1,49 +1,44 @@
-/* Estilos específicos para la página FAQ */
-.faq-section {
-    padding: 40px;
-    background-color: var(--section-bg); /* Usando la variable de fondo de sección */
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 .faq-header {
-    text-align: center;
-    margin-bottom: 40px;
+    margin: 0;
+    margin-bottom: 2rem;
 }
 
-/* Contenedor de las preguntas */
 .faq-container {
     display: grid;
-    grid-template-columns: 1fr; /* Una columna por defecto */
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
 }
 
 .faq-item {
-    border: 1px solid var(--h3); /* Usando la variable del verde claro */
-    padding-bottom: 10px;
-    padding: 10px 20px 10px 20px;
-    background-color: rgba(255, 255, 255, 0.3);
+    padding: 0.625rem 1.25rem;
+    padding-bottom: 0.625rem;
+    background-color: var(--formularios);
+    border: 0.063 solid var(--h3);
     border-radius: 1rem;
 }
 
 .faq-question {
-    font-size: 1.5rem;
-    color: var(--color-principal); /* Usando la variable de texto principal */
+    padding: 0.938rem 0;
     display: flex;
     justify-content: space-between;
+    color: var(--color-principal); 
+    font-size: 1.5rem;
     cursor: pointer;
-    padding: 15px 0;
 }
 
 .faq-answer {
+    padding: 0.625rem 0;
     display: none;
-    padding: 10px 0;
-    color: var(--color-principal); /* Usando la variable de texto principal */
+    color: var(--gris);
 }
 
 .faq-question span {
+    height: 1.5rem;
+    width: 1.5rem;
+    position: absolute;
+    right: 3.5rem;
+    color: var(--verdeOscuro);
     font-size: 1.5rem;
-    color: var(--h1); /* Usando la variable del verde oscuro */
 }
 
 .faq-item.active .faq-answer {
@@ -54,9 +49,13 @@
     transform: rotate(45deg); /* Rota el ícono de "+" a "x" */
 }
 
-/* Layout en columnas cuando la pantalla es ancha */
 @media (min-width: 768px) {
     .faq-container {
-        grid-template-columns: 1fr 1fr; /* Dos columnas para pantallas más grandes */
+        grid-template-columns: 1fr 1fr; 
+    }
+
+    .faq-question span {
+        position: relative;
+        right: 0.05rem;
     }
 }

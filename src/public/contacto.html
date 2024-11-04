@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>ZONE | Contacto</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/contacto.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="img/logotipo_modoClaro.png" alt="Logo de la empresa" class="logo-img">
+            </a>
+        </div>
+        <button class="menu-toggle">&#9776;</button>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">PRINCIPAL</a></li>
+                <li><a href="sensor.html">SENSOR</a></li>
+                <li><a href="acerca_de.html">ACERCA DE</a></li>
+                <li><a href="suscripción.html">SUSCRIPCIÓN</a></li>
+                <li><a href="contacto.html" style="font-weight: bold;">CONTACTO</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+        <div class="user"><a href="log-in.html"><i class="bi bi-person-circle"></i></a></div>
+
+    </header>
+    <div class="vacio"></div>
+
+    <main>
+        <div class="container">
+            <div class="formulario">
+                <h1>Formulario de Contacto</h1>
+                <form method="post">
+                    <div class="grupo">
+                        <div class="escribir">
+                            <label>Nombre*</label>
+                            <input id="name" type="text" required>
+                        </div>
+                        <div class="escribir">
+                            <label>Apellido*</label>
+                            <input id="surname" type="text" required>
+                        </div>
+                    </div>
+                    <div class="grupo">
+                        <div class="escribir">
+                            <label>Correo Electrónico*</label>
+                            <input id="email" type="text" required>
+                        </div>
+                        <div class="escribir">
+                            <label>Teléfono de contacto</label>
+                            <input id="telephone" type="text">
+                        </div>
+                    </div>
+                    <div class="grupo">
+                        <div class="escribir">
+                            <label for="options">Asunto*</label>
+                            <select id="options" name="options">
+                                <option value="opcion1">Opción 1</option>
+                                <option value="opcion2">Opción 2</option>
+                                <option value="opcion3">Opción 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grupo">
+                        <div class="descripcion">
+                            <label>Descripción</label>
+                            <input id="description" type="text">
+                        </div>
+                    </div>
+                    <input class=boton type="submit" value="Enviar">
+                </form>
+            </div>
+        </div>    
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Ozone. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/menu.js"></script>   
+    <script src="js/contacto.js"></script> 
+</body>
+</html>
