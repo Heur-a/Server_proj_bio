@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -10,7 +11,9 @@
     <link rel="stylesheet" href="css/landing.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -50,7 +53,7 @@
                 </a>
             </section>
             <section class="map">
-                <img src="images/mapa.png" alt="Mapa de España">
+                <div id="map" style="height: 500px; width: 100%;"></div>
             </section>
         </div>
     </main>
@@ -61,4 +64,5 @@
 
     <script src="js/menu.js"></script>    
 </body>
+
 </html>
