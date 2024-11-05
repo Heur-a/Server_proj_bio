@@ -31,3 +31,8 @@ input::placeholder {
   color: var(--textos-placeholder); 
 } 
 
+@media (max-width: 750px){
+  .sensor-form input {
+    width: 70%;
+  }
+}

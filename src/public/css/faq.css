@@ -1,9 +1,9 @@
 .faq-header {
-    margin: 0;
-    margin-bottom: 2rem;
+    margin: 2rem;
 }
 
 .faq-container {
+    margin-bottom: 2rem;
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.25rem;
