@@ -24,7 +24,7 @@
                 <li><a href="index.html">PRINCIPAL</a></li>
                 <li><a href="sensor.html">SENSOR</a></li>
                 <li><a href="acerca_de.html">ACERCA DE</a></li>
-                <li><a href="suscripción.html">SUSCRIPCIÓN</a></li>
+                <li><a href="suscripcion.html">SUSCRIPCIÓN</a></li>
                 <li><a href="contacto.html" style="font-weight: bold;">CONTACTO</a></li>
                 <li><a href="faq.html">FAQ</a></li>
             </ul>
@@ -62,10 +62,11 @@
                     <div class="grupo">
                         <div class="escribir">
                             <label for="options">Asunto*</label>
-                            <select id="options" name="options">
-                                <option value="opcion1">Opción 1</option>
-                                <option value="opcion2">Opción 2</option>
-                                <option value="opcion3">Opción 3</option>
+                            <select id="options" name="options" required>
+                                <option value="" disabled selected>Seleccione un asunto</option>
+                                <option value="averia_sensor">Avería del sensor</option>
+                                <option value="averia_app">Avería app</option>
+                                <option value="otro">Otro</option>
                             </select>
                         </div>
                     </div>
@@ -75,7 +76,7 @@
                             <input id="description" type="text">
                         </div>
                     </div>
-                    <input class=boton type="submit" value="Enviar">
+                    <input class=boton type="submit" onclick="verify()"" value="Enviar">
                 </form>
             </div>
         </div>    

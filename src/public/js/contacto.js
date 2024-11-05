@@ -1,68 +1,42 @@
-document.querySelector('form').addEventListener('submit', async function(event) {
-    // Prevenir el envio  predeterminado del formulario
-    event.preventDefault();
-
-    // Limpiar los mensajes de error anteriores
-    clearErrors();
-
-    // Recoger datos del formulario
-    const name = document.getElementById('name').value.trim();
-    const surname_1 = document.getElementById('surname').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const telephone = document.getElementById('telephone').value.trim();
-    const password = document.getElementById('options').value.trim();
-    const password2 = document.getElementById('description').value.trim();
+function verify() {
+    const fields = [
+        { id: 'name', message: 'El nombre no puede estar vacío' },
+        { id: 'surname', message: 'Los apellidos no pueden estar vacíos' },
+        { id: 'email', message: 'El correo electrónico no es válido', pattern: /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/ },
+        { id: 'telephone', message: 'El teléfono ha de tener 9 cifras y empezar por 6, 7 o 9', pattern: /^[679]\d{8}$/ },
+        { id: 'options', message: 'Debe seleccionar un asunto' },
+    ];
 
     let isValid = true;
 
-    // Validación del nombre: comprobar si no está vacio
-    if (name === '') {
-        showError('name', 'El nombre no puede estar vacío');
-        isValid = false;
-    }
+    fields.forEach(field => {
+        const value = document.getElementById(field.id).value.trim();
+        const existingError = document.querySelector(`#${field.id} + .error-message`);
 
-    // Validación de los apellidos: comprobar si no está vacio
-    if (surname_1 === '') {
-        showError('surname', 'Los apellidos no pueden estar vacíos');
-        isValid = false;
-    }
+        if ((field.pattern && !field.pattern.test(value)) || (!field.pattern && value === '')) {
+            if (!existingError) {
+                showError(field.id, field.message);
+            }
+            isValid = false;
+        } else if (existingError) {
+            existingError.remove();
+        }
+    });
 
-    // Validación del correo
-    const emailPattern = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
-    if (!emailPattern.test(email)) {
-        showError('email', 'El correo electrónico no es válido');
-        isValid = false;
-    }
-
-    // Validación del teléfono: formato español (9 dígits, empezando por 6, 7 o 9)
-    const telephonePattern = /^[679]\d{8}$/;
-    if (!telephonePattern.test(telephone)) {
-        showError('telephone', 'El teléfono ha de tener 9 zifras y empezar por 6, 7 o 9');
-        isValid = false;
-    }
-
-
-    //asunto
-
-
-    // Si todos los campos son validos, permitir enviar el formulario
     if (isValid) {
         // Build the user object
         const userData = {
             name: name,
-            surname_1: surname_1,
-            surname_2: surname_2,
+            surname: surname,
             email: email,
             telephone: telephone,
-            password: password
+            options: options,
         };
 
         // Call the registerUser function
         registerUser(userData);
-
-
     }
-});
+}
 
 // Función para mostrar un mensaje de error
 function showError(fieldId, message) {
