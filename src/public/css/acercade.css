@@ -1,4 +1,15 @@
 /* Estilos para la sección "Acerca de" */
+header {
+    margin: 0;
+    padding: 0;
+    height: 6.4rem;
+    width: 100%;
+    background: #3a5335;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .about-section {
     text-align: center;
     padding-bottom: 50px;

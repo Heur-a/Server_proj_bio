@@ -9,6 +9,8 @@ body {
 }
 
 header {
+    margin: 0;
+    padding: 0;
     height: 6.4rem;
     width: 100%;
     background: #3a5335;
@@ -16,6 +18,12 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+
+main {
+    flex: 1;
+    padding: 50px;
+}
+
 
 .logo {
     width: 200px;
@@ -105,11 +113,7 @@ h1 {
     position:relative;
 }
 
-/* Sección de contenido */
-main {
-    
-    padding: 50px;
-}
+
 
 .grupo{
     display: grid;
@@ -142,15 +146,6 @@ main {
 .botonSuscribirse{
     width: 60%;
     text-align: center;
-}
-
-/* Footer más pequeño */
-footer {
-    background-color: #3a5335; /* Color de fondo del footer */
-    color: white; /* Color del texto */
-    text-align: center; /* Centrar el contenido */
-    padding: 10px 0; /* Espaciado interno */
-    width: 100%; /* Asegurar que ocupe todo el ancho de la página */
 }
 
 /* Media Queries */
