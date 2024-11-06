@@ -13,8 +13,8 @@ main {
 }
 
 footer {
-  background-color: var(--h1);
-  color: var(--texto-footer);
+  background-color: var(--verdeOscuro);
+  color: var(--beige);
   padding: 20px;
   text-align: center;
   position: fixed;

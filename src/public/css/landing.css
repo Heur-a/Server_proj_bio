@@ -140,10 +140,24 @@ header .nav ul li a:hover i {
     text-align: center;
 }
 
+.footer{
+    background-color: var(--verdeOscuro);
+    color: var(--beige);
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+
 /* Media Queries */
 @media (max-width: 768px) and (min-width: 360px) {
     
         .vacio{
+            padding-top: 0;
             height: 7rem;
         }
     
@@ -165,6 +179,7 @@ header .nav ul li a:hover i {
 @media (max-width: 959px) and (min-width: 360px) {
 
     .vacio{
+        padding-top: 0;
         height: 7rem;
     }
 
