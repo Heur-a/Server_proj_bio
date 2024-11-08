@@ -1,246 +1,190 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Montserrat, sans-serif;
-    background: #ddd2ba;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-header {
-    height: 15%;
-    width: 100%;
-    background: #3a5335;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    width: 200px;
-    height: auto;
-}
-
-.logo a{
-    display: inline-block;
-    cursor:pointer;
-}
-
-.logo a img {
-    width: 100%;
-    height: auto;
-}
-
-.nav{
-    display:flex;
-}
-
-.nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center; 
-}
-
-.nav ul li {
-    margin-left: 20px;
-}
-
-.nav ul li a {
-    display: block;
-    color: #ddd2ba;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-.user {
-    font-size: 200%;
-    padding: 2%
-}
-
-.user a i{
-    color: #ddd2ba;
-}
-
-header .nav ul li a:hover {
-    color: #87a08b;
-}
-
-header .nav ul li a:hover i {
-    color: #87a08b; 
-}
-
-.menu-toggle {
-    display: none;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    color:#ddd2ba;
-    cursor:pointer;
-    margin-left:auto;
-}
-
 .formulario {
-    position: relative;
     width: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .formulario h1 {
-    color: black;
-    margin-bottom: 20px;
     align-self: center;
-    font-family: Twinkle, Montserrat, sans-serif;
 }
 
-.formulario form {
+.step { 
+    display: none; 
+}
+
+.step.active { 
     width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
     align-self: center;
-    background: rgba(255,255,255,0.3);
-    border-radius: 15px 15px 0 0;
+    background: var(--formularios);
+    border-radius: 0.938rem 0.938rem 0 0;
 }
 
+.step h2{
+    margin: 1.25rem 0 0.625rem 0;
+}
+
+.step p{
+    margin: 0;
+    margin-bottom: 0.625rem;
+}
+
+.progress-container {
+    width: 20%;
+    height: 0.625rem;
+    background: var(--verdeClaro);
+    border-radius: 1.25rem;
+}
+  
+.progress-bar {
+    height: 100%;
+    background: var(--verdeOscuro);
+    border-radius: 1.25rem;
+}
+
+#myBar1{
+    width: 33%;
+}
+
+#myBar2{
+    width: 66%;
+}
+
+#myBar3{
+    width: 100%;
+}
+
+
+
 .grupo {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan en líneas nuevas */
+    flex-wrap: wrap;
+}
+
+.medio{
+    width: 90%;
+    margin: 1.875rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.medio input{
+    width: 40%;
+    margin-top: 2rem;
+    text-align: center;
 }
 
 .escribir {
     width: 40%;
-    margin: 30px 40px;
-    border-bottom: 2px solid rgba(135, 160, 139, 0.35);
+    margin: 1.875rem 2.5rem;
 }
 
-.peque {
-    width: 15%;
-    margin: 30px 30px;
-    border-bottom: 2px solid rgba(135, 160, 139, 0.35);
+label{
+    color: var(--verdeOscuro);
+    font-size: 1rem;
 }
 
-.escribir label, .peque label {
-    color: #3a5335;
-    font-size: 16px;
-}
-
-.escribir input, .peque input {
+input {
     width: 100%;
-    height: 30px;
-    font-size: 16px;
+    height: 1.875rem;
     background: none;
+    color: var(--gris);
+    font-size: 1rem;
     outline: none;
-    color: white;
     border: none;
+    border-bottom: 0.125rem solid var(--linea-input);
 }
 
 .boton {
     width: 30%;
-    height: 40px;
-    margin: 40px 0 20px 0;
-    background: #87a08b;
-    border-radius: 25px;
-    font-size: 18px;
-    color: white;
+    height: 2.5rem;
+    margin: 2.5rem 0 1.25rem 0;
+    background: var(--verdeClaro);
+    border-radius: 1.563rem;
+    font-size: 1.125rem;
+    color: var(--blanco);
     cursor: pointer;
     outline: none;
     border: none;
 }
 
 .boton:hover {
-    background-color: #5c715e;
+    background-color: var(--hover);
     transition: .3s;
 }
 
-footer {
-    background-color: #3a5335; /* Color de fondo del footer */
-    color: white; /* Color del texto */
-    text-align: center; /* Centrar el contenido */
-    padding: 10px 0; /* Espaciado interno */
-    width: 100%; /* Asegurar que ocupe todo el ancho de la página */
+#bb{
+    margin-bottom: 3.3rem;
 }
 
-/* Media queries */
-@media (max-width: 1180px) and (min-width: 960px){
-  
+.privacidad {
+    width: 90%;
+    margin: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#privacy{
+    width: 1.25rem;
+}
+
+.popup { 
+    padding: 1.25rem; 
+    display: none; 
+    text-align: center;
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    background: var(--popup); 
+    border-radius: 1rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    background: none;
+    color: var(--gris);
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
+@media (max-width: 1120px) {
     .escribir {
-        width: 39%;
-    }
-    
-    .peque {
-        width: 14%;
+        margin-left: 2rem;
+        margin-right: 2rem; 
     }
 }
 
-@media (max-width: 959px){
 
-    .nav{
-        display:none;
+@media (max-width: 920px) {
+    .escribir {
+        width: 90%; 
+        margin: 1.875rem 2.5rem;
     }
 
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav.active{
-        display: block;
-        position: absolute;
-        top: 100px;
-        right: 0;
-        width: 50%;
-        background-color:#3a5335;
-        z-index:1000;
-    }
-
-    .nav ul{
-        flex-direction: column;
-        padding:0;
-    }
-
-    .nav ul li{
+    .medio input{
+        width: 80%;
+        margin-top: 2rem;
         text-align: center;
-        padding: 1rem;
     }
 
-    .user{
-        padding-top: 2.6%;
-    }
-
-}
-
-@media (max-width: 959px) and (min-width: 735px){
-
-    .escribir {
-        width: 36%;
-    }
-    
-    .peque {
-        width: 11%;
-    }
-}
-
-@media (max-width: 734px) {
-    .formulario form {
-        width: 90%; 
-    }
-
-    .escribir {
-        width: 90%; 
-        margin: 30px 40px;
-    }
-
-    .peque {
-        width: 30%;     
-        margin: 30px 40px;
-    }
 }
 
 

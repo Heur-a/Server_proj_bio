@@ -1,4 +1,3 @@
-
 body {
     margin: 0;
     padding: 0;
@@ -9,12 +8,19 @@ body {
 }
 
 header {
+    margin: 0;
+    padding: 0;
     height: 6.4rem;
     width: 100%;
     background: #3a5335;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+main {
+    flex: 1;
+    padding: 50px;
 }
 
 .logo {
@@ -84,19 +90,12 @@ header .nav ul li a:hover i {
 }
 
 .vacio{
-    background-color: #3a5335;
     height: 10rem;
-    width: 100rem;
+    width: 100%;
     position: absolute;
-    top:5rem;
+    top: 5rem;
+    background-color: var(--verdeOscuro);
     z-index: 1;
-}
-
-/* Encabezados */
-h1 {
-    font-family: 'The Seasons', serif;
-    font-size: 3rem;
-    color: var(--h1);
 }
 
 .marron{
@@ -105,38 +104,35 @@ h1 {
     position:relative;
 }
 
-/* Sección de contenido */
-main {
-    
-    padding: 50px;
+.marron{
+    position: relative;
+    color: var(--beige);
+    z-index: 10;
 }
 
 .grupo{
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Una columna por defecto */
-    gap: 20px;
     width: 100%;
+    padding-top: 3.125rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr; 
+    gap: 1.25rem;
     flex-wrap: wrap;
 }
-.grupo h1{
-    margin-bottom:0px;
-    margin-top:0px;
-    padding-top:23px;
-   }
-   
-.content{
-    max-width: 70%;
-}
 
-/* Map Section */
+.grupo h1{
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 1.438rem;
+}
+   
 .map {
-    max-width: 60%;
     z-index: 10;
 }
 
 .map img {
-    width: 150%;
-    border: 0px;
+    width: 90%;
+    padding-left: 5rem;
+    border: 0;
 }
 
 .botonSuscribirse{
@@ -144,56 +140,61 @@ main {
     text-align: center;
 }
 
-/* Footer más pequeño */
-footer {
-    background-color: #3a5335; /* Color de fondo del footer */
-    color: white; /* Color del texto */
-    text-align: center; /* Centrar el contenido */
-    padding: 10px 0; /* Espaciado interno */
-    width: 100%; /* Asegurar que ocupe todo el ancho de la página */
+.footer{
+    background-color: var(--verdeOscuro);
+    color: var(--beige);
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
 }
+
 
 /* Media Queries */
 @media (max-width: 768px) and (min-width: 360px) {
-
-    .grupo{
-        grid-template-columns: 1fr;
+    
+        .vacio{
+            padding-top: 0;
+            height: 7rem;
+        }
+    
+        .marron, .grupo h1, .content, .botonSuscribirse{
+            text-align: center;
+        }
+    
+        .grupo{
+            position: relative;
+            top: -2.5rem;
+            grid-template-columns: 1fr;
+        }
+    
+        .map{
+            padding-top: 3rem;
+        }
     }
     
-}
+@media (max-width: 959px) and (min-width: 360px) {
 
-@media (max-width: 959px){
-
-    .nav{
-        display:none;
+    .vacio{
+        padding-top: 0;
+        height: 7rem;
     }
 
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav.active{
-        display: block;
-        position: absolute;
-        top: 100px;
-        right: 0;
-        width: 50%;
-        background-color:#3a5335;
-        z-index:1000;
-    }
-
-    .nav ul{
-        flex-direction: column;
-        padding:0;
-    }
-
-    .nav ul li{
+    .marron, .grupo h1, .content, .botonSuscribirse{
         text-align: center;
-        padding: 1rem;
     }
 
-    .user{
-        padding-top: 2.6%;
+
+    .grupo{
+        position: relative;
+        top: -2.5rem;
+        grid-template-columns: 1fr;
     }
 
+    .map{
+        padding-top: 3rem;
+    }
 }

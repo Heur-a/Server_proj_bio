@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Compra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>OZONE | Compra</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/compra.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
@@ -17,92 +21,119 @@
         <button class="menu-toggle">&#9776;</button>
         <nav class="nav">
             <ul>
-                <li><a href="#">PRINCIPAL</a></li>
-                <li><a href="#">SENSOR</a></li>
-                <li><a href="#">ACERCA DE</a></li>
-                <li><a href="#">SUSCRIPCIÓN</a></li>
-                <li><a href="#">CONTACTO</a></li>
-                <li><a href="#">FAQ</a></li>
+                <li><a href="index.html">PRINCIPAL</a></li>
+                <li><a href="sensor.html">SENSOR</a></li>
+                <li><a href="acerca_de.html">ACERCA DE</a></li>
+                <li><a href="suscripcion.html">SUSCRIPCIÓN</a></li>
+                <li><a href="contacto.html">CONTACTO</a></li>
+                <li><a href="faq.html">FAQ</a></li>
             </ul>
         </nav>
-        <div class="user"><a href="#"><i class="bi bi-person-circle"></i></a></div>
+        <div class="user"><a href="log-in.html"><i class="bi bi-person-circle"></i></a></div>
 
     </header>
-    <div class="container">
-        <div class="formulario">
-            <h1>Formulario de Compra</h1>
-            <form method="post">
+
+    <main>
+        <form method="post" id="purchaseForm" class="formulario">
+        <h1 id="titulo">Formulario de Compra</h1>
+            <div class="step active" id="step1">
+                <h2>Paso 1</h2>
+                <p>Verifique su identidad</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="myBar1"></div>
+                </div>
+                <div class="grupo">
+                    <div class="medio">
+                        <label for="email">Correo Electrónico*</label>
+                        <input id="email" type="email" required placeholder="Introduzca su correo electrónico">
+                    </div>
+                </div>
+                <button class="boton" id="bb" type="button" onclick="verifyEmail()">Siguiente</button>
+            </div>
+            <div class="step" id="step2">
+                <h2>Paso 2</h2>
+                <p>Introduzca sus datos personales</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="myBar2"></div>
+                  </div>
                 <div class="grupo">
                     <div class="escribir">
-                        <label>Nombre*</label>
-                        <input id='name' type="text" required>
+                        <label for="name">Nombre*</label>
+                        <input id="name" type="text" required>
                     </div>
                     <div class="escribir">
-                        <label>Primer Apellido*</label>
-                        <input id='surname_1' type="text" required>
-                    </div>
-                    <div  class="escribir">
-                        <label>Segundo Apellido*</label>
-                        <input id='surname_2' type="text" required>
+                        <label for="name">Apellidos*</label>
+                        <input id="surname" type="text" required>
                     </div>
                 </div>
                 <div class="grupo">
                     <div class="escribir">
-                        <label>Correo Electrónico*</label>
-                        <input id="email" type="text" required>
-                    </div>
-                    <div class="escribir">
-                        <label>Teléfono de contacto*</label>
+                        <label for="name">Teléfono de contacto*</label>
                         <input id="telephone" type="text" required>
                     </div>
-                </div>
-                <div class="grupo">
                     <div class="escribir">
-                        <label>Contraseña*</label>
-                        <input id="password" type="password" required>
-                    </div>
-                    <div class="escribir">
-                        <label>Repetir Contraseña*</label>
-                        <input id="password2" type="password" required>
+                        <label for="address">Dirección*</label>
+                        <input id="address" type="text"  required>
                     </div>
                 </div>
                 <div class="grupo">
                     <div class="escribir">
-                        <label>Dirección*</label>
-                        <input type="text" required>
+                        <label for="name">Población*</label>
+                        <input id="population" type="text" required>
                     </div>
-                    <div class="peque" class=>
-                        <label>Población*</label>
-                        <input type="text" required>
+                    <div class="escribir">
+                        <label for="name">Código postal*</label>
+                        <input id="cp" type="text" required>
                     </div>
-                    <div class="peque">
-                        <label>Código Postal*</label>
-                        <input type="text" required>
+                </div>
+                <button class="boton" type="button" onclick="verifyStep2()">Siguiente</button>
+            </div>
+            <div class="step" id="step3">
+                <h2>Paso 3</h2>
+                <p>Introduzca sus datos de compra</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="myBar3"></div>
+                  </div>
+                <div class="grupo">
+                    <div class="medio">
+                        <label for="card">Número de Tarjeta*</label>
+                        <input id="card" type="text"required>
                     </div>
                 </div>
                 <div class="grupo">
                     <div class="escribir">
-                        <label>Número de Tarjeta*</label>
-                        <input type="text" required>
+                        <label for="card">Fecha de caducidad*</label>
+                        <input id="expiration" type="text" required>
                     </div>
-                    <div class="peque">
-                        <label>Caducidad*</label>
-                        <input type="text" required>
-                    </div>
-                    <div class="peque">
-                        <label>CVC*</label>
-                        <input type="text" required>
+                    <div class="escribir">
+                        <label for="card">CVC*</label>
+                        <input id="cvc" type="text" required>
                     </div>
                 </div>
-                
-                <input class=boton type="submit" value="Comprar">
-            </form>
-        </div>
+                <div class="grupo">
+                    <div class="privacidad">
+                        <input type="checkbox" id="privacy" name="privacy" required>
+                        <label for="privacy">He leído y acepto la <a href="#">política de privacidad</a></label>
+                    </div>
+                </div>
+                <button class="boton" type="button" onclick="submitForm()">Comprar</button>
+            </div>
+        </form>    
+        
+    </main>
+    <div class="popup" id="popup">
+        <button class="close-btn" onclick="closePopup()">&times;</button>
+        <h2>SU COMPRA HA SIDO REALIZADA CON ÉXITO</h2>
+        <p>Le enviaremos un paquete sensor en breves</p>
+        <button onclick="downloadApp()">Descargar App</button>
     </div>
+    
     <footer>
-        <label>© 2024 Ozone. Todos los derechos reservados.</label>
+        <p>&copy; 2024 Ozone. Todos los derechos reservados.</p>
     </footer>
-    <script src="js/menu.js"></script>
+
+    <script src="js/menu.js"></script>   
     <script src="js/compra.js"></script>
+ 
 </body>
 </html>

@@ -1,0 +1,55 @@
+/* Estilos para la sección "Acerca de" */
+header {
+    margin: 0;
+    padding: 0;
+    height: 6.4rem;
+    width: 100%;
+    background: #3a5335;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.about-section {
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.about-section h2 {
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+}
+
+.team {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.team-member {
+    max-width: 200px;
+    text-align: center;
+}
+
+.team-member img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.team-member h3 {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.team-member p {
+    font-size: 0.7em;
+}

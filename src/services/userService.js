@@ -41,6 +41,25 @@ export const getUserByEmail = async (email) => {
 };
 
 /**
+ * Retrieves a user by their ID.
+    * @async
+    * @function getUserById
+    * @param {number} id - The ID of the user to retrieve.
+    * @returns {Promise<Object|null>} Returns the user object or null if not found.
+    * @throws Will throw an error if the SQL query fails.
+    */
+
+export const getUserById = async (id) => {
+        try {
+            const sql = await readFile('./src/sql/getUserById.sql', 'utf-8');
+            const [rows] = await pool.query(sql, [id]);
+            return rows.length ? rows[0] : null;
+        } catch (error) {
+            throw new Error('Failed to fetch user: ' + error.message);
+        }
+    }
+
+/**
  * Creates a new user.
  * @async
  * @function createUser

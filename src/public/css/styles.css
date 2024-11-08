@@ -1,20 +1,14 @@
-/* Variables de color */
 :root {
-    --color-principal: #3b3b3b; /* Color de texto principal */
-    --fondo: #ddd2ba; /* Fondo beige */
-    --h1: #3a5335; /* Verde oscuro para encabezado h1 */
-    --h2: #3b3b3b; /* Gris oscuro para encabezado h2 */
-    --h3: #87a08b; /* Verde claro para encabezado h3 */
-    --texto-footer:#ddd2ba; /* Color de texto para el footer */
-    --boton-bg: #87a08b; /* Fondo verde para botones */
-    --boton-texto: #fff; /* Texto blanco para botones */
-    --section-bg: #ddd2ba; /* Beige claro para secciones */
-    --highlight: #000000; /* Color para elementos destacados */
-    --subtle: #87a08b; /* Verde claro para elementos sutiles */
-    --pagina-principal-sensores: #fff; /* Fondo blanco para la pagina de los datos del sensor */
-    --hover: #87a08b; /* Verde claro para el hover de los textos/botones */
-    --fondo-semitransparente-formularios: rgba(255, 255, 255, 0.3); /* Fondo blanco transparente */
-    --lineas-semitransparentes-formularios: rgba(135, 160, 139, 0.35); /* Lineas de los formularios */
+    --verdeOscuro: #3a5335; /*h1, menu, footer*/
+    --verdeClaro: #87a08b; /*h3, botones, elementos sutiles*/
+    --beige: #ddd2ba; /*fondo, texto menu y footer*/
+    --gris: #3b3b3b; /*h2, texto principal*/
+    --blanco: #fff; /*texto botones, pagina sensores*/
+    --negro: #000; /*elementos destacados*/
+    --hover: rgba(135, 160, 139, 0.7); /*hover botones*/
+    --formularios: rgba(255, 255, 255, 0.3); 
+    --popup: rgba(250, 250, 250, 0.75);
+    --linea-input: rgba(135, 160, 139, 0.35);
     --textos-placeholder: rgba(135, 160, 139, 0.5);
 }
 
@@ -27,61 +21,59 @@
     font-display: swap;
 }
 
-
-body {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--color-principal);
-    background-color: var(--fondo);
+html{
+    min-height: 100%;
+    position: relative;
 }
 
-/* Encabezados */
+body {
+    height: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--gris);
+    background-color: var(--beige);
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    padding: 0 3.125rem 3.125rem 3.125rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 h1 {
     font-family: 'FONTSPRING DEMO - The Seasons', serif;
+    color: var(--verdeOscuro);
     font-size: 3rem;
-    color: var(--h1);
 }
 
 h2 {
-    font-size: 2rem;
-    color: var(--h2);
     font-family: 'Montserrat', sans-serif;
+    color: var(--gris);
+    font-size: 2rem;
     font-style: normal;
 }
 
 h3 {
+    color: var(--verdeClaro);
     font-size: 1.5rem;
-    color: var(--h3);
 }
 
-/* Botones */
 button {
-    background-color: var(--boton-bg);
-    color: var(--boton-texto);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
+    padding: 0.625rem 1.25rem;
+    background-color: var(--verdeClaro);
+    color: var(--blanco);
     font-size: 1rem;
+    border: none;
+    border-radius: 1.25rem;
+    cursor: pointer;
 }
 
 button:hover {
-    background-color:var(--hover) ; 
+    background-color:var(--hover); 
 }
-
-/* Sección de contenido */
-.section {
-    background-color: var(--section-bg);
-    padding: 20px;
-}
-
-/* Otros elementos */
-.highlight {
-    color: var(--highlight);
-    font-weight: bold;
-}
-
-.subtle {
-    color: var(--subtle);
-}
-
 

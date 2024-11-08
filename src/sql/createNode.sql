@@ -1,0 +1,1 @@
+INSERT INTO Nodes (uuid, Users_idUsers) VALUES (?, ?);
