@@ -55,5 +55,5 @@ export const checkAuthentication = (req, res) => {
         return res.status(401).json({ message: 'Not authenticated' });
     }
 
-    res.status(error.statusCode).json({ message: 'User is authenticated', user });
+    res.status(200).json({ message: 'User is authenticated', user });
 };

@@ -13,8 +13,7 @@ const router = express.Router();
  * @brief Log in a user.
  * @route POST /auth/login
  * @group Authentication - Operations related to user authentication.
- * @param {string} email.query.required - User's email.
- * @param {string} password.query.required - User's password.
+ * @param {object} body.required - User's login credentials.
  * @returns {object} 200 - Successful login, returns JWT token.
  * @returns {object} 400 - Invalid login credentials.
  * @returns {object} 500 - Server error.

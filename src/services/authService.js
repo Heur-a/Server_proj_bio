@@ -3,6 +3,7 @@ import { getUserByEmail, getUserPasswordById, createUser } from './userService.j
 import { config } from 'dotenv';
 import session from 'express-session';
 import { HttpError } from '../components/HttpErrorClass.js';
+import jwt from 'jsonwebtoken';
 
 // Load environment variables from .env file
 config();
@@ -138,5 +139,13 @@ export const verifyIdentity = (req, res, next) => {
         res.status(401).json({ message: 'Unauthorized access' }); // User is not authenticated
     }
 };
+
+/**
+* @brief Sends email for verifying email using jwt and nodemailer.
+* @param {object} req - Express request object.
+* @param {object} res - Express response object.
+* @param {function} next - Next middleware function.
+*/
+
 
 
