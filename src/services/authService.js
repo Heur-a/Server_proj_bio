@@ -84,6 +84,9 @@ export const isAuthenticated = (session) => {
 //todo: Hacer que todos los errores 400, si hay mas de uno, se envien todos y no solo uno !!!
 export const registerUser = async (newUser) => {
 
+    //todo: Mirar si correo esta verificado
+
+
     // User validations
     if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
         throw new HttpError(400,'All fields are required');
@@ -146,6 +149,27 @@ export const verifyIdentity = (req, res, next) => {
 * @param {object} res - Express response object.
 * @param {function} next - Next middleware function.
 */
+
+
+
+//todo: Añadir correo para verificar a bbdd
+
+// Crear numero aleatorio de 6 digitos, hacer un hash
+// Crear el campo de correo con el email y el hash
+// Enviar el correo con el digito
+
+//todo: Verificar el correo
+
+//Sacar el digito
+//Mirar si el digito es válido
+// Mirar si el digito es el mismo que el de la bbdd comprando el hash
+// Si es válido, seguimos 200 OK
+// Si no es válido, 400 Bad Request
+
+//todo: resetear la contraseña
+
+//todo: enviar correo contraseña nueva
+
 
 
 
