@@ -1,3 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, sans-serif;
+    background: #ddd2ba;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    margin: 0;
+    padding: 0;
+    height: 6.4rem;
+    width: 100%;
+    background: #3a5335;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main {
+    flex: 1;
+    padding: 50px;
+}
+
+.logo {
+    width: 200px;
+    height: auto;
+}
+
+.logo a{
+    display: inline-block;
+    cursor:pointer;
+}
+
+.logo a img {
+    width: 100%;
+    height: auto;
+}
+
+.nav{
+    display:flex;
+}
+
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center; 
+}
+
+.nav ul li {
+    margin-left: 20px;
+}
+
+.nav ul li a {
+    display: block;
+    color: #ddd2ba;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.user {
+    font-size: 200%;
+    padding: 2%;
+}
+
+.user a i{
+    color: #ddd2ba;
+}
+
+header .nav ul li a:hover {
+    color: #87a08b;
+}
+
+header .nav ul li a:hover i {
+    color: #87a08b; 
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color:#ddd2ba;
+    cursor:pointer;
+    margin-left:auto;
+}
+
 .vacio{
     height: 10rem;
     width: 100%;
@@ -5,6 +96,12 @@
     top: 5rem;
     background-color: var(--verdeOscuro);
     z-index: 1;
+}
+
+.marron{
+    color: var(--fondo);
+    z-index:10;
+    position:relative;
 }
 
 .marron{
@@ -43,15 +140,53 @@
     text-align: center;
 }
 
+.footer{
+    background-color: var(--verdeOscuro);
+    color: var(--beige);
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) and (min-width: 360px) {
+    
+        .vacio{
+            padding-top: 0;
+            height: 7rem;
+        }
+    
+        .marron, .grupo h1, .content, .botonSuscribirse{
+            text-align: center;
+        }
+    
+        .grupo{
+            position: relative;
+            top: -2.5rem;
+            grid-template-columns: 1fr;
+        }
+    
+        .map{
+            padding-top: 3rem;
+        }
+    }
+    
 @media (max-width: 959px) and (min-width: 360px) {
 
     .vacio{
+        padding-top: 0;
         height: 7rem;
     }
 
     .marron, .grupo h1, .content, .botonSuscribirse{
         text-align: center;
     }
+
 
     .grupo{
         position: relative;

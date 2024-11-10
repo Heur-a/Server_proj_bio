@@ -1,0 +1,32 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: var(--verdeOscuro);
+  color: var(--beige);
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10; /* Asegura que el footer esté sobre otros elementos */
+}
+
+@media (max-width: 768px) {
+  footer {
+      padding: 10px;
+      font-size: 14px;
+  }
+}
