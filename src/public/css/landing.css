@@ -28,9 +28,9 @@ main {
     height: auto;
 }
 
-.logo a{
+.logo a {
     display: inline-block;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .logo a img {
@@ -38,8 +38,8 @@ main {
     height: auto;
 }
 
-.nav{
-    display:flex;
+.nav {
+    display: flex;
 }
 
 .nav ul {
@@ -47,7 +47,7 @@ main {
     margin: 0;
     padding: 0;
     display: flex;
-    align-items: center; 
+    align-items: center;
 }
 
 .nav ul li {
@@ -67,7 +67,7 @@ main {
     padding: 2%;
 }
 
-.user a i{
+.user a i {
     color: #ddd2ba;
 }
 
@@ -76,7 +76,7 @@ header .nav ul li a:hover {
 }
 
 header .nav ul li a:hover i {
-    color: #87a08b; 
+    color: #87a08b;
 }
 
 .menu-toggle {
@@ -84,12 +84,12 @@ header .nav ul li a:hover i {
     font-size: 2rem;
     background: none;
     border: none;
-    color:#ddd2ba;
-    cursor:pointer;
-    margin-left:auto;
+    color: #ddd2ba;
+    cursor: pointer;
+    margin-left: auto;
 }
 
-.vacio{
+.vacio {
     height: 10rem;
     width: 100%;
     position: absolute;
@@ -98,49 +98,63 @@ header .nav ul li a:hover i {
     z-index: 1;
 }
 
-.marron{
-    color: var(--fondo);
-    z-index:10;
-    position:relative;
-}
-
-.marron{
-    position: relative;
+.marron {
     color: var(--beige);
     z-index: 10;
+    position: relative;
 }
 
-.grupo{
+.grupo {
+    display: flex;
+    align-items: flex-start;
     width: 100%;
+    gap: 80px;
     padding-top: 3.125rem;
-    display: grid;
-    grid-template-columns: 1fr 2fr; 
-    gap: 1.25rem;
     flex-wrap: wrap;
 }
 
-.grupo h1{
-    margin-bottom: 0;
-    margin-top: 0;
+.grupo h1 {
+    margin: 0;
     padding-top: 1.438rem;
 }
-   
+
 .map {
+    flex: 1;
+    position: relative;
     z-index: 10;
 }
 
-.map img {
-    width: 90%;
-    padding-left: 5rem;
-    border: 0;
+#map {
+    height: 500px;
+    width: 100%;
 }
 
-.botonSuscribirse{
+#locationButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background-color: #5c715e;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.medicion {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+.botonSuscribirse {
     width: 60%;
     text-align: center;
 }
 
-.footer{
+.footer {
     background-color: var(--verdeOscuro);
     color: var(--beige);
     padding: 20px;
@@ -152,49 +166,96 @@ header .nav ul li a:hover i {
     z-index: 10;
 }
 
-
-/* Media Queries */
-@media (max-width: 768px) and (min-width: 360px) {
-    
-        .vacio{
-            padding-top: 0;
-            height: 7rem;
-        }
-    
-        .marron, .grupo h1, .content, .botonSuscribirse{
-            text-align: center;
-        }
-    
-        .grupo{
-            position: relative;
-            top: -2.5rem;
-            grid-template-columns: 1fr;
-        }
-    
-        .map{
-            padding-top: 3rem;
-        }
+/* Estilos para móviles */
+@media (max-width: 600px) {
+    .grupo {
+        flex-direction: column;
+        gap: 20px;
     }
-    
-@media (max-width: 959px) and (min-width: 360px) {
 
-    .vacio{
+    .content,
+    .map {
+        flex: 1;
+        width: 100%;
+    }
+
+    #map {
+        height: 300px;
+    }
+
+    header .nav ul {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .logo {
+        max-width: 150px;
+    }
+}
+
+/* Estilos para tabletas */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .grupo {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .content,
+    .map {
+        width: 100%;
+        flex: 1;
+    }
+
+    #map {
+        height: 400px;
+    }
+
+    .logo {
+        max-width: 200px;
+    }
+}
+
+/* Estilos para pantallas grandes */
+@media (min-width: 1025px) {
+    .grupo {
+        flex-direction: row;
+        gap: 80px;
+    }
+
+    .content,
+    .map {
+        flex: 1;
+    }
+
+    #map {
+        height: 500px;
+    }
+}
+
+/* Media Queries específicas */
+@media (max-width: 768px) and (min-width: 360px),
+(max-width: 959px) and (min-width: 360px) {
+    .vacio {
         padding-top: 0;
         height: 7rem;
     }
 
-    .marron, .grupo h1, .content, .botonSuscribirse{
+    .marron,
+    .grupo h1,
+    .content,
+    .botonSuscribirse {
         text-align: center;
     }
 
-
-    .grupo{
+    .grupo {
         position: relative;
         top: -2.5rem;
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        gap: 20px;
     }
 
-    .map{
+    .map {
         padding-top: 3rem;
     }
 }
