@@ -1,3 +1,14 @@
+let userFields = {
+    email: '',
+    name: '',
+    surname_1: '',
+    surname_2: '',
+    telephone: '',
+    password: ''
+}
+
+
+
 function nextStep(step) {
     document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
     document.getElementById('step' + step).classList.add('active');
@@ -14,6 +25,7 @@ function verifyEmail() {
         }
     } else {
         clearErrors();
+        userFields.email = email;
         nextStep(2);
     }
 }
@@ -22,6 +34,8 @@ function verifyStep2() {
     const fields = [
         { id: 'name', message: 'El nombre no puede estar vacío' },
         { id: 'surname', message: 'Los apellidos no pueden estar vacíos' },
+        { id: 'password', message: 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número', pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/ },
+        { id: 'repeat_password', message: 'Las contraseñas no coinciden', pattern: new RegExp(document.getElementById('password').value) },
         { id: 'telephone', message: 'El teléfono ha de tener 9 cifras y empezar por 6, 7 o 9', pattern: /^[679]\d{8}$/ },
         { id: 'address', message: 'La dirección no puede estar vacía' },
         { id: 'population', message: 'La población no puede estar vacía' },
@@ -46,6 +60,15 @@ function verifyStep2() {
 
     if (isValid) {
         clearErrors();
+        userFields.name = document.getElementById('name').value.trim();
+        // Split surname into two parts
+        const surname = document.getElementById('surname').value.trim().split(' ');
+        userFields.surname_1 = surname[0];
+        // Check if there is a second surname
+        userFields.surname_2 = surname.length > 1 ? surname[1] : '';
+        userFields.telephone = document.getElementById('telephone').value.trim();
+        userFields.password = document.getElementById('password').value.trim();
+
         nextStep(3);
     }
 }
@@ -76,9 +99,7 @@ function submitForm() {
 
     if (isValid) {
         clearErrors();
-        document.getElementById('popup').style.display = 'block';
-        document.getElementById('purchaseForm').style.display = 'none';
-        document.getElementById('titulo').style.display = 'none';
+        registerUser();
 
     }
 }
@@ -99,4 +120,28 @@ function showError(fieldId, message) {
 
 function clearErrors() {
     document.querySelectorAll('.error-message').forEach(error => error.remove());
+}
+
+async function registerUser() {
+    try {
+        const response = await fetch('/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userFields)
+        });
+
+        if (response.ok) {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('purchaseForm').style.display = 'none';
+            document.getElementById('titulo').style.display = 'none';
+        } else {
+            throw new Error('Error al registrar el usuario, ' + response.statusText);
+
+        }
+    }
+    catch (error) {
+        alert(error.message);
+    }
 }
