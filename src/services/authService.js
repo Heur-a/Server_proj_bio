@@ -27,18 +27,18 @@ export const loginUser = async (email, password, session) => {
     try {
         const user = await getUserByEmail(email);
         if (!user) {
-            throw new HttpError(404,'User not found');
+            throw new HttpError(404, 'User not found');
         }
 
         const res = await getUserPasswordById(user.id);
         const isMatch = await bcrypt.compare(password, res.password);
         if (!isMatch) {
-            throw new HttpError(400,'Invalid credentials');
+            throw new HttpError(400, 'Invalid credentials');
         }
 
         // Store user in session
         session.user = { id: user.id, email: user.email };
-        console.log('User is now logged in', session.user );
+        console.log('User is now logged in', session.user);
         return session;
     } catch (error) {
         throw new HttpError(error.statusCode, error.message);
@@ -54,13 +54,13 @@ export const logoutUser = (session) => {
     //check if session exists
     if (!session) {
         return new Promise((resolve, reject) => {
-            reject(new HttpError(401,'No session found'));
+            reject(new HttpError(401, 'No session found'));
         });
     }
     return new Promise((resolve, reject) => {
         session.destroy((err) => {
             if (err) {
-                reject(new HttpError(500,'Could not log out'));
+                reject(new HttpError(500, 'Could not log out'));
             }
             resolve('Logged out successfully');
         });
@@ -89,29 +89,29 @@ export const registerUser = async (newUser) => {
 
     // User validations
     if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
-        throw new HttpError(400,'All fields are required');
+        throw new HttpError(400, 'All fields are required');
     }
 
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(newUser.email)) {
-        throw new HttpError(400,'Invalid email');
+        throw new HttpError(400, 'Invalid email');
     }
 
     const telephoneRegex = /^[679]\d{8}$/;
     if (!telephoneRegex.test(newUser.telephone)) {
-        throw new HttpError(400,'Invalid telephone');
+        throw new HttpError(400, 'Invalid telephone');
     }
     //Hacer que la contraseña tenga al menos 6 caracteres, 1 mayúscula, 1 minúscula y 1 número
 
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
     if (!passwordPattern.test(newUser.password)) {
-        throw new HttpError(400,'Password must have at least 6 characters, 1 uppercase, 1 lowercase and 1 number');
+        throw new HttpError(400, 'Password must have at least 6 characters, 1 uppercase, 1 lowercase and 1 number');
     }
 
 
     const userExists = await getUserByEmail(newUser.email);
     if (userExists) {
-        throw new HttpError(409,'User already exists');
+        throw new HttpError(409, 'User already exists');
     }
 
     //add the user type to the newUser object
@@ -122,10 +122,10 @@ export const registerUser = async (newUser) => {
         session.user = { id: createdUser.id, email: createdUser.email };
         return session;
     } catch (error) {
-        throw new HttpError(500,error.message);
+        throw new HttpError(500, error.message);
     }
 
-    
+
 };
 
 /**
@@ -158,6 +158,48 @@ export const verifyIdentity = (req, res, next) => {
 // Crear el campo de correo con el email y el hash
 // Enviar el correo con el digito
 
+export const sendVerificationEmail = async (email) => {
+    // Generate random 6-digit number
+    let randomCode;
+    for (let i = 0; i < 6; i++) {
+        randomCode += Math.floor(Math.random() * 10) * Math.pow(10, i);
+    }
+    const hashedCode = await bcrypt.hash(randomCode.toString(), 10);
+    // Configure nodemailer
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+        },
+    });
+
+    // Create email
+    const emailData = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Ozone - Email Verification',
+        text: `Your verification code is: ${randomCode}`,
+    };
+
+    //Send email
+    await transporter.sendMail(emailData, async (error, info) => {
+        if (error) {
+            console.log('Error sending email:', error);
+            throw new HttpError(500, 'Error sending email');
+        } else {
+            console.log('Email sent:', info.response);
+
+            //Store email, hashed code on db
+            try {
+                await addEmailVerification(email, hashedCode);
+            } catch (error) {
+                throw new HttpError(500, 'Failed to add email verification');
+            }
+        }
+    });
+}
+
 //todo: Verificar el correo
 
 //Sacar el digito
@@ -166,10 +208,40 @@ export const verifyIdentity = (req, res, next) => {
 // Si es válido, seguimos 200 OK
 // Si no es válido, 400 Bad Request
 
+export const verifyEmail = async (email, code) => {
+    // Get hashed code from db
+    const emailVerification = await getEmailVerification(email);
+    if (!emailVerification) {
+        throw new HttpError(400, 'Email not found');
+    }
+
+    const isMatch = await bcrypt.compare(code, emailVerification.code);
+    if (!isMatch) {
+        throw new HttpError(400, 'Invalid code');
+    }
+}
+
 //todo: resetear la contraseña
 
 //todo: enviar correo contraseña nueva
 
 
+const addEmailVerification = async (email, hashedCode) => {
+    try {
+        const sql = await readFile('./src/sql/addEmailVerification.sql', 'utf-8');
+        await pool.query(sql, [email, hashedCode]);
+    } catch (error) {
+        throw new HttpError(500, 'Failed to add email verification');
+    }
+}
 
+const getEmailVerification = async (email) => {
+    try {
+        const sql = await readFile('./src/sql/getEmailVerification.sql', 'utf-8');
+        const result = await pool.query(sql, [email]);
+        return result[0];
+    } catch (error) {
+        throw new HttpError(500, 'Failed to get email verification');
+    }
+}
 

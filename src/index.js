@@ -119,7 +119,7 @@ app.get('/', (req, res) => {
  */
 server.listen(443, () => {
     console.log('Server running on port 443');
-    console.log(`Connected to MySQL database at ${process.env.DB_HOST}:${process.env.MYSQLDB_PORT}`);
+    console.log(`Connected to MySQL database at ${process.env.MYSQLDB_HOST}:${process.env.MYSQLDB_PORT}`);
 });
 
 /**
