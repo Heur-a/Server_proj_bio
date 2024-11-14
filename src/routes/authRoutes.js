@@ -5,7 +5,7 @@
     @details This module handles user authentication such as login, logout, and registration, using password-based authentication. */
 
 import express from 'express';
-import { login, register, logout, checkAuthentication } from '../controllers/authController.js';
+import { login, register, logout, checkAuthentication, handleEmailVerification } from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -53,5 +53,7 @@ router.post('/logout', logout);
 * @security This route requires a valid JWT token.
 */
 router.get('/checkAuth',checkAuthentication)
+
+router.get('/sendVerificationEmail',handleEmailVerification)
 
 export default router;

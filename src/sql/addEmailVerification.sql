@@ -1,1 +1,1 @@
-INSERT INTO EmailVerification (email, code) VALUES (?, ?);
+INSERT INTO EmailValidated (email, code) VALUES (?, ?);

@@ -1,4 +1,4 @@
-import { loginUser, logoutUser, isAuthenticated, registerUser } from '../services/authService.js';
+import { loginUser, logoutUser, isAuthenticated, registerUser, sendVerificationEmail } from '../services/authService.js';
 
 /**
  * @brief Registra un nou usuari.
@@ -57,3 +57,15 @@ export const checkAuthentication = (req, res) => {
 
     res.status(200).json({ message: 'User is authenticated', user });
 };
+
+
+export const handleEmailVerification = async (req, res) => {
+    //Llamar a la función verifyEmail del servicio authService
+    try {
+        await sendVerificationEmail(req.query.email);
+        res.status(200).json({ message: 'Email verified successfully' });
+    } catch (error) {
+        //todo: change to dinamyc when everything works
+        res.status(500).json({ message: error.message });
+    }
+}

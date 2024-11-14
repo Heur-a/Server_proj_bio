@@ -132,3 +132,6 @@ dist
 # db data
 db_data
 node_modules/.json
+
+#vs code
+.vscode
