@@ -6,6 +6,7 @@ import { HttpError } from '../components/HttpErrorClass.js';
 import nodemailer from 'nodemailer';
 import { readFile } from 'fs/promises';
 import pool from '../config/db_conection.js';
+import { emailValidated } from '../components/emailValidatedClass.js';
 // Load environment variables from .env file
 config();
 
@@ -155,6 +156,9 @@ const verifyIdentity = (req, res, next) => {
  * @throws {HttpError} Throws an error if sending the email fails.
  */
 const sendVerificationEmail = async (email) => {
+    //todo: Check if email is already verified
+
+
     // Generate random 6-digit number
     let randomCode = Math.floor(100000 + Math.random() * 900000).toString();
     const hashedCode = await bcrypt.hash(randomCode, 10);
@@ -164,7 +168,8 @@ const sendVerificationEmail = async (email) => {
     console.log('Hashed code:', hashedCode);
     console.log('Email user:', process.env.EMAIL_USER);
     console.log('Email pass:', process.env.EMAIL_PASS);
-    
+    console.log('\r\n');
+
     // Configure Nodemailer
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -213,17 +218,42 @@ const sendVerificationEmail = async (email) => {
  * @throws {HttpError} Throws an error if the email is not found or the code is invalid.
  */
 const verifyEmail = async (email, code) => {
-    // Get hashed code from the database
-    const emailVerification = await getEmailVerification(email);
-    if (!emailVerification) {
-        throw new HttpError(400, 'Email not found');
-    }
+    try {
+        // Retrieve the hashed code for email verification from the database
+        const emailVerification = await getEmailVerification(email);
 
-    const isMatch = await bcrypt.compare(code, emailVerification.code);
-    if (!isMatch) {
-        throw new HttpError(400, 'Invalid code');
+        // If no email verification data found, throw an error for "Email not found"
+        if (!emailVerification || typeof emailVerification === 'undefined') {
+            throw new HttpError(400, 'Email not found');
+        }
+
+        console.log('authService.verifyEmail:');
+        console.log('Code:', code);
+        console.log('Email verification:', emailVerification);
+        // Compare the provided code with the hashed code from the database
+        const isMatch = await bcrypt.compare(code, emailVerification.hashedCode);
+        if (!isMatch) {
+            throw new HttpError(400, 'Invalid code'); // Error for invalid code
+        }
+
+        // If code matches, mark the email as valid in the database
+        await makeEmailValid(email);
+
+    } catch (error) {
+        // Detailed logging to debug issues with email verification
+        console.error('Error in verifyEmail function:', error);
+
+        // Check for specific error cases and throw meaningful HttpError
+        if (error instanceof HttpError) {
+            // Re-throw known errors as-is, preserving status and message
+            throw error;
+        } else {
+            // For other errors, respond with a generic server error message
+            throw new HttpError(500, 'Failed to verify email');
+        }
     }
 };
+
 
 /**
  * @brief Resets the user's password.
@@ -251,7 +281,7 @@ const changePassword = async (email, password) => {
  * @returns {Promise<void>} Sends an email with the new password to the user.
  * @throws {HttpError} Throws an error if sending the email fails.
  */
- const sendNewPasswordEmail = async (email) => {
+const sendNewPasswordEmail = async (email) => {
     // Generate random 8-character password
     let randomPassword = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -325,12 +355,36 @@ const addEmailVerification = async (email, hashedCode) => {
 const getEmailVerification = async (email) => {
     try {
         const sql = await readFile('./src/sql/getEmailVerification.sql', 'utf-8');
-        const result = await pool.query(sql, [email]);
-        return result[0];
+        const [result]= await pool.query(sql, [email]);
+        console.log('getEmailVerification:', result);
+        if (result.length) {
+            const row = result[0];
+            return new emailValidated(row.idEmailValidated, row.email, row.code, row.isValidated);
+        }
+        
     } catch (error) {
         throw new HttpError(500, 'Failed to get email verification');
     }
 };
+
+const makeEmailValid = async (email) => {
+    try {
+        const sql = await readFile('./src/sql/makeEmailValid.sql', 'utf-8');
+        await pool.query(sql, [email]);
+    } catch (error) {
+        throw new HttpError(500, 'Failed to make email valid');
+    }
+}
+
+const isEmailVerified = async (email) => {
+    try {
+        const emailVerifiedRow = await getEmailVerification(email);
+        return emailVerifiedRow.isValidated;
+    } catch (error) {
+        throw new HttpError(500, 'Failed to check email verification');
+    }
+}
+
 
 export {
     loginUser,
@@ -342,5 +396,7 @@ export {
     verifyEmail,
     sendNewPasswordEmail,
     addEmailVerification,
-    getEmailVerification
+    getEmailVerification,
+    makeEmailValid,
+    isEmailVerified
 };

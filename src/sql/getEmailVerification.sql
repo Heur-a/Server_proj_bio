@@ -1,1 +1,1 @@
-SELECT 
+SELECT * FROM EmailValidated WHERE email = ?;
