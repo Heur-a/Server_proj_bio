@@ -1,11 +1,11 @@
 /**
-
-    @file authRouter.js
-    @brief Defines authentication routes (login, logout, register).
-    @details This module handles user authentication such as login, logout, and registration, using password-based authentication. */
+ * @file authRouter.js
+ * @brief Defines authentication routes (login, logout, register).
+ * @details This module handles user authentication such as login, logout, and registration, using password-based authentication.
+ */
 
 import express from 'express';
-import { login, register, logout, checkAuthentication, handleEmailVerification, handleMakeEmailVerified } from '../controllers/authController.js';
+import { login, register, logout, checkAuthentication, handleEmailVerification, handleMakeEmailVerified, handleResetPassword } from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -45,17 +45,47 @@ router.post('/register', register);
 router.post('/logout', logout);
 
 /**
-* @brief Check if the user is authenticated.
-* @route GET /auth/checkAuth
-* @group Authentication - Operations related to user authentication.
-* @returns {object} 200 - User is authenticated.
-* @returns {object} 401 - User is not authenticated.
-* @security This route requires a valid JWT token.
-*/
-router.get('/checkAuth',checkAuthentication)
+ * @brief Check if the user is authenticated.
+ * @route GET /auth/checkAuth
+ * @group Authentication - Operations related to user authentication.
+ * @returns {object} 200 - User is authenticated.
+ * @returns {object} 401 - User is not authenticated.
+ * @security This route requires a valid JWT token.
+ */
+router.get('/checkAuth', checkAuthentication);
 
-router.get('/sendVerificationEmail',handleEmailVerification)
+/**
+ * @brief Sends a verification email to the user.
+ * @route GET /auth/sendVerificationEmail
+ * @group Authentication - Operations related to user authentication.
+ * @param {string} email.query.required - The email address to send the verification code.
+ * @returns {object} 200 - Verification email sent successfully.
+ * @returns {object} 400 - Invalid email address.
+ * @returns {object} 500 - Server error.
+ */
+router.get('/sendVerificationEmail', handleEmailVerification);
 
-router.put('/verifyEmail', handleMakeEmailVerified)
+/**
+ * @brief Verifies the user's email address.
+ * @route PUT /auth/verifyEmail
+ * @group Authentication - Operations related to user authentication.
+ * @param {string} token.body.required - The verification token sent to the user's email.
+ * @returns {object} 200 - Email verified successfully.
+ * @returns {object} 400 - Invalid verification token.
+ * @returns {object} 500 - Server error.
+ */
+router.put('/verifyEmail', handleMakeEmailVerified);
+
+/**
+ * @brief Initiates the password reset process.
+ * @route GET /auth/resetPassword
+ * @group Authentication - Operations related to user authentication.
+ * @param {string} email.query.required - The email address of the user requesting a password reset.
+ * @returns {object} 200 - Password reset email sent successfully.
+ * @returns {object} 404 - User not found.
+ * @returns {object} 500 - Server error.
+ */
+router.get('/resetPassword', handleResetPassword);
 
 export default router;
+

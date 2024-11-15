@@ -156,8 +156,14 @@ const verifyIdentity = (req, res, next) => {
  * @throws {HttpError} Throws an error if sending the email fails.
  */
 const sendVerificationEmail = async (email) => {
-    //todo: Check if email is already verified
 
+    //check if email is valid
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+        throw new HttpError(400, 'Invalid email');
+    }
+
+    //todo: Check if email is already verified
 
     // Generate random 6-digit number
     let randomCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -282,12 +288,14 @@ const changePassword = async (email, password) => {
  * @throws {HttpError} Throws an error if sending the email fails.
  */
 const sendNewPasswordEmail = async (email) => {
-    // Generate random 8-character password
-    let randomPassword = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 8; i++) {
-        randomPassword += characters.charAt(Math.floor(Math.random() * characters.length));
+    //Check if user w/ email exists
+    const user = await getUserByEmail(email);
+    if (!user) {
+        throw new HttpError(404, 'User not found');
     }
+
+    // Generate random password
+    const randomPassword = generateRandomPassword();
 
     // Configure Nodemailer
     const transporter = nodemailer.createTransport({
@@ -355,13 +363,13 @@ const addEmailVerification = async (email, hashedCode) => {
 const getEmailVerification = async (email) => {
     try {
         const sql = await readFile('./src/sql/getEmailVerification.sql', 'utf-8');
-        const [result]= await pool.query(sql, [email]);
+        const [result] = await pool.query(sql, [email]);
         console.log('getEmailVerification:', result);
         if (result.length) {
             const row = result[0];
             return new emailValidated(row.idEmailValidated, row.email, row.code, row.isValidated);
         }
-        
+
     } catch (error) {
         throw new HttpError(500, 'Failed to get email verification');
     }
@@ -385,6 +393,41 @@ const isEmailVerified = async (email) => {
     }
 }
 
+const generateRandomPassword = () => {
+    const getRandomChar = (charSet) =>
+        charSet[Math.floor(Math.random() * charSet.length)];
+
+    const lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
+    const upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numberChars = "0123456789";
+
+    // Assegurem un caràcter de cada tipus requerit
+    const mandatoryChars = [
+        getRandomChar(lowerCaseChars),
+        getRandomChar(upperCaseChars),
+        getRandomChar(numberChars),
+    ];
+
+    // Omplim la resta amb caràcters aleatoris de l'alfabet i números
+    const allChars = lowerCaseChars + upperCaseChars + numberChars;
+    while (mandatoryChars.length < 8) {
+        mandatoryChars.push(getRandomChar(allChars));
+    }
+
+    // Barregem els caràcters per evitar un patró previsible
+    for (let i = mandatoryChars.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [mandatoryChars[i], mandatoryChars[j]] = [mandatoryChars[j], mandatoryChars[i]];
+    }
+
+    // Convertim l'array a cadena i la retornem
+    return mandatoryChars.join("");
+};
+
+console.log(generateRandomPassword());
+
+
+
 
 export {
     loginUser,
@@ -398,5 +441,6 @@ export {
     addEmailVerification,
     getEmailVerification,
     makeEmailValid,
-    isEmailVerified
+    isEmailVerified,
+    changePassword
 };
