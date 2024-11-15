@@ -1,200 +1,105 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Montserrat, sans-serif;
-    background: #ddd2ba;
-    display: flex;
-    flex-direction: column;
-}
-
-header {
-    margin: 0;
-    padding: 0;
-    height: 6.4rem;
-    width: 100%;
-    background: #3a5335;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-main {
-    flex: 1;
-    padding: 50px;
-}
-
-.logo {
-    width: 200px;
-    height: auto;
-}
-
-.logo a{
-    display: inline-block;
-    cursor:pointer;
-}
-
-.logo a img {
-    width: 100%;
-    height: auto;
-}
-
-.nav{
-    display:flex;
-}
-
-.nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center; 
-}
-
-.nav ul li {
-    margin-left: 20px;
-}
-
-.nav ul li a {
-    display: block;
-    color: #ddd2ba;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-.user {
-    font-size: 200%;
-    padding: 2%;
-}
-
-.user a i{
-    color: #ddd2ba;
-}
-
-header .nav ul li a:hover {
-    color: #87a08b;
-}
-
-header .nav ul li a:hover i {
-    color: #87a08b; 
-}
-
-.menu-toggle {
-    display: none;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    color:#ddd2ba;
-    cursor:pointer;
-    margin-left:auto;
-}
-
-.vacio{
-    height: 10rem;
+.vacio {
+    height: 8rem;
     width: 100%;
     position: absolute;
-    top: 5rem;
+    top: 6.3rem;
     background-color: var(--verdeOscuro);
     z-index: 1;
 }
 
-.marron{
-    color: var(--fondo);
-    z-index:10;
-    position:relative;
-}
-
-.marron{
-    position: relative;
-    color: var(--beige);
-    z-index: 10;
-}
-
-.grupo{
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     width: 100%;
-    padding-top: 3.125rem;
-    display: grid;
-    grid-template-columns: 1fr 2fr; 
-    gap: 1.25rem;
     flex-wrap: wrap;
 }
 
-.grupo h1{
-    margin-bottom: 0;
-    margin-top: 0;
-    padding-top: 1.438rem;
-}
-   
-.map {
-    z-index: 10;
+.content, .map {
+    flex: 1;
 }
 
-.map img {
-    width: 90%;
-    padding-left: 5rem;
-    border: 0;
+.content h1 {
+    margin: 0;
 }
 
-.botonSuscribirse{
-    width: 60%;
-    text-align: center;
-}
-
-.footer{
-    background-color: var(--verdeOscuro);
+#marron {
     color: var(--beige);
-    padding: 20px;
+    z-index: 10;
+    position: relative;
+}
+
+.content p{
+    margin: 1.5rem 6rem 1.5rem 0;
+}
+
+.botonSuscribirse {
+    width: 40%;
     text-align: center;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+}
+
+.map {
+    position: relative;
     z-index: 10;
 }
 
+#map {
+    height: 26.25rem;
+}
 
-/* Media Queries */
-@media (max-width: 768px) and (min-width: 360px) {
-    
-        .vacio{
-            padding-top: 0;
-            height: 7rem;
-        }
-    
-        .marron, .grupo h1, .content, .botonSuscribirse{
-            text-align: center;
-        }
-    
-        .grupo{
-            position: relative;
-            top: -2.5rem;
-            grid-template-columns: 1fr;
-        }
-    
-        .map{
-            padding-top: 3rem;
-        }
+#locationButton {
+    padding: 0.625rem 1.25rem;
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    z-index: 1000;
+    border: none;
+    border-radius: 0.313rem;
+    cursor: pointer;
+}
+
+.medicion {
+    font-size: 1.125rem;
+    color: var(--negro);
+    font-weight: bold;
+    text-shadow: 0.125rem 0.125rem 0.25rem rgba(255, 255, 255, 0.7);
+}
+
+
+@media (max-width: 1041px){
+    .content p{
+        margin: 1.5rem 4rem 1.5rem 0;
+
     }
-    
-@media (max-width: 959px) and (min-width: 360px) {
+}
 
-    .vacio{
-        padding-top: 0;
-        height: 7rem;
+@media (max-width: 842px){
+    .vacio {
+        height: 6.5rem;
     }
 
-    .marron, .grupo h1, .content, .botonSuscribirse{
+    .container {
+        position: relative;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .container h1,
+    .content,
+    .botonSuscribirse {
         text-align: center;
     }
 
-
-    .grupo{
-        position: relative;
-        top: -2.5rem;
-        grid-template-columns: 1fr;
+    .content p{
+        margin: 1.5rem;
     }
 
-    .map{
-        padding-top: 3rem;
+    .content,
+    .map {
+        width: 100%;
+    }
+
+    #map {
+        height: 18.75rem;
     }
 }

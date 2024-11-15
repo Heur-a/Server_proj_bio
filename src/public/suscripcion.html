@@ -2,14 +2,17 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>ZONE | Suscripción</title>
+    <title>OZONE | Suscripción</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/suscripcion.css">
+    
+    <!--tipografia-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!--iconos bootstrap-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    
 </head>
 <body>
     <header>
@@ -23,25 +26,65 @@
             <ul>
                 <li><a href="index.html">PRINCIPAL</a></li>
                 <li><a href="sensor.html">SENSOR</a></li>
-                <li><a href="acerca_de.html">ACERCA DE</a></li>
+                <li><a href="acerca_de.html">ACERCA DE OZONE</a></li>
                 <li><a href="suscripcion.html" style="font-weight: bold;">SUSCRIPCIÓN</a></li>
                 <li><a href="contacto.html">CONTACTO</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="gases.html">GASES</a></li>
             </ul>
         </nav>
         <div class="user"><a href="log-in.html"><i class="bi bi-person-circle"></i></a></div>
 
     </header>
-    <div class="vacio"></div>
 
     <main>
-        
+        <section>
+            <h2>Suscripción</h2>
+            <div class="container">
+                <div class="paquete">
+                    <h3>Paquete Básico</h3>
+                    <p class="precio" id="precio">1€</p>
+                    <p class="precio">/mes</p>
+                    <div class="incluye">
+                        <div class="item">
+                            <i class="bi bi-check"></i>
+                            <p>Incluye un nodo sensor para monitorear gases en tiempo real.</p>
+                        </div>
+                        <div class="item">
+                            <i class="bi bi-check"></i>
+                            <p>Servicio técnico incluido.</p>
+                        </div>
+                        <div class="item">
+                            <i class="bi bi-check"></i>
+                            <p>Acceso a gráficos detallados con mediciones de: lugar, tipo de gas, medida y hora.</p>
+                        </div>
+                        <div class="item">
+                            <i class="bi bi-check"></i>
+                            <p>Alertas básicas.</p>
+                        </div>
+                        <div class="item">
+                            <i class="bi bi-check"></i>
+                            <p>App donde visualizar tus datos.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="texto">
+                    <p><strong>¡Descubre tu propio universo de datos!</strong></p>
+                    <p>Nuestra app te permite visualizar en tiempo real los datos <strong>únicos y personalizados</strong> que recolecta tu nodo sensor. ¿Quieres saber cómo cambia la <strong>temperatura</strong> en tu habitación durante la noche? ¿O cómo varía la cantidad de <strong>ozono</strong> en tu jardín? <strong>Accede fácil y rápido:</strong> Escanea el código QR o usa el código secreto que viene con tu nodo sensor. ¡Y listo!</p>
+                    <p>¡Con nuestra <strong>app</strong>, todo está al alcance de tu mano!</p>
+                    <a href="compra.html">
+                        <button class="botonCompra">Comprar</button>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
-    
+
     <footer>
         <p>&copy; 2024 Ozone. Todos los derechos reservados.</p>
     </footer>
-
-    <script src="js/menu.js"></script>    
+    
+    <script src="js/menu.js"></script>
 </body>
 </html>

@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>OZONE | Monitorea el aire de tu ciudad</title>
+    <title>OZONE | Monitoriza y visualiza</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/landing.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/styles.css">
+    
+    <!--tipografia-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!--iconos bootstrap-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    
+    
 </head>
-
 <body>
     <header>
         <div class="logo">
@@ -24,105 +27,50 @@
         <button class="menu-toggle">&#9776;</button>
         <nav class="nav">
             <ul>
-                <li><a href="#">PRINCIPAL</a></li>
-                <li><a href="#">SENSOR</a></li>
-                <li><a href="#">ACERCA DE</a></li>
-                <li><a href="#">SUSCRIPCIÓN</a></li>
-                <li><a href="#">CONTACTO</a></li>
-                <li><a href="#">FAQ</a></li>
+                <li><a href="index.html" style="font-weight: bold;">PRINCIPAL</a></li>
+                <li><a href="sensor.html">SENSOR</a></li>
+                <li><a href="acerca_de.html">ACERCA DE OZONE</a></li>
+                <li><a href="suscripcion.html">SUSCRIPCIÓN</a></li>
+                <li><a href="contacto.html">CONTACTO</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="gases.html">GASES</a></li>
             </ul>
         </nav>
-        <div class="user"><a href="./log-in.html"><i class="bi bi-person-circle"></i></a></div>
+        <div class="user"><a href="log-in.html"><i class="bi bi-person-circle"></i></a></div>
+
     </header>
 
     <main>
-        <div class="grupo">
-            <section class="content">
-                <h1 class="marron">Monitoriza<br></h1>
+        <div class="vacio"></div>
+        <section class="container">
+            <div class="content">
+                <h1 id="marron">Monitoriza<br></h1>
                 <h1>Visualiza</h1>
                 <p>¡Descubre las zonas más contaminadas gratis! Accede a nuestro mapa interactivo y consulta niveles
                     generales. Para <strong>datos detallados</strong> y en tiempo real sobre la calidad del aire,
                     <strong>¡hazte suscriptor!</strong> Al suscribirte, recibirás un <strong>sensor
                         personalizado</strong> con información precisa y actualizada. Mejora tu conocimiento del aire y
-                    toma decisiones informadas. ¡Empieza ahora!</p>
-                <a href="compra.html">
+                    toma decisiones informadas. ¡Empieza ahora!
+                </p>
+                <a href="suscripcion.html">
                     <button class="botonSuscribirse">Ver suscripción</button>
                 </a>
-            </section>
-            <section class="map">
-                <div id="map" style="height: 500px; width: 100%;"></div>
-            </section>
-        </div>
+            </div>
+            <div class="map">
+                <div id="map"></div>
+                <button id="locationButton">Usar mi ubicación</button>
+            </div>
+        </section>
     </main>
-    <div class="vacio"></div>
 
     <footer>
-        <label>© 2024 Ozone. Todos los derechos reservados.</label>
+        <p>© 2024 Ozone. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZiYmd-8BwMWMu2AmM-kOKhVRIsJWCgTo&callback=initMap" async defer></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/mapa.js"></script>
 
-        <script>
-            const ciudades = [
-                { nombre: "Madrid", lat: 40.4168, lng: -3.7038 },
-                { nombre: "Barcelona", lat: 41.3851, lng: 2.1734 },
-                { nombre: "Valencia", lat: 39.4699, lng: -0.3763 },
-                { nombre: "Sevilla", lat: 37.3886, lng: -5.9823 },
-                { nombre: "Zaragoza", lat: 41.6488, lng: -0.8891 },
-                { nombre: "Málaga", lat: 36.7213, lng: -4.4214 },
-                { nombre: "Murcia", lat: 37.9847, lng: -1.1285 },
-                { nombre: "Bilbao", lat: 43.263, lng: -2.935 },
-                { nombre: "Alicante", lat: 38.3452, lng: -0.481 },
-                { nombre: "Córdoba", lat: 37.8882, lng: -4.7794 }
-            ];
-    
-            async function obtenerCalidadAire(lat, lng) {
-                const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lng}&appid=d024fff28be7de44160d3945394f358c`;
-                const response = await fetch(url);
-                const data = await response.json();
-                return data.list[0].main.aqi;
-            }
-    
-            function definirColor(aqi) {
-                switch (aqi) {
-                    case 1: return 'green';    // Buena calidad
-                    case 2: return 'green';
-                    case 3: return 'yellow';   // Calidad media
-                    case 4: return 'yellow';
-                    case 5: return 'red';      // Mala calidad
-                    default: return 'gray';    // Desconocida
-                }
-            }
-    
-            async function initMap() {
-                const centroEspana = { lat: 40.4168, lng: -3.7038 };
-                const map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 6,
-                    center: centroEspana,
-                });
-    
-                for (const ciudad of ciudades) {
-                    try {
-                        const aqi = await obtenerCalidadAire(ciudad.lat, ciudad.lng);
-                        const color = definirColor(aqi);
-    
-                        new google.maps.Marker({
-                            position: { lat: ciudad.lat, lng: ciudad.lng },
-                            map: map,
-                            title: `Calidad del Aire en ${ciudad.nombre}: ${aqi}`,
-                            icon: {
-                                path: google.maps.SymbolPath.CIRCLE,
-                                scale: 10,
-                                fillColor: color,
-                                fillOpacity: 0.8,
-                                strokeWeight: 0
-                            }
-                        });
-                    } catch (error) {
-                        console.error(`Error al obtener la calidad del aire en ${ciudad.nombre}`, error);
-                    }
-                }
-            }
-        </script>
 </body>
 </html>

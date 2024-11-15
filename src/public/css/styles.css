@@ -1,3 +1,4 @@
+/*COLORES*/
 :root {
     --verdeOscuro: #3a5335; /*h1, menu, footer*/
     --verdeClaro: #87a08b; /*h3, botones, elementos sutiles*/
@@ -12,6 +13,7 @@
     --textos-placeholder: rgba(135, 160, 139, 0.5);
 }
 
+/*FUENTES*/
 @font-face {
     font-family: 'FONTSPRING DEMO - The Seasons';
     src: url('/assets/fonts/transfonter.org-20241023-125212/FONTSPRINGDEMO-TheSeasonsRegular.woff2') format('woff2'),
@@ -38,29 +40,137 @@ body {
     flex-direction: column;
 }
 
+/*HEADER*/
+
+header {
+    height: 6.4rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--verdeOscuro);
+}
+
+.logo {
+    width: 12.5rem;
+    height: auto;
+}
+
+.logo a{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.logo a img {
+    width: 100%;
+    height: auto;
+}
+
+.menu-toggle {
+    margin-left: auto;
+    display: none;
+    background: none;
+    color: var(--beige);
+    font-size: 2rem;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-toggle:hover{
+    background-color: initial;
+    color: var(--verdeClaro);
+}
+
+.nav{
+    display: flex;
+}
+
+.nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center; 
+    list-style-type: none;
+}
+
+.nav ul li a {
+    padding: 0.875rem 1rem;
+    display: block;
+    text-align: center;
+    color: var(--beige);
+    text-decoration: none;
+}
+
+.nav ul li a:hover {
+    color: var(--verdeClaro);
+}
+
+.nav ul li a:hover i {
+    color: var(--verdeClaro);
+}
+
+.user {
+    padding: 2%;
+    font-size: 200%;
+}
+
+.user a i{
+    color: var(--beige);
+}
+
+.user a i:hover{
+    color: var(--verdeClaro);
+}
+
+/*MAIN*/
+
 main {
-    padding: 0 3.125rem 3.125rem 3.125rem;
+    padding: 3.125rem;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+section {
+    display: flex;
+    flex-direction: column;
+}
+
 h1 {
     font-family: 'FONTSPRING DEMO - The Seasons', serif;
     color: var(--verdeOscuro);
-    font-size: 3rem;
+    font-size: 4rem;
 }
 
 h2 {
+    margin: 0;
     font-family: 'Montserrat', sans-serif;
     color: var(--gris);
-    font-size: 2rem;
+    font-size: 3rem;
     font-style: normal;
+    align-self: center;
 }
 
 h3 {
-    color: var(--verdeClaro);
-    font-size: 1.5rem;
+    margin: 2rem 0;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--verdeOscuro);
+    font-size: 2rem;
+}
+
+h4 {
+    margin: 1rem 0;
+    color: var(--gris);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+h5{
+    margin: 1rem 0;
+    color: var(--verdeOscuro);
+    font-size: 1rem;
+    font-weight: normal;
 }
 
 button {
@@ -74,6 +184,64 @@ button {
 }
 
 button:hover {
-    background-color:var(--hover); 
+    background-color: var(--hover); 
 }
 
+/*FOOTER*/
+
+footer {
+    height: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--verdeOscuro);
+    color: var(--blanco);
+}
+
+@media (max-width: 1041px){
+
+    /*HEADER*/
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav{
+        display: none;
+    }
+
+    .nav.active{
+        width: 50%;
+        top: 6.25rem;
+        right: 0;
+        display: block;
+        position: absolute;
+        background-color: var(--verdeOscuro);
+        z-index: 1000;
+    }
+
+    .nav ul{
+        padding: 0;
+        flex-direction: column;
+    }
+
+    .nav ul li{
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .user{
+        padding-top: 2.6%;
+    }
+}
+
+
+@media (max-width: 842px){
+    main{
+        padding: 2rem 3.125rem 1rem 3.125rem;
+    }
+    h2{
+        font-size: 2rem;
+    }
+}
