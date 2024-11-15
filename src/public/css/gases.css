@@ -1,29 +1,29 @@
-
 .gas-container {
-    margin: 2rem;
+    padding-top: 2rem;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
 }
 
 .gas-item {
     padding: 0.625rem 1.25rem;
     background-color: var(--formularios);
-    border: 0.063rem solid var(--h3);
     border-radius: 1rem;
 }
 
 .gas-question {
     display: flex;
-    align-items: center; /* Alinea verticalmente los elementos */
-    justify-content: space-between; /* Mantiene la flecha en su posición */
-    gap: 20px; /* Espacio entre la imagen y el título */
+    justify-content: space-between; 
+    align-items: center;
+    gap: 1.25rem;
+    cursor: pointer;
+
 }
 
 .gas-icon {
-    max-width: 200px; /* Tamaño grande para la imagen */
+    width: 12.5rem;
     height: auto;
-    border-radius: 0.5rem; /* Bordes redondeados opcionales */
+    border-radius: 0.5rem;
 }
 
 .gas-info {
@@ -32,20 +32,10 @@
     color: var(--gris);
 }
 
-.gas-info img {
-   max-width: 200px; /* Ajusta el tamaño máximo de la imagen */
-    height: auto;
-    border-top-left-radius: 1rem; /* Borde redondeado en la esquina superior izquierda */
-    border-bottom-left-radius: 1rem; /* Borde redondeado en la esquina inferior izquierda */
-    border-top-right-radius: 0; /* Sin redondeo en la esquina superior derecha */
-    border-bottom-right-radius: 0; /* Sin redondeo en la esquina inferior derecha */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
-}
-
 .toggle-sign {
-    font-size: 2rem;  /* Tamaño más grande para el signo */
+    font-size: 2rem;  
     color: var(--verdeOscuro);
-    transition: transform 0.3s ease;  /* Animación de transición */
+    transition: transform 0.3s ease;  
 }
 
 .gas-item.active .gas-info {
@@ -53,11 +43,27 @@
 }
 
 .gas-item.active .toggle-sign {
-    transform: rotate(45deg); /* Rota el ícono de "+" a "x" */
+    transform: rotate(45deg); 
 }
 
-@media (min-width: 768px) {
+@media (max-width: 1210px) {
+    h3{
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 1087px) {
     .gas-container {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
+    }
+
+    h3{
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 652px) {
+    h3{
+        font-size: 1.2rem;
     }
 }

@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZONE | Sensor</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>OZONE | Vincular sensor</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/sensor.css">
-    <link rel="stylesheet" href="css/footer.css">
+    
+    <!--tipografia-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!--iconos bootstrap-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    <style>
-        .error-message {
-            color: red;
-            font-size: 0.9em;
-            display: none;
-        }
-    </style>
+
 </head>
 <body>
     <header>
@@ -30,18 +26,20 @@
             <ul>
                 <li><a href="index.html">PRINCIPAL</a></li>
                 <li><a href="sensor.html" style="font-weight: bold;">SENSOR</a></li>
-                <li><a href="acerca_de.html">ACERCA DE</a></li>
+                <li><a href="acerca_de.html">ACERCA DE OZONE</a></li>
                 <li><a href="suscripcion.html">SUSCRIPCIÓN</a></li>
                 <li><a href="contacto.html">CONTACTO</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="gases.html">GASES</a></li>
             </ul>
         </nav>
         <div class="user"><a href="log-in.html"><i class="bi bi-person-circle"></i></a></div>
+
     </header>
     
     <main>
         <div class="sensor-form">
-            <h2>INTRODUZCA EL CÓDIGO DE SU SENSOR</h2>
+            <h3>INTRODUZCA EL CÓDIGO DE SU SENSOR</h3>
             <input type="text" id="sensorCode" placeholder="Escribe el código de seis dígitos aquí" oninput="validateInput()">
             <p id="errorMessage" class="error-message">El formato no es correcto. Deben ser seis dígitos numéricos.</p>
             <button id="submitButton" disabled>Acceder a mis datos</button>

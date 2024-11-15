@@ -1,96 +1,37 @@
-/* Estilos para la sección "Acerca de" */
-header {
-    margin: 0;
-    padding: 0;
-    height: 6.4rem;
-    width: 100%;
-    background: #3a5335;
-    display: flex;
-    justify-content: space-between;
+.about-section{
+    text-align: center;
     align-items: center;
 }
 
-.about-section {
-    text-align: center;
-    padding: 50px 20px; /* Añadido padding lateral para mejor visualización en pantallas pequeñas */
-}
-
-.about-section h2 {
-    margin-bottom: 20px;
-    font-size: 2rem; /* Ajuste del tamaño de fuente para mayor responsividad */
-}
-
 .about-section p {
-    max-width: 800px;
-    margin: 0 auto 40px;
+    width: 80%;
+    margin: 1rem 0 2rem 0;
+    font-size: 1rem;
     line-height: 1.6;
-    font-size: 1rem; /* Ajuste de tamaño de texto */
-    padding: 0 10px; /* Espacio adicional para pantallas pequeñas */
 }
 
 .team {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 1.875rem;
 }
 
 .team-member {
-    max-width: 200px;
+    width: 12.5rem;
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    align-items: center;
 }
 
 .team-member img {
     width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.team-member h3 {
-    font-size: 1em;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: var(--primary-color);
+    border-radius: 0.625rem;
 }
 
 .team-member p {
+    margin: 0;
     font-size: 0.7em;
 }
 
-/* Media Queries para responsividad */
-@media (max-width: 768px) {
-    .about-section h2 {
-        font-size: 1.5rem; /* Reducir tamaño del título en pantallas medianas */
-    }
-
-    .about-section p {
-        font-size: 0.9rem; /* Reducir tamaño del texto en pantallas medianas */
-    }
-
-    .team-member {
-        max-width: 150px; /* Ajustar tamaño de los miembros del equipo en pantallas medianas */
-    }
-
-    .team {
-        gap: 20px; /* Reducir espacio entre miembros del equipo */
-    }
-}
-
-@media (max-width: 480px) {
-    .about-section h2 {
-        font-size: 1.2rem; /* Reducir aún más el tamaño del título en pantallas pequeñas */
-    }
-
-    .about-section p {
-        font-size: 0.8rem; /* Reducir aún más el tamaño del texto */
-    }
-
-    .team-member {
-        max-width: 100%; /* Hacer que los miembros del equipo ocupen todo el ancho disponible */
-    }
-
-    .team {
-        flex-direction: column; /* Mostrar miembros del equipo en columna */
-        gap: 15px; /* Reducir espacio entre miembros del equipo */
-    }
-}

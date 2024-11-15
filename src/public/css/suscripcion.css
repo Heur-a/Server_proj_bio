@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.paquete{
+    padding: 1.5rem;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    color: var(--blanco);
+    background-color: var(--verdeOscuro);
+    border-radius: 1rem;
+}
+
+h3{
+    color: var(--blanco);
+}
+
+.item{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.item i{
+    align-self: center;
+}
+
+.texto{
+    flex: 2;
+    color: var(--verdeOscuro);
+}
+
+.botonCompra{
+    width: 100%;
+}

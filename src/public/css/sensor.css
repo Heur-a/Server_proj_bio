@@ -15,7 +15,6 @@
 }
 
 .sensor-form h2 {
-  margin-bottom: 1.25rem;
   color: var(--h2);
 }  
 
@@ -31,8 +30,14 @@ input::placeholder {
   color: var(--textos-placeholder); 
 } 
 
-@media (max-width: 750px){
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  display: none;
+}
+
+@media (max-width: 850px){
   .sensor-form input {
-    width: 70%;
+    width: 80%;
   }
 }
