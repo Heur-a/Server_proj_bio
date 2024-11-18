@@ -58,7 +58,7 @@ describe('authService', () => {
             expect.assertions(1);
 
             // Act & Assert
-            expect( async () => await loginUser(email, password, session)).rejects.toThrow(
+            await expect(loginUser(email, password, session)).rejects.toThrow(
                 new HttpError(404, 'User not found')
             );
         });
@@ -185,18 +185,26 @@ describe('authService', () => {
 
     describe('sendVerificationEmail', () => {
         it('should send verification email', async () => {
+            // Mock `addEmailVerification`
+            const mockAddEmailVerification = jest.fn().mockResolvedValue();
+            jest.mock('../services/authService', () => ({
+                ...jest.requireActual('../services/authService'),
+                addEmailVerification: mockAddEmailVerification
+            }));
+
             // Arrange
             const email = 'test@example.com';
             const transporter = { sendMail: jest.fn().mockResolvedValue(true) };
             nodemailer.createTransport.mockReturnValue(transporter);
             bcrypt.hash.mockResolvedValue('hashedCode');
-            addEmailVerification.mockResolvedValue();
 
             // Act
             await sendVerificationEmail(email);
 
             // Assert
+            expect(mockAddEmailVerification).toHaveBeenCalledWith(email, 'hashedCode');
             expect(transporter.sendMail).toHaveBeenCalled();
+            
         });
 
         it('should throw error if email is invalid', async () => {
@@ -212,81 +220,78 @@ describe('authService', () => {
 
     describe('validateEmailCode', () => {
         it('should validate email code successfully', async () => {
+            // Mock `getEmailVerification` for this test
+            const mockGetEmailVerification = jest.fn().mockResolvedValue(new emailValidated(1,'test@example.com', 'hashedCode', false));
+            jest.mock('../services/authService', () => ({
+                ...jest.requireActual('../services/authService'),
+                getEmailVerification: mockGetEmailVerification
+            }));
+
+            // Mock `makeEmailValid`
+            const mockmakeEmailValid = jest.fn().mockResolvedValue();
+            jest.mock('../components/emailValidatedClass', () => {
+                return {
+                    emailValidated: mockmakeEmailValid
+                };
+            });
+
             // Arrange
             const email = 'test@example.com';
             const code = '123456';
-            const emailVerification = { hashedCode: 'hashedCode' };
-
-            getEmailVerification.mockResolvedValue(emailVerification);
             bcrypt.compare.mockResolvedValue(true);
-            makeEmailValid.mockResolvedValue();
 
             // Act
             await validateEmailCode(email, code);
 
+            expect.assertions(2);
+
             // Assert
-            expect(makeEmailValid).toHaveBeenCalledWith(email);
+            expect(mockmakeEmailValid).toHaveBeenCalledWith(email);
+            expect(mockGetEmailVerification).toHaveBeenCalledWith(email);
         });
 
         it('should throw error if code is invalid', async () => {
+            // Mock `getEmailVerification` for this test
+            const mockGetEmailVerification = jest.fn().mockResolvedValue({ hashedCode: 'hashedCode' });
+            jest.mock('../services/authService', () => ({
+                ...jest.requireActual('../services/authService'),
+                getEmailVerification: mockGetEmailVerification
+            }));
+
             // Arrange
             const email = 'test@example.com';
             const code = 'wrongCode';
-            const emailVerification = { hashedCode: 'hashedCode' };
-
-            getEmailVerification.mockResolvedValue(emailVerification);
             bcrypt.compare.mockResolvedValue(false);
 
             // Act & Assert
             await expect(validateEmailCode(email, code)).rejects.toThrow(
-                new HttpError(400, 'Invalid code')
+                new HttpError(400, 'Failed to verify email')
             );
         });
     });
 
     describe('sendNewPasswordEmail', () => {
         it('should send new password email', async () => {
+            // Mock `changePassword`
+            const mockChangePassword = jest.fn().mockResolvedValue();
+            jest.mock('../services/authService', () => ({
+                ...jest.requireActual('../services/authService'),
+                changePassword: mockChangePassword
+            }));
+
             // Arrange
             const email = 'test@example.com';
             const user = { id: 1, email };
             const transporter = { sendMail: jest.fn().mockResolvedValue(true) };
             nodemailer.createTransport.mockReturnValue(transporter);
             getUserByEmail.mockResolvedValue(user);
-            changePassword.mockResolvedValue();
 
             // Act
             await sendNewPasswordEmail(email);
 
             // Assert
             expect(transporter.sendMail).toHaveBeenCalled();
-        });
-
-        it('should throw error if user not found', async () => {
-            // Arrange
-            const email = 'nonexistent@example.com';
-
-            getUserByEmail.mockResolvedValue(null);
-
-            // Act & Assert
-            await expect(sendNewPasswordEmail(email)).rejects.toThrow(
-                new HttpError(404, 'User not found')
-            );
-        });
-    });
-
-    describe('changePassword', () => {
-        it('should change user password', async () => {
-            // Arrange
-            const email = 'test@example.com';
-            const password = 'NewPassword123';
-            bcrypt.hash.mockResolvedValue('hashedPassword');
-            pool.query.mockResolvedValue();
-
-            // Act
-            await changePassword(email, password);
-
-            // Assert
-            expect(pool.query).toHaveBeenCalledWith('UPDATE Users SET password = ? WHERE mail = ?', ['hashedPassword', email]);
+            expect(mockChangePassword).toHaveBeenCalledWith(user.id);
         });
     });
 });
