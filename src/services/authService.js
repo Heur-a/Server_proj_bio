@@ -223,7 +223,7 @@ const sendVerificationEmail = async (email) => {
  * @returns {Promise<void>} Verifies the email code and updates the user's status.
  * @throws {HttpError} Throws an error if the email is not found or the code is invalid.
  */
-const verifyEmail = async (email, code) => {
+const validateEmailCode = async (email, code) => {
     try {
         // Retrieve the hashed code for email verification from the database
         const emailVerification = await getEmailVerification(email);
@@ -436,7 +436,7 @@ export {
     registerUser,
     verifyIdentity,
     sendVerificationEmail,
-    verifyEmail,
+    validateEmailCode,
     sendNewPasswordEmail,
     addEmailVerification,
     getEmailVerification,

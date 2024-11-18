@@ -56,14 +56,14 @@ router.get('/checkAuth', checkAuthentication);
 
 /**
  * @brief Sends a verification email to the user.
- * @route GET /auth/sendVerificationEmail
+ * @route POST /auth/sendVerificationEmail
  * @group Authentication - Operations related to user authentication.
  * @param {string} email.query.required - The email address to send the verification code.
  * @returns {object} 200 - Verification email sent successfully.
  * @returns {object} 400 - Invalid email address.
  * @returns {object} 500 - Server error.
  */
-router.get('/sendVerificationEmail', handleEmailVerification);
+router.post('/sendVerificationEmail', handleEmailVerification);
 
 /**
  * @brief Verifies the user's email address.
@@ -85,7 +85,7 @@ router.put('/verifyEmail', handleMakeEmailVerified);
  * @returns {object} 404 - User not found.
  * @returns {object} 500 - Server error.
  */
-router.get('/resetPassword', handleResetPassword);
+router.post('/resetPassword', handleResetPassword);
 
 export default router;
 

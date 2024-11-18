@@ -1,4 +1,4 @@
-import { loginUser, logoutUser, isAuthenticated, registerUser, sendVerificationEmail, verifyEmail, sendNewPasswordEmail } from '../services/authService.js';
+import { loginUser, logoutUser, isAuthenticated, registerUser, sendVerificationEmail, sendNewPasswordEmail, validateEmailCode } from '../services/authService.js';
 
 /**
  * @brief Registra un nou usuari.
@@ -73,7 +73,7 @@ export const handleEmailVerification = async (req, res) => {
 export const handleMakeEmailVerified = async (req, res) => {
     //Call verifyEmail from authService
     try{
-        await verifyEmail(req.query.email, req.query.code);
+        await validateEmailCode(req.query.email, req.query.code);
         res.status(200).json({ message: 'Email verified successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
