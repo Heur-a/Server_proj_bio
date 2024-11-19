@@ -14,7 +14,7 @@ function nextStep(step) {
     document.getElementById('step' + step).classList.add('active');
 }
 
-function verifyEmail() {
+async function verifyEmail() {
     const email = document.getElementById('email').value.trim();
     const emailPattern = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
     const existingError = document.querySelector('#email + .error-message');
@@ -26,7 +26,12 @@ function verifyEmail() {
     } else {
         clearErrors();
         userFields.email = email;
-        nextStep(2);
+        let userExists = await checkEmailAvailability(email);
+        if (userExists) {
+            showError('email', 'El correo electrónico ya está en uso');
+        } else {
+            nextStep(2);
+        }
     }
 }
 
@@ -142,6 +147,21 @@ async function registerUser() {
         }
     }
     catch (error) {
+        alert(error.message);
+    }
+}
+
+async function checkEmailAvailability(email) {
+    try {
+        const response = await fetch(`/users/checkemail?email=${email}`);
+        if (response.ok) {
+            return true;
+        } else if (response.status === 404) {
+            return false;
+        } else {
+            throw new Error('Error al comprobar si el usuario existe, ' + response.statusText);
+        }
+    } catch (error) {
         alert(error.message);
     }
 }

@@ -6,6 +6,8 @@ import bcrypt from 'bcrypt';
  * @file userService.js
  * @module services/userService
  * @description Service layer for handling user-related operations.
+ * This module provides functions to create, retrieve, update, and delete user information
+ * in the database, as well as to check user existence and retrieve user passwords.
  */
 
 /**
@@ -14,13 +16,13 @@ import bcrypt from 'bcrypt';
  * @function getUserByEmail
  * @param {string} email - The email of the user to retrieve.
  * @returns {Promise<Object|null>} Returns the user object or null if not found.
- * @throws Will throw an error if the SQL query fails.
+ * @throws {Error} Will throw an error if the SQL query fails.
  */
 export const getUserByEmail = async (email) => {
     try {
         const sql = await readFile('./src/sql/getUserByEmail.sql', 'utf-8');
         const [rows] = await pool.query(sql, [email]);
-        
+
         // If a user is found, format the response to match the OpenAPI schema
         if (rows.length) {
             const user = rows[0];
@@ -42,22 +44,21 @@ export const getUserByEmail = async (email) => {
 
 /**
  * Retrieves a user by their ID.
-    * @async
-    * @function getUserById
-    * @param {number} id - The ID of the user to retrieve.
-    * @returns {Promise<Object|null>} Returns the user object or null if not found.
-    * @throws Will throw an error if the SQL query fails.
-    */
-
+ * @async
+ * @function getUserById
+ * @param {number} id - The ID of the user to retrieve.
+ * @returns {Promise<Object|null>} Returns the user object or null if not found.
+ * @throws {Error} Will throw an error if the SQL query fails.
+ */
 export const getUserById = async (id) => {
-        try {
-            const sql = await readFile('./src/sql/getUserById.sql', 'utf-8');
-            const [rows] = await pool.query(sql, [id]);
-            return rows.length ? rows[0] : null;
-        } catch (error) {
-            throw new Error('Failed to fetch user: ' + error.message);
-        }
+    try {
+        const sql = await readFile('./src/sql/getUserById.sql', 'utf-8');
+        const [rows] = await pool.query(sql, [id]);
+        return rows.length ? rows[0] : null;
+    } catch (error) {
+        throw new Error('Failed to fetch user: ' + error.message);
     }
+};
 
 /**
  * Creates a new user.
@@ -72,7 +73,7 @@ export const getUserById = async (id) => {
  * @param {number} userData.userTypeId - ID of the user type.
  * @param {string} userData.mail - Email of the user.
  * @returns {Promise<Object>} Returns the created user object.
- * @throws Will throw an error if the SQL query fails.
+ * @throws {Error} Will throw an error if the SQL query fails.
  */
 export const createUser = async (userData) => {
     try {
@@ -90,7 +91,7 @@ export const createUser = async (userData) => {
         ]);
         return { id: result.insertId, ...userData };
     } catch (error) {
-        throw new Error('Failed to create user');
+        throw new Error('Failed to create user: ' + error.message);
     }
 };
 
@@ -106,13 +107,13 @@ export const createUser = async (userData) => {
  * @param {string} userData.tel - Updated phone number.
  * @param {string} userData.password - Updated password.
  * @returns {Promise<boolean>} Returns true if the user was updated successfully.
- * @throws Will throw an error if the SQL query fails.
+ * @throws {Error} Will throw an error if the SQL query fails or if no fields are provided for update.
  */
 export const updateUser = async (email, userData) => {
     try {
         // Read the base SQL from the updateUser.sql file
         const sqlBase = await readFile('./src/sql/updateUser.sql', 'utf-8');
-        
+
         // Initialize an array to hold the fields and values for updating
         const fields = [];
         const values = [];
@@ -163,7 +164,7 @@ export const updateUser = async (email, userData) => {
  * @function deleteUser
  * @param {string} email - The email of the user to delete.
  * @returns {Promise<boolean>} Returns true if the user was deleted successfully.
- * @throws Will throw an error if the SQL query fails.
+ * @throws {Error} Will throw an error if the SQL query fails.
  */
 export const deleteUser = async (email) => {
     try {
@@ -176,13 +177,13 @@ export const deleteUser = async (email) => {
 };
 
 /**
-*Retrives a user password by their id
-*@async
-*@function getUserPasswordById
-*@param {number} id - The id of the user to retrieve.
-*@returns {Promise<Object|null>} Returns the user object or null if not found.
-*@throws Will throw an error if the SQL query fails.
-*/
+ * Retrieves a user password by their ID.
+ * @async
+ * @function getUserPasswordById
+ * @param {number} id - The ID of the user to retrieve.
+ * @returns {Promise<Object|null>} Returns the user object or null if not found.
+ * @throws {Error} Will throw an error if the SQL query fails.
+ */
 export const getUserPasswordById = async (id) => {
     try {
         const sql = await readFile('./src/sql/getUserPasswordById.sql', 'utf-8');
@@ -192,3 +193,27 @@ export const getUserPasswordById = async (id) => {
         throw new Error('Failed to fetch user password: ' + error.message);
     }
 };
+
+/**
+ * Checks if a user with the specified email exists.
+ * @async
+ * @function checkUserExists
+ * @param {string} email - The email of the user to check.
+ * @returns {Promise<boolean>} Returns true if the user exists, false otherwise.
+ * @throws {Error} Will throw an error if the SQL query fails.
+ */
+export const checkUserExists = async (email) => {
+    try {
+        // Read the SQL query from file
+        const sql = await readFile('./src/sql/checkUserExists.sql', 'utf-8');
+
+        // Execute the query, passing the email as a parameter
+        const [rows] = await pool.execute(sql, [email]);
+
+        // Check the result to see if any rows were returned
+        return rows[0]?.email_exists > 0;
+    } catch (error) {
+        console.error('Database query error:', error);
+        throw new Error('Failed to check user existence.');
+    }
+}

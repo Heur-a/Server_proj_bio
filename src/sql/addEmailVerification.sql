@@ -1,0 +1,1 @@
+INSERT INTO EmailValidated (email, code) VALUES (?, ?);

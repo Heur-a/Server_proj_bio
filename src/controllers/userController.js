@@ -5,28 +5,31 @@ import * as userService from '../services/userService.js';
 /**
  * @file userController.js
  * @module controllers/userController
- * @description Controlador per a les operacions relacionades amb els usuaris.
+ * @description Controller for user-related operations.
+ * This module defines the controller functions for handling user requests, including
+ * fetching, creating, updating, and deleting users. It interacts with the user service
+ * to perform the necessary operations and sends appropriate responses to the client.
  */
 
 /**
  * @typedef {Object} User
- * @property {number} id - Identificador de l'usuari.
- * @property {string} name - Nom de l'usuari.
- * @property {string} surname_1 - Primer cognom de l'usuari.
- * @property {string} surname_2 - Segon cognom de l'usuari.
- * @property {string} email - Correu electrònic de l'usuari.
- * @property {string} telephone - Telèfon de l'usuari.
+ * @property {number} id - User identifier.
+ * @property {string} name - User's first name.
+ * @property {string} surname_1 - User's first surname.
+ * @property {string} surname_2 - User's second surname.
+ * @property {string} email - User's email address.
+ * @property {string} telephone - User's telephone number.
  */
 
 /**
- * Obté un usuari pel seu email.
+ * Retrieves a user by their email.
  * @async
  * @function
  * @name getUserByEmail
  * @memberof module:controllers/userController
- * @param {Object} req - Objecte de la petició HTTP.
- * @param {Object} res - Objecte de la resposta HTTP.
- * @returns {Promise<void>} Retorna l'usuari amb èxit o un error en cas contrari.
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<void>} Returns the user if found or an error otherwise.
  */
 export const getUserByEmail = async (req, res) => {
     const { email } = req.query;
@@ -47,14 +50,14 @@ export const getUserByEmail = async (req, res) => {
 };
 
 /**
- * Crea un nou usuari.
+ * Creates a new user.
  * @async
  * @function
  * @name createUser
  * @memberof module:controllers/userController
- * @param {Object} req - Objecte de la petició HTTP.
- * @param {Object} res - Objecte de la resposta HTTP.
- * @returns {Promise<void>} Retorna l'usuari creat amb èxit o un error en cas contrari.
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<void>} Returns the created user if successful or an error otherwise.
  */
 export const createUser = async (req, res) => {
     const userData = req.body;
@@ -68,14 +71,14 @@ export const createUser = async (req, res) => {
 };
 
 /**
- * Actualitza un usuari existent.
+ * Updates an existing user.
  * @async
  * @function
  * @name updateUser
  * @memberof module:controllers/userController
- * @param {Object} req - Objecte de la petició HTTP.
- * @param {Object} res - Objecte de la resposta HTTP.
- * @returns {Promise<void>} Retorna l'usuari actualitzat amb èxit o un error en cas contrari.
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<void>} Returns the updated user if successful or an error otherwise.
  */
 export const updateUser = async (req, res) => {
     const userData = req.body;
@@ -98,30 +101,62 @@ export const updateUser = async (req, res) => {
 };
 
 /**
- * Elimina un usuari pel seu email.
+ * Deletes a user by their email.
  * @async
  * @function
  * @name deleteUser
  * @memberof module:controllers/userController
- * @param {Object} req - Objecte de la petició HTTP.
- * @param {Object} res - Objecte de la resposta HTTP.
- * @returns {Promise<void>} Retorna una resposta sense contingut si l'usuari s'ha eliminat correctament.
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<void>} Returns a response with no content if the user was deleted successfully.
  */
 export const deleteUser = async (req, res) => {
     const { email } = req.query;
     if (!email) {
-        return res.status(400).json({ message: 'El paràmetre email és obligatori' });
+        return res.status(400).json({ message: 'The email parameter is required' });
     }
 
     try {
         const result = await userService.deleteUser(email);
         if (!result) {
-            return res.status(404).json({ message: 'No s\'ha trobat cap usuari' });
+            return res.status(404).json({ message: 'No user found' });
         }
         return res.status(204).send();
     } catch (error) {
-        return res.status(500).json({ message: 'Error en el servidor', error: error.message });
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
-export default { getUserByEmail, createUser, updateUser, deleteUser };
+/**
+ * Checks if a user exists by their email.
+ * @async
+ * @function
+ * @name checkUserExists
+ * @memberof module:controllers/userController
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<void>} Returns true if the user exists or an error otherwise.
+ */
+export const checkEmailInUse = async (req, res) => {
+    const { email } = req.query;
+    if (!email) {
+        return res.status(400).json({ message: 'The email parameter is required' });
+    }
+
+    try {
+        const exists = await userService.checkUserExists(email);
+        if (!exists) {
+            return res.status(404).json({ message: 'User not found' });
+        } else {
+            return res.status(200).json({ exists });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+/**
+ * Exports the user controller functions for use in routing.
+ * @exports {Object} UserController - The user controller functions.
+ */
+export default { getUserByEmail, createUser, updateUser, deleteUser, checkUserExists: checkEmailInUse };
