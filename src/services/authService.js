@@ -93,6 +93,7 @@ const isAuthenticated = (session) => {
  * @throws {HttpError} Throws an error if user data is invalid or user already exists.
  */
 const registerUser = async (newUser) => {
+
     // User validations
     if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
         throw new HttpError(400, 'All fields are required');
@@ -101,6 +102,12 @@ const registerUser = async (newUser) => {
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(newUser.email)) {
         throw new HttpError(400, 'Invalid email');
+    }
+
+    //check if email has been verified
+    const emailVerified = await isEmailVerified(newUser.email);
+    if (!emailVerified) {
+        throw new HttpError(400, 'Email not verified');
     }
 
     const telephoneRegex = /^[679]\d{8}$/;
@@ -162,8 +169,11 @@ const sendVerificationEmail = async (email) => {
     if (!emailRegex.test(email)) {
         throw new HttpError(400, 'Invalid email');
     }
-
-    //todo: Check if email is already verified
+    
+    const emailVerified = await isEmailVerified(email);
+    if (emailVerified) {
+        throw new HttpError(400, 'Email already verified');
+    }
 
     // Generate random 6-digit number
     let randomCode = Math.floor(100000 + Math.random() * 900000).toString();
