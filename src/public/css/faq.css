@@ -19,6 +19,7 @@
     color: var(--color-principal); 
     font-size: 1.5rem;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .faq-question p {
@@ -38,6 +39,7 @@
 
 .toggle-sign {
     font-size: 2rem;  
+    font-weight: normal;
     color: var(--verdeOscuro);
     transition: transform 0.3s ease;  
 }
