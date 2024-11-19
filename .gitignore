@@ -135,3 +135,5 @@ node_modules/.json
 
 #vs code
 .vscode
+.42c/conf.yaml
+.42c/scan/api-de-mediciones/scanconf.json
