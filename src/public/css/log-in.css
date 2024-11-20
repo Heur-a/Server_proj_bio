@@ -1,72 +1,60 @@
 body {
     height: 100vh;
-    background: #3a5335;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--verdeOscuro);
 }
 
-header {
-    height: 15%;
-    display: block;
-
+.login-container {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
 }
 
-#enlace{
-    width: 50%;
-    height: 30%;
-
-}
-
-#flecha{
-    position: relative;
+.flecha {
+    position: absolute;
     top: 3rem;
     left: 3rem;
+    font-size: 3rem;
     color: var(--beige);
-
+    text-decoration: none;
 }
-
 .logo {
-    position: relative;
-    top: -10%;
+    position: absolute;
+    top: 3rem;
+    left: 3rem;
 }
 
-.logo img {
-    width: 100%;
-    height: auto;
-    padding-left: 10%;
-}
-
-.container {
-    flex: 1;
-    display: flex;
+.logo img{
+    width: 150%;
+    height: 150%;
 }
 
 .formulario {
-    width: 60%;
-    height: 110%;
-    padding: 1.25rem;
+    height: 100%;
+    width: 50%;
     position: relative;
-    top: -17.5%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    box-shadow: 0.625rem 0 0.625rem rgba(0,0,0,.5);
+    box-shadow: 2rem 0 1rem rgba(0, 0, 0, 0.2);     
 }
 
-.formulario h1 {
-    margin-bottom: 1.25rem;
-    padding-left: 10%;
-    font-size: 2rem;
+h1 {
     color: var(--beige);
 }
 
 .formulario form {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .escribir {
-    width: 80%;
+    width: 100%;
     margin: 0.625rem 0;
     border-bottom: 0.125rem solid var(--verdeClaro);
 }
@@ -97,6 +85,7 @@ header {
     cursor: pointer;
     outline: none;
     border: none;
+    align-self: center;
 }
 
 .boton:hover {
@@ -107,6 +96,7 @@ header {
 .recordar {
     color: var(--beige);
     cursor: pointer;
+    text-align: center;
 }
 
 .recordar a {
@@ -133,34 +123,22 @@ header {
     top: -10%;
 }
 
-@media (max-width: 800px) {
 
-    header{
-        height: 50%;
-    }
-
-    .logo {
-        width: 50%;
-        padding: 0;
-        margin: 2rem auto;
-        display: block;
-        }
-
-    .logo img{
-        padding: 0;
-    }
+@media (max-width: 1500px) {
     
-    .container {
+    .login-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
     .formulario {
-        padding: 0;
         width: 100%;
+        padding: 0;
+        align-items: center;
         box-shadow: none;
     }
+
     .foto img {
         display: none;
     }

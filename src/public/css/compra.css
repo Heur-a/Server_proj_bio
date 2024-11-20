@@ -35,10 +35,18 @@ main{
     border-radius: 0.938rem 0.938rem 0 0;
 }
 
+.divFlecha{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: left;
+}
+
 .flecha{
     position: relative;
-    top: 2rem;
-    left: -40%;
+    top: 1rem;
+    left: 1rem;
+
 }
 
 .flecha i{

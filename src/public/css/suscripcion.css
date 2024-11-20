@@ -34,7 +34,7 @@ h3{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 1.5rem;
     margin: 1rem 0;
 }
 
@@ -56,9 +56,7 @@ h3{
 
 .item i{
     align-self: center;
-    background: var(--beige);
-    color: var(--verdeOscuro);
-    border-radius: 45%;
+    color: var(--beige);
 }
 
 .texto{
@@ -80,6 +78,18 @@ h3{
         position: relative;
         flex-direction: column;
         gap: 3rem;
+    }
+
+    .precio{
+        gap: 0.5rem;
+    }
+
+    #euro{
+        font-size: 2rem;
+    }
+
+    #mes{
+        margin: 1rem 0 0 0;
     }
 
     .texto{
