@@ -1,5 +1,5 @@
 .sensor-form {
-  width: 70%; 
+  width: 50%; 
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -14,30 +14,12 @@
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
-.sensor-form h2 {
-  color: var(--h2);
-}  
-
-.sensor-form input {
-  all: unset;
-  width: 50%;
-  margin-bottom: 1rem;
-  padding: 0.625rem;
-  border-bottom: 0.063rem solid var(--linea-input);
+#submitButton{
+  width: 40%;
 }
 
-input::placeholder {
-  color: var(--textos-placeholder); 
-} 
-
-.error-message {
-  color: red;
-  font-size: 0.9em;
-  display: none;
-}
-
-@media (max-width: 850px){
-  .sensor-form input {
-    width: 80%;
+@media (max-width: 720px) {
+  .sensor-form {
+    width: 70%;
   }
 }

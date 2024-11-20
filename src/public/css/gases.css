@@ -1,5 +1,5 @@
 .gas-container {
-    padding-top: 2rem;
+    margin: 2rem 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
@@ -11,19 +11,29 @@
     border-radius: 1rem;
 }
 
-.gas-question {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    gap: 1.25rem;
-    cursor: pointer;
-
-}
-
 .gas-icon {
     width: 12.5rem;
     height: auto;
     border-radius: 0.5rem;
+}
+
+.gas-question {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-principal); 
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    align-items: center;
+}
+
+.gas-question h3 {
+    width: 90%;
+}
+
+.gas-question span{
+    width: 5%;
+    align-self: center;
 }
 
 .gas-info {
@@ -34,6 +44,7 @@
 
 .toggle-sign {
     font-size: 2rem;  
+    font-weight: normal;
     color: var(--verdeOscuro);
     transition: transform 0.3s ease;  
 }
@@ -46,24 +57,9 @@
     transform: rotate(45deg); 
 }
 
-@media (max-width: 1210px) {
-    h3{
-        font-size: 1.5rem;
-    }
-}
 
-@media (max-width: 1087px) {
+@media (max-width: 768px) {
     .gas-container {
-        grid-template-columns: 1fr;
-    }
-
-    h3{
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 652px) {
-    h3{
-        font-size: 1.2rem;
+        grid-template-columns: 1fr; 
     }
 }

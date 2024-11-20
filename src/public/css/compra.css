@@ -35,6 +35,21 @@ main{
     border-radius: 0.938rem 0.938rem 0 0;
 }
 
+.flecha{
+    position: relative;
+    top: 2rem;
+    left: -40%;
+}
+
+.flecha i{
+    color: var(--verdeOscuro);
+    font-size: 200%;
+}
+
+.flecha i:hover{
+    color: var(--verdeClaro);
+}
+
 .step p{
     margin: 0 0 0.625rem 0;
     font-size: 0.7rem;
@@ -56,14 +71,18 @@ main{
 }
 
 #myBar1{
-    width: 33%;
+    width: 25%;
 }
 
 #myBar2{
-    width: 66%;
+    width: 50%;
 }
 
 #myBar3{
+    width: 75%;
+}
+
+#myBar4{
     width: 100%;
 }
 
@@ -71,7 +90,7 @@ main{
 
 .medio{
     width: 100%;
-    margin: 4rem 0rem;
+    margin: 2rem 0rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,7 +149,7 @@ input {
 .boton {
     width: 30%;
     height: 2.5rem;
-    margin: 2rem 0 1rem 0;
+    margin: 2rem 0 2rem 0;
     background: var(--verdeClaro);
     border-radius: 1.563rem;
     font-size: 1.125rem;
@@ -143,6 +162,10 @@ input {
 .boton:hover {
     background-color: var(--hover);
     transition: .3s;
+}
+
+#bb{
+    margin-bottom: 5rem;
 }
 
 .popup { 
@@ -182,17 +205,48 @@ input {
 
 
 @media (max-width: 920px) {
-    .escribir {
+
+    #titulo{
+        margin-top: 3rem;
+    }
+
+    .step.active{
+        background: none;
+    }
+
+    .flecha{
+        position: absolute;
+        top: 0rem;
+        left: 0rem;
+    }
+
+    .progress-container {
+        width: 40%;
+        margin-bottom: 3rem;
+    }
+
+    .grupo{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .escribir, .medio {
         width: 90%; 
-        margin: 1.875rem 2.5rem;
+        margin: 1.875rem 0rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-self: center;
     }
 
     .medio input{
-        width: 80%;
-        margin-top: 2rem;
+        width: 100%;
         text-align: center;
     }
 
+    .boton {
+        width: 60%;
+    }
 }
 
 

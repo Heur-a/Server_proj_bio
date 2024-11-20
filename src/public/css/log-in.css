@@ -5,13 +5,27 @@ body {
 
 header {
     height: 15%;
+    display: block;
+
+}
+
+#enlace{
+    width: 50%;
+    height: 30%;
+
+}
+
+#flecha{
+    position: relative;
+    top: 3rem;
+    left: 3rem;
+    color: var(--beige);
+
 }
 
 .logo {
-    width: 12.5rem;
-    height: 100%;
     position: relative;
-    top: -50%;
+    top: -10%;
 }
 
 .logo img {
@@ -40,7 +54,8 @@ header {
 .formulario h1 {
     margin-bottom: 1.25rem;
     padding-left: 10%;
-    color: var(--blanco);
+    font-size: 2rem;
+    color: var(--beige);
 }
 
 .formulario form {
@@ -57,7 +72,7 @@ header {
 }
 
 .escribir label {
-    color: var(--blanco);
+    color: var(--beige);
     font-size: 1rem;
 }
 
@@ -66,7 +81,7 @@ header {
     height: 1.875rem;
     background: none;
     font-size: 1rem;
-    color: var(--blanco);
+    color: var(--beige);
     outline: none;
     border: none;
 }
@@ -90,12 +105,12 @@ header {
 }
 
 .recordar {
-    color: var(--blanco);
+    color: var(--beige);
     cursor: pointer;
 }
 
 .recordar a {
-    color: var(--blanco);
+    color: var(--beige);
     text-decoration: underline;
     font-weight: bold;
 }
@@ -119,18 +134,28 @@ header {
 }
 
 @media (max-width: 800px) {
-    .logo {
-        width: 10.938rem;
-        position: relative;
-        top: 0;
-        left: 2rem;
+
+    header{
+        height: 50%;
     }
-    .container {
+
+    .logo {
+        width: 50%;
         padding: 0;
+        margin: 2rem auto;
+        display: block;
+        }
+
+    .logo img{
+        padding: 0;
+    }
+    
+    .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
+
     .formulario {
         padding: 0;
         width: 100%;

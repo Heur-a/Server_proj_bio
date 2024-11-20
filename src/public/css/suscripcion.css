@@ -5,7 +5,7 @@
     width: 100%;
     flex-wrap: wrap;
     margin-top: 2rem;
-    gap: 1rem;
+    gap: 3rem;
 }
 
 .paquete{
@@ -18,8 +18,34 @@
     border-radius: 1rem;
 }
 
+.titulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 h3{
+    margin: 1rem 0 0 2rem;
     color: var(--blanco);
+    font-size: 1.5rem;
+}
+
+.precio{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
+#euro{
+    margin: 0;
+    color: var(--beige);
+    font-size: 3rem;
+}
+
+#mes{
+    margin: 2rem 0 0 0;
 }
 
 .item{
@@ -30,6 +56,9 @@ h3{
 
 .item i{
     align-self: center;
+    background: var(--beige);
+    color: var(--verdeOscuro);
+    border-radius: 45%;
 }
 
 .texto{
@@ -37,6 +66,27 @@ h3{
     color: var(--verdeOscuro);
 }
 
+.texto p{
+    margin: 0 0 1rem 0;
+}
+
 .botonCompra{
     width: 100%;
+    margin: 1rem 0;
+}
+
+@media (max-width: 842px){
+    .container {
+        position: relative;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .texto{
+        text-align: center;
+    }
+
+    .botonCompra{
+        width: 80%;
+    }
 }

@@ -10,6 +10,7 @@ let userFields = {
 
 
 function nextStep(step) {
+    document.getElementById('popup-step2').style.display = 'none'; 
     document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
     document.getElementById('step' + step).classList.add('active');
 }
@@ -30,12 +31,36 @@ async function verifyEmail() {
         if (userExists) {
             showError('email', 'El correo electrónico ya está en uso');
         } else {
-            nextStep(2);
+            popupCorreoEnviado();
         }
     }
 }
 
+function popupCorreoEnviado() {
+    document.getElementById('popup-step2').style.display = 'block'; 
+}
+
 function verifyStep2() {
+    const codigo = document.getElementById('codigo').value.trim();
+    const codigoPattern = /^\d{6}$/;
+    const existingError = document.querySelector('#codigo + .error-message');
+
+//comprobar codigo bbdd
+
+
+    if (!codigoPattern.test(codigo)) {
+        if (!existingError) {
+            showError('codigo', 'El código debe tener 6 dígitos');
+        }
+    } else {
+        clearErrors();
+        
+        popupCorreoEnviado();
+        nextStep(3);
+    }
+}
+
+function verifyStep3() {
     const fields = [
         { id: 'name', message: 'El nombre no puede estar vacío' },
         { id: 'surname', message: 'Los apellidos no pueden estar vacíos' },
@@ -74,7 +99,7 @@ function verifyStep2() {
         userFields.telephone = document.getElementById('telephone').value.trim();
         userFields.password = document.getElementById('password').value.trim();
 
-        nextStep(3);
+        nextStep(4);
     }
 }
 
