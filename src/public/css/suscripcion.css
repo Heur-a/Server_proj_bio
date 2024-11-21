@@ -9,6 +9,7 @@
 }
 
 .paquete{
+    margin: 0 3rem;
     padding: 1.5rem;
     flex: 3;
     display: flex;
@@ -78,6 +79,10 @@ h3{
         position: relative;
         flex-direction: column;
         gap: 3rem;
+    }
+
+    .paquete{
+        margin: 0;
     }
 
     .precio{
