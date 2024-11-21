@@ -1,0 +1,144 @@
+main {
+    padding: 20px;
+  }
+  
+  .dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    grid-template-areas: 
+      "graph summary"
+      "alerts location";
+  }
+  
+  p {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  #grafica-container {
+    width: 100%; /* Ancho completo */
+    max-width: 600px; /* Ancho máximo */
+    margin: auto;
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f4ec;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  canvas {
+    max-height: 400px; /* Altura máxima para evitar alargar la página */
+    width: 100%; /* Ajusta el ancho dinámicamente */
+  }
+  
+  .alerts {
+    background: #fffbe0;
+    padding: 15px;
+    border: 1px solid #ffc107;
+    border-radius: 5px;
+    grid-area: alerts;
+  }
+  
+  .summary {
+    border-radius: 5px;
+    grid-column: auto;  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: 10rem;
+  }
+  
+  .location {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    grid-area: location;
+  }
+  
+  .summary .measurement {
+    margin-bottom: 15px;
+  }
+
+  .measurement {
+    background-color: #324B38;  
+    color: white; 
+    border-radius: 10px; 
+    padding: 20px; 
+    text-align: center; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.measurement h4 {
+    color: #D1E7DD; 
+    font-weight: bold; 
+}
+
+.measurement p {
+    font-size: 2.5em;  
+}
+
+.measurement small {
+    color: #A6B9AC;
+}
+
+.measurement:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
+}
+
+.measurement:nth-child(2) {
+    background-color: #E8E3D8; 
+    color: #333; 
+}
+
+.measurement:nth-child(2) h4 {
+    color: #5A5A5A; 
+}
+  
+  
+  /* Diseño responsive para pantallas medianas (tablets y dispositivos pequeños) */
+  @media (max-width: 768px) {
+    .dashboard {
+      grid-template-columns: 1fr; /* Una sola columna */
+      grid-template-areas: 
+        "graph"
+        "summary"
+        "alerts"
+        "location";
+    }
+    
+    p {
+      font-size: 1em; /* Reduce el tamaño del texto */
+    }
+  }
+  
+  /* Diseño responsive para pantallas pequeñas (móviles) */
+  @media (max-width: 480px) {
+    main {
+      padding: 10px; /* Reduce el espacio del padding */
+    }
+    
+    .dashboard {
+      gap: 15px; /* Reduce el espacio entre las secciones */
+    }
+    
+    #grafica-container {
+      padding: 15px; /* Reduce el padding del contenedor */
+      max-width: 100%; /* Ajusta el ancho al tamaño completo */
+    }
+  
+    canvas {
+      max-height: 300px; /* Reduce la altura de la gráfica */
+    }
+    
+    .alerts,
+    .summary,
+    .location {
+      padding: 10px; /* Ajusta el padding en elementos secundarios */
+    }
+    
+
+  }
+  
