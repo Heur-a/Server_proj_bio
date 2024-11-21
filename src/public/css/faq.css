@@ -1,3 +1,7 @@
+.faq{
+    width: 100%;
+}
+
 .faq-container {
     margin: 2rem 0;
     display: grid;
@@ -6,9 +10,11 @@
 }
 
 .faq-item {
+    width: 90%;
     padding: 0.625rem 1.25rem;
     background-color: var(--formularios);
     border-radius: 1rem;
+    justify-self: center;
 }
 
 .faq-question {
@@ -30,6 +36,7 @@
 }
 
 .faq-answer {
+    width: 80%;
     padding: 0.625rem 0;
     display: none;
     color: var(--gris);

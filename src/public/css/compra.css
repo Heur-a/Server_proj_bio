@@ -6,15 +6,23 @@ main{
 
 .formulario {
     width: 100%;
-    position: relative;
+    height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.formulario h2{
+    flex: 0 0 auto;
 }
 
 .formulario form {
     width: 80%;
     margin-top: 2rem;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,15 +30,17 @@ main{
 }
 
 .step { 
-    display: none; 
+    display: none;
 }
 
 .step.active { 
     width: 100%;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     align-self: center;
+    justify-content: space-around;
     background: var(--formularios);
     border-radius: 0.938rem 0.938rem 0 0;
 }
@@ -60,7 +70,8 @@ main{
 
 .step p{
     margin: 0 0 0.625rem 0;
-    font-size: 0.7rem;
+    font-size: 1rem;
+    text-align: center;
 }
 
 /*barra*/
@@ -139,6 +150,18 @@ input {
     border-bottom: 0.125rem solid var(--linea-input);
 }
 
+.contraseña{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.toggle-password, .toggle-password2 {
+    position: relative;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
 .privacidad {
     width: 90%;
     margin: 0 2.5rem;
@@ -150,6 +173,12 @@ input {
 
 #privacy{
     width: 1.25rem;
+}
+
+.politica{
+    text-decoration: none;
+    color: var(--verdeOscuro);
+    font-weight: bold;
 }
 
 /*botones*/
@@ -238,7 +267,14 @@ input {
         align-items: center;
     }
 
-    .escribir, .medio {
+    .escribir{
+        width: 90%; 
+        margin: 1.875rem 0rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .medio {
         width: 90%; 
         margin: 1.875rem 0rem;
         display: flex;
@@ -253,7 +289,7 @@ input {
     }
 
     .boton {
-        width: 60%;
+        width: 90%;
     }
 }
 

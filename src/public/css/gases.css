@@ -1,3 +1,7 @@
+.gases{
+    width: 100%;
+}
+
 .gas-container {
     margin: 2rem 0;
     display: grid;
@@ -6,9 +10,11 @@
 }
 
 .gas-item {
+    width: 90%;
     padding: 0.625rem 1.25rem;
     background-color: var(--formularios);
     border-radius: 1rem;
+    justify-self: center;
 }
 
 .gas-icon {
@@ -61,5 +67,9 @@
 @media (max-width: 768px) {
     .gas-container {
         grid-template-columns: 1fr; 
+    }
+
+    .gas-icon {
+        width: 50%;
     }
 }
