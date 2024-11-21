@@ -4,7 +4,7 @@ main {
   
   .dashboard {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 20px;
     grid-template-areas: 
       "graph summary"
@@ -25,6 +25,7 @@ main {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    grid-area: graph;
   }
   
   canvas {
@@ -42,11 +43,11 @@ main {
   
   .summary {
     border-radius: 5px;
-    grid-column: auto;  
+    grid-area: summary;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    height: 10rem;
+    height: 7rem;
   }
   
   .location {
@@ -141,4 +142,3 @@ main {
     
 
   }
-  

@@ -1,0 +1,90 @@
+
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1rem;
+    color: var(--verdeOscuro);
+    margin-bottom: 0.5rem;
+}
+
+input {
+    padding: 0.75rem;
+    border: none;
+    border-bottom: 2px solid var(--linea-input);
+    background: var(--formularios);
+    color: var(--gris);
+    font-size: 1rem;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: var(--verdeClaro);
+}
+
+input::placeholder {
+    color: var(--textos-placeholder);
+}
+
+.error-message {
+    color: var(--negro);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    display: none; /* Oculto por defecto */
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--verdeClaro);
+    color: var(--blanco);
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--hover);
+}
+
+#logoutButton {
+    background-color: var(--negro);
+    color: var(--blanco);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+#logoutButton:hover {
+    background-color: var(--gris);
+}
+
+/* Mensaje de estado */
+#statusMessage {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--gris);
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    main {
+        padding: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+}

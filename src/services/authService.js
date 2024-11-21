@@ -156,7 +156,7 @@ const verifyIdentity = (req, res, next) => {
         console.log('User is authenticated');
         next(); // User is authenticated, proceed to the next middleware
     } else {
-        res.status(401).json({ message: 'Unauthorized access' }); // User is not authenticated
+        res.redirect("/paginaError.html"); // User is not authenticated
     }
 };
 

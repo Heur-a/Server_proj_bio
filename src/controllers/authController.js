@@ -26,7 +26,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         req.session = await loginUser(req.body.email, req.body.password, req.session);
-        res.redirect(200,'/user/user-profile.html');
+        res.redirect(200,'/user/mediciones.html');
     } catch (error) {
         res.status(error.statusCode).json({ message: error.message });
     }

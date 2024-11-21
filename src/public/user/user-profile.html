@@ -4,19 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Formulario Simple</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>OZONE | Editar perfil</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/editarPerfil.css">
+    
+    <!--tipografia-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!--iconos bootstrap-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+
 </head>
 <body>
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="/img/logotipo_modoClaro.png" alt="Logo de la empresa" class="logo-img">
+            </a>
+        </div>
+        <button class="menu-toggle">&#9776;</button>
+        <nav class="nav">
+            <ul>
+                <li><a href="/mediciones.html" style="font-weight: bold;">PRINCIPAL</a></li>
+                <li><a href="/contacto.html">CONTACTO</a></li>
+                <li><a href="/faq.html">FAQ</a></li>
+                <li><a href="/gases.html">GASES</a></li>
+            </ul>
+        </nav>
+        <div class="user"><a href="/user/user-profile.html"><i class="bi bi-person-circle"></i></a></div>
+
+    </header>
     <main>
-        <div>
-            MOCK USER PAGE
-        </div>
-        <div>
-            <button id="logoutButton">Log Out</button>
-        </div>
+       
         <section>
-            <h2>Formulario</h2>
+            <h2>Editar perfil</h2>
             <form id="simpleForm">
                 <div class="form-group">
                     <label for="name">Nombre</label>
@@ -43,11 +63,20 @@
                     <input id="postal" type="text" placeholder="Introduzca sus apellidos a cambiar" required>
                     <span class="error-message" id="postalError"></span>
                 </div>
-                <button type="button" onclick="validateForm()">Enviar</button>
+                <button type="button" onclick="validateForm()">Enviar</button> 
+                <div>
+            <button id="logoutButton">Log Out</button>
+        </div>
             </form>
             <div id="statusMessage"></div>
         </section>
     </main>
+
+    <footer>
+        <p>&copy; 2024 Ozone. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="/js/menu.js"></script>
     <script src="/js/updateUser-UserProfile.js"></script>
     <script src="/js/logout.js"></script>
 </body>
