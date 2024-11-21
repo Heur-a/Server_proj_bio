@@ -26,7 +26,7 @@
             <ul>
                 <li><a href="index.html">PRINCIPAL</a></li>
                 <li><a href="sensor.html">SENSOR</a></li>
-                <li><a href="acerca_de.html">ACERCA DE OZONE</a></li>
+                <li><a href="acerca_de.html">ACERCA DE</a></li>
                 <li><a href="suscripcion.html">SUSCRIPCIÓN</a></li>
                 <li><a href="contacto.html">CONTACTO</a></li>
                 <li><a href="faq.html">FAQ</a></li>
@@ -42,7 +42,11 @@
             <h2 id="titulo">Formulario de Compra</h2>
             <form method="post" id="purchaseForm">
                 <div class="step active" id="step1">
-                    <h5>Paso 1</h5>
+                    <div class="divFlecha">
+                        <a href="suscripcion.html" class="flecha"><i class="bi bi-arrow-left"></i></a>
+                    </div>
+                    
+                    <h4>Paso 1</h4>
                     <p>Verifique su identidad</p>
                     <div class="progress-container">
                         <div class="progress-bar" id="myBar1"></div>
@@ -51,14 +55,51 @@
                         <label for="email">Correo Electrónico*</label>
                         <input id="email" type="email" required placeholder="Introduzca su correo electrónico">
                     </div>
-                    <button class="boton" type="button" onclick="verifyEmail()">Siguiente</button>
+                    <button class="boton" id="bb" type="button" onclick="verifyEmail()">Siguiente</button>
                     
                 </div>
+
+                <div class="popup" id="popup-step2" style="display: none;">
+                    <div class="popup-content">
+                        <h3>LE HEMOS ENVIADO UN CORREO DE VERIFICACIÓN</h3>
+                        <button class="boton" onclick="nextStep(2)">Continuar</button>
+                    </div>
+                </div>
+
                 <div class="step" id="step2">
-                    <h5>Paso 2</h5>
-                    <p>Introduzca sus datos personales</p>
+                    <div class="divFlecha">
+                        <a href="#" class="flecha" onclick="nextStep(1)"><i class="bi bi-arrow-left"></i></a>
+                    </div>
+                        
+                    <h4>Paso 2</h4>
+                    <p>Verifique su código</p>
                     <div class="progress-container">
                         <div class="progress-bar" id="myBar2"></div>
+                    </div>
+
+                    <div class="medio">
+                        <label>¿No te ha llegado el correo?</label>                    
+                        <button class="boton" type="button" onclick="popupCorreoEnviado()">Volver a enviar</button>
+
+                    </div>
+
+                    <div class="medio">
+                        <label for="codigo">Introduce el código enviado a tu correo*</label>
+                        <input id="codigo" type="text" required placeholder="Introduzca el código de seis dígitos">
+                    </div>
+                    <button class="boton" type="button" onclick="verifyStep2()">Siguiente</button>
+                    
+                </div>
+
+                <div class="step" id="step3">
+                    <div class="divFlecha">
+                        <a href="#" class="flecha" onclick="nextStep(2)"><i class="bi bi-arrow-left"></i></a>
+                    </div>
+
+                    <h4>Paso 3</h4>
+                    <p>Introduzca sus datos personales</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="myBar3"></div>
                     </div>
                     <div class="grupo">
                         <div class="escribir">
@@ -100,13 +141,18 @@
                             <input id="cp" type="text" required>
                         </div>
                     </div>
-                    <button class="boton" type="button" onclick="verifyStep2()">Siguiente</button>
+                    <button class="boton" type="button" onclick="verifyStep3()">Siguiente</button>
                 </div>
-                <div class="step" id="step3">
-                    <h5>Paso 3</h5>
+
+                <div class="step" id="step4">
+                    <div class="divFlecha">
+                        <a href="#" class="flecha" onclick="nextStep(3)"><i class="bi bi-arrow-left"></i></a>
+                    </div>
+                    
+                    <h4>Paso 4</h4>
                     <p>Introduzca sus datos de compra</p>
                     <div class="progress-container">
-                        <div class="progress-bar" id="myBar3"></div>
+                        <div class="progress-bar" id="myBar4"></div>
                     </div>
                     <div class="medio">
                         <label for="card">Número de Tarjeta*</label>

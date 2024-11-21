@@ -6,16 +6,25 @@
     <title>OZONE | Iniciar sesión</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/log-in.css">
+    
+    <!--tipografia-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!--iconos bootstrap-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
+
+    <div class="login-container">
+        <!-- Flecha y Logo -->
+        <a href="index.html" class="flecha"><i class="bi bi-arrow-left"></i></a>
+        
         <div class="logo">
-            <img src="img/logotipo_modoClaro.png" alt="Logo de la empresa">
+            <img src="img/logotipo_modoClaro.png" alt="Logo de la empresa" class="logo-img">
         </div>
-    </header>
-    <div class="container">
+
+        <!-- Login Form -->
         <div class="formulario">
-            <h1>Iniciar sesión</h1>
+            <h1>Iniciar sesion</h1>
             <form method="post">
                 <div class="escribir">
                     <label>Correo electrónico*</label>
@@ -32,12 +41,12 @@
             
             </form>
         </div>
+
+        <!-- Illustration Area -->
         <div class="foto">
             <img src="img/imagen_login.png" alt="Imagen de inicio de sesión">
         </div>
     </div>
-
-    <script src="/js/login.js"></script>
 
 </body>
 </html>

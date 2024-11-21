@@ -1,63 +1,66 @@
 body {
     height: 100vh;
-    background: #3a5335;
-}
-
-header {
-    height: 15%;
-}
-
-.logo {
-    width: 12.5rem;
-    height: 100%;
-    position: relative;
-    top: -50%;
-}
-
-.logo img {
-    width: 100%;
-    height: auto;
-    padding-left: 10%;
-}
-
-.container {
-    flex: 1;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--verdeOscuro);
+}
+
+.login-container {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+}
+
+.flecha {
+    position: absolute;
+    top: 3rem;
+    left: 3rem;
+    font-size: 3rem;
+    color: var(--beige);
+    text-decoration: none;
+}
+.logo {
+    position: absolute;
+    top: 3rem;
+    left: 3rem;
+}
+
+.logo img{
+    width: 150%;
+    height: 150%;
 }
 
 .formulario {
-    width: 60%;
-    height: 110%;
-    padding: 1.25rem;
+    height: 100%;
+    width: 50%;
     position: relative;
-    top: -17.5%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    box-shadow: 0.625rem 0 0.625rem rgba(0,0,0,.5);
+    box-shadow: 2rem 0 1rem rgba(0, 0, 0, 0.2);     
 }
 
-.formulario h1 {
-    margin-bottom: 1.25rem;
-    padding-left: 10%;
-    color: var(--blanco);
+h1 {
+    color: var(--beige);
 }
 
 .formulario form {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .escribir {
-    width: 80%;
+    width: 100%;
     margin: 0.625rem 0;
     border-bottom: 0.125rem solid var(--verdeClaro);
 }
 
 .escribir label {
-    color: var(--blanco);
+    color: var(--beige);
     font-size: 1rem;
 }
 
@@ -66,7 +69,7 @@ header {
     height: 1.875rem;
     background: none;
     font-size: 1rem;
-    color: var(--blanco);
+    color: var(--beige);
     outline: none;
     border: none;
 }
@@ -82,6 +85,7 @@ header {
     cursor: pointer;
     outline: none;
     border: none;
+    align-self: center;
 }
 
 .boton:hover {
@@ -90,12 +94,13 @@ header {
 }
 
 .recordar {
-    color: var(--blanco);
+    color: var(--beige);
     cursor: pointer;
+    text-align: center;
 }
 
 .recordar a {
-    color: var(--blanco);
+    color: var(--beige);
     text-decoration: underline;
     font-weight: bold;
 }
@@ -118,24 +123,22 @@ header {
     top: -10%;
 }
 
-@media (max-width: 800px) {
-    .logo {
-        width: 10.938rem;
-        position: relative;
-        top: 0;
-        left: 2rem;
-    }
-    .container {
-        padding: 0;
+
+@media (max-width: 1500px) {
+    
+    .login-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
+
     .formulario {
-        padding: 0;
         width: 100%;
+        padding: 0;
+        align-items: center;
         box-shadow: none;
     }
+
     .foto img {
         display: none;
     }

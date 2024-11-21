@@ -79,9 +79,19 @@ input, select {
 
 
 @media (max-width: 920px) {
+
+    .formulario form {
+        width: 100%;
+        background: none;
+    }
+
     .escribir, .descripcion {
-        width: 90%; 
-        margin: 1.875rem 2.5rem;
+        width: 100%; 
+        margin: 1.875rem 0rem;
+    }
+
+    .boton{
+        width: 60%;
     }
 }
 

@@ -144,8 +144,9 @@ h1 {
 }
 
 h2 {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    margin: 0 1rem;
+    text-align: center;
+    font-family: 'FONTSPRING DEMO - The Seasons', serif;
     color: var(--gris);
     font-size: 3rem;
     font-style: normal;
@@ -156,20 +157,13 @@ h3 {
     margin: 2rem 0;
     font-family: 'Montserrat', sans-serif;
     color: var(--verdeOscuro);
-    font-size: 2rem;
+    font-size: 1.2rem;
 }
 
 h4 {
     margin: 1rem 0;
     color: var(--gris);
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-h5{
-    margin: 1rem 0;
-    color: var(--verdeOscuro);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: normal;
 }
 
@@ -197,6 +191,10 @@ footer {
     text-align: center;
     background-color: var(--verdeOscuro);
     color: var(--blanco);
+}
+
+footer p {
+    width: 90%;
 }
 
 @media (max-width: 1041px){
@@ -239,9 +237,19 @@ footer {
 
 @media (max-width: 842px){
     main{
-        padding: 2rem 3.125rem 1rem 3.125rem;
+        padding: 2rem 2.5rem 1rem 2.5rem;
     }
+
+    h1 {
+        font-size: 3rem;
+        padding-bottom: 1rem;
+    }
+    
     h2{
-        font-size: 2rem;
+        font-size: 2.5rem;
+    }
+
+    footer p{
+        font-size: 0.8rem;
     }
 }
