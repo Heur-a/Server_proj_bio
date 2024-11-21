@@ -24,9 +24,14 @@ async function updateUserData(validatedFields) {
 async function validateForm() {
     const fields = [
         { 
+            id: 'name', 
+            message: 'El nombre debe contener al menos 2 caracteres.', 
+            pattern: /^.{2,}$/,
+        },
+        { 
             id: 'password', 
             message: 'La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, una minúscula y un número.', 
-            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 
+            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
             isPassword: true,
         },
         { 
@@ -46,10 +51,11 @@ async function validateForm() {
         },
         { 
             id: 'postal', 
-            message: 'El campo de apellidos debe contener texto válido y estar separado por espacios.', 
+            message: 'El campo de apellidos debe contener como máximo dos palabras.', 
             customCheck: () => {
                 const postalValue = document.getElementById('postal').value.trim();
-                return postalValue.split(' ').length >= 2; // Verifica que haya al menos dos palabras
+                const names = postalValue.split(/\s+/).filter(Boolean); // Eliminar espacios extra
+                return names.length <= 2; // Verificar que no haya más de 2 palabras
             },
         },
     ];
@@ -71,9 +77,10 @@ async function validateForm() {
             } else {
                 // Preparar los campos para la solicitud
                 if (field.id === 'postal') {
-                    const names = value.split(' ').map(part => part.trim());
+                    // Dividir apellidos en lastName1 y lastName2
+                    const names = value.split(/\s+/).filter(Boolean);
                     validatedFields.lastName1 = names[0];
-                    validatedFields.lastName2 = names.slice(1).join(' ');
+                    validatedFields.lastName2 = names[1] || ''; // Si no hay segundo apellido, enviar vacío
                 } else {
                     validatedFields[field.id === 'telephone' ? 'tel' : field.id] = value;
                 }
