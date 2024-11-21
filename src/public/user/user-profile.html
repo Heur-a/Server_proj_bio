@@ -35,7 +35,7 @@
     </header>
     <main>
        
-        <section>
+        <section class="formulario">
             <h2>Editar perfil</h2>
             <form id="simpleForm">
                 <div class="form-group">
@@ -63,9 +63,10 @@
                     <input id="postal" type="text" placeholder="Introduzca sus apellidos a cambiar" required>
                     <span class="error-message" id="postalError"></span>
                 </div>
-                <button type="button" onclick="validateForm()">Enviar</button> 
+                <button type="button" onclick="validateForm()">Enviar</button>
+                <button type="button" id="logoutButton">Log Out</button> 
                 <div>
-            <button id="logoutButton">Log Out</button>
+            
         </div>
             </form>
             <div id="statusMessage"></div>
