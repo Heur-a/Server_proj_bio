@@ -98,7 +98,7 @@ const isAuthenticated = (session) => {
 const registerUser = async (newUser, session) => {
 
     // User validations
-    if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
+    if (!newUser.name || !newUser.surname_1  || !newUser.email || !newUser.telephone || !newUser.password) {
         throw new HttpError(400, 'All fields are required');
     }
 
