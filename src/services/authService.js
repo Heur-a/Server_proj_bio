@@ -7,6 +7,8 @@ import nodemailer from 'nodemailer';
 import { readFile } from 'fs/promises';
 import pool from '../config/db_conection.js';
 import { emailValidated } from '../components/emailValidatedClass.js';
+import { updateUser } from '../controllers/userController.js';
+import { UserUpdate } from '../components/userClass.js';
 // Load environment variables from .env file
 config();
 
@@ -146,6 +148,7 @@ const registerUser = async (newUser) => {
  * @returns {void} Calls next middleware if authenticated, otherwise sends a 401 response.
  */
 const verifyIdentity = (req, res, next) => {
+    console.log('User request: ', req)
     if (req.session.user) {
         console.log('User is authenticated');
         next(); // User is authenticated, proceed to the next middleware
@@ -153,6 +156,58 @@ const verifyIdentity = (req, res, next) => {
         res.status(401).json({ message: 'Unauthorized access' }); // User is not authenticated
     }
 };
+
+const updateUserData = async (user) => {
+    try {
+
+        //mirar si user es un objeto UserUpdate
+        if (!(user instanceof UserUpdate)) {
+            throw new HttpError(400, 'Invalid user object');
+        }
+
+        //mirar si el id del usuario no es null
+        if (!user.id) {
+            throw new HttpError(400, 'Invalid user id');
+        }
+
+        //mirar si el id del usuario es un número
+        if (typeof user.id !== 'number') {
+            throw new HttpError(400, 'Invalid user id');
+        }
+
+        //mirar si el id del usuario es mayor que 0
+        if (user.id <= 0) {
+            throw new HttpError(400, 'Invalid user id');
+        }
+
+        //mirar si el id del usuario existe
+        if (!(await getUserById(user.id))) {
+            throw new HttpError(404, 'User not found');
+        }
+
+        await updateUser(user);
+    } catch (error) {
+
+        // Detailed logging to debug issues with email verification
+        console.error('Error in verifyEmail function:', error);
+
+        // Check for specific error cases and throw meaningful HttpError
+        if (error instanceof HttpError) {
+            // Re-throw known errors as-is, preserving status and message
+            throw error;
+        } else {
+            // For other errors, respond with a generic server error message
+            throw new HttpError(500, 'Failed to verify email');
+        }
+
+    }
+};
+
+
+
+
+
+
 
 /**
  * @brief Sends email for verifying email using JWT and Nodemailer.
@@ -169,7 +224,7 @@ const sendVerificationEmail = async (email) => {
     if (!emailRegex.test(email)) {
         throw new HttpError(400, 'Invalid email');
     }
-    
+
     const emailVerified = await isEmailVerified(email);
     if (emailVerified) {
         throw new HttpError(400, 'Email already verified');

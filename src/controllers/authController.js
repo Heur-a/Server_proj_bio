@@ -7,7 +7,7 @@ import { loginUser, logoutUser, isAuthenticated, registerUser, sendVerificationE
  */
 export const register = async (req, res) => {
     try {
-        res.session = await registerUser(req.body);
+        req.session = await registerUser(req.body);
         res.redirect(200,'/user/user-profile.html');
     } catch (error) {
         res.status(error.statusCode).json({ message: error.message });
@@ -21,7 +21,7 @@ export const register = async (req, res) => {
  */
 export const login = async (req, res) => {
     try {
-        res.session = await loginUser(req.body.email, req.body.password, req.session);
+        req.session = await loginUser(req.body.email, req.body.password, req.session);
         res.redirect(200,'/user/user-profile.html');
     } catch (error) {
         res.status(error.statusCode).json({ message: error.message });
