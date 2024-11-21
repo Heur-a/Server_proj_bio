@@ -7,8 +7,11 @@ import { loginUser, logoutUser, isAuthenticated, registerUser, sendVerificationE
  */
 export const register = async (req, res) => {
     try {
-        req.session = await registerUser(req.body);
-        res.redirect(200,'/user/user-profile.html');
+        req.session = await registerUser(req.body, req.session);
+        console.log('User registered successfully');
+        console.log(req.session);
+        console.log('Redirecting to user-profile.html');
+        res.status(201).redirect('/user/user-profile.html');
     } catch (error) {
         res.status(error.statusCode).json({ message: error.message });
     }

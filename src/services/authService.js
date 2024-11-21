@@ -91,10 +91,11 @@ const isAuthenticated = (session) => {
  * @async
  * @function
  * @param {object} newUser - Object containing new user data.
+ * @param {object} session - Express session.
  * @returns {Promise<object>} Returns the user session if registration is successful.
  * @throws {HttpError} Throws an error if user data is invalid or user already exists.
  */
-const registerUser = async (newUser) => {
+const registerUser = async (newUser, session) => {
 
     // User validations
     if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
@@ -132,7 +133,9 @@ const registerUser = async (newUser) => {
 
     try {
         const createdUser = await createUser(newUser);
+        console.log('User created:', createdUser);
         session.user = { id: createdUser.id, email: createdUser.email };
+        console.log('User registered:', session.user);
         return session;
     } catch (error) {
         throw new HttpError(500, error.message);
@@ -409,9 +412,18 @@ const sendNewPasswordEmail = async (email) => {
  * @throws {HttpError} Throws an error if adding verification fails.
  */
 const addEmailVerification = async (email, hashedCode) => {
+
+    //check if entry already exists
+    const emailVerified = await getEmailVerification(email);
+    if (emailVerified) {
+        updateVerificationCode(email, hashedCode);
+        return;
+    }
+    
     try {
         const sql = await readFile('./src/sql/addEmailVerification.sql', 'utf-8');
         await pool.query(sql, [email, hashedCode]);
+        return;
     } catch (error) {
         throw new HttpError(500, error.message);
     }
@@ -433,10 +445,12 @@ const getEmailVerification = async (email) => {
         if (result.length) {
             const row = result[0];
             return new emailValidated(row.idEmailValidated, row.email, row.code, row.isValidated);
+        } else {
+            return null;
         }
 
     } catch (error) {
-        throw new HttpError(500, 'Failed to get email verification');
+        throw new HttpError(500, error.message);
     }
 };
 
@@ -452,9 +466,12 @@ const makeEmailValid = async (email) => {
 const isEmailVerified = async (email) => {
     try {
         const emailVerifiedRow = await getEmailVerification(email);
+        if (!emailVerifiedRow || emailVerifiedRow === null){
+            return false;
+        }
         return emailVerifiedRow.isValidated;
     } catch (error) {
-        throw new HttpError(500, 'Failed to check email verification');
+        throw new HttpError(500, error.message);
     }
 }
 
@@ -489,7 +506,14 @@ const generateRandomPassword = () => {
     return mandatoryChars.join("");
 };
 
-console.log(generateRandomPassword());
+const updateVerificationCode = async (email, code) => {
+    try {
+        const sql = await readFile('./src/sql/updateEmailVerificationCode.sql', 'utf-8');
+        await pool.query(sql, [code, email]);
+    } catch (error) {
+        throw new HttpError(500, error.message);
+    }
+}
 
 
 
