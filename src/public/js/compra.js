@@ -238,3 +238,33 @@ async function sendVerificationCode(email, code) {
         alert(error.message);
     }
 }
+
+function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.querySelector('.toggle-password');
+        
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('bi-eye-slash-fill');
+        toggleIcon.classList.add('bi-eye-fill'); 
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('bi-eye-fill');
+        toggleIcon.classList.add('bi-eye-slash-fill'); 
+    }
+}
+
+function togglePassword2() {
+    const passwordRepeatInput = document.getElementById('repeat_password');
+    const toggleIcon2 = document.querySelector('.toggle-password2');
+        
+    if (passwordRepeatInput.type === 'password') {
+        passwordRepeatInput.type = 'text';
+        toggleIcon2.classList.remove('bi-eye-slash-fill');
+        toggleIcon2.classList.add('bi-eye-fill'); 
+    } else {
+        passwordRepeatInput.type = 'password';
+        toggleIcon2.classList.remove('bi-eye-fill');
+        toggleIcon2.classList.add('bi-eye-slash-fill'); 
+    }
+}
