@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { getUserByEmail, getUserPasswordById, createUser } from './userService.js';
+import { getUserByEmail, getUserPasswordById, createUser, updateUser, getUserById } from './userService.js';
 import { config } from 'dotenv';
 import session from 'express-session';
 import { HttpError } from '../components/HttpErrorClass.js';
@@ -7,8 +7,8 @@ import nodemailer from 'nodemailer';
 import { readFile } from 'fs/promises';
 import pool from '../config/db_conection.js';
 import { emailValidated } from '../components/emailValidatedClass.js';
-import { updateUser } from '../controllers/userController.js';
 import { UserUpdate } from '../components/userClass.js';
+import { get } from 'http';
 // Load environment variables from .env file
 config();
 
@@ -184,7 +184,7 @@ const updateUserData = async (user) => {
         }
 
         //mirar si el id del usuario existe
-        if (!(await getUserById(user.id))) {
+        if (!(await getUserByEmail(user.email))) {
             throw new HttpError(404, 'User not found');
         }
 
@@ -531,5 +531,6 @@ export {
     getEmailVerification,
     makeEmailValid,
     isEmailVerified,
-    changePassword
+    changePassword,
+    updateUserData
 };

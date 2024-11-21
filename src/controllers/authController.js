@@ -1,4 +1,5 @@
-import { loginUser, logoutUser, isAuthenticated, registerUser, sendVerificationEmail, sendNewPasswordEmail, validateEmailCode } from '../services/authService.js';
+import { UserUpdate } from '../components/userClass.js';
+import { loginUser, logoutUser, isAuthenticated, registerUser, sendVerificationEmail, sendNewPasswordEmail, validateEmailCode, updateUserData } from '../services/authService.js';
 
 /**
  * @brief Registra un nou usuari.
@@ -89,5 +90,31 @@ export const handleResetPassword = async (req, res) => {
         res.status(200).json({ message: 'Password changed successfully, ' });
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+}
+
+export const handleUpdateUserData = async (req, res) => {
+    try {
+        const userId = req.session.user?.id;
+        const email = req.session.user?.email;
+        if (!userId || !email) {
+            return res.status(400).json({ message: "User ID and email is required and missing in the session." });
+        }
+
+        const user = new UserUpdate.Builder()
+            .setId(userId)
+            .setName(req.body.name)
+            .setEmail(req.session.user.email)
+            .setLastName1(req.body.lastName1)
+            .setLastName2(req.body.lastName2)
+            .setTel(req.body.tel)
+            .setPassword(req.body.password)
+            .build();
+
+        await updateUserData(user);
+
+        res.status(200).json({ message: "Data changed successfully" });
+    } catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message });
     }
 }
