@@ -109,7 +109,7 @@ export const createUser = async (userData) => {
  * @returns {Promise<boolean>} Returns true if the user was updated successfully.
  * @throws {Error} Will throw an error if the SQL query fails or if no fields are provided for update.
  */
-export const updateUser = async (email, userData) => {
+export const updateUser = async (userData) => {
     try {
         // Read the base SQL from the updateUser.sql file
         const sqlBase = await readFile('./src/sql/updateUser.sql', 'utf-8');
@@ -125,15 +125,15 @@ export const updateUser = async (email, userData) => {
         }
         if (userData.lastName1) {
             fields.push('lastName1 = ?');
-            values.push(userData.surname_1);
+            values.push(userData.lastName1);
         }
         if (userData.lastName2) {
             fields.push('lastName2 = ?');
-            values.push(userData.surname_2);
+            values.push(userData.lastName2);
         }
         if (userData.tel) {
             fields.push('tel = ?');
-            values.push(userData.telephone);
+            values.push(userData.tel);
         }
         if (userData.password) {
             const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -147,8 +147,8 @@ export const updateUser = async (email, userData) => {
         }
 
         // Construct the final SQL statement by appending the dynamic fields
-        const sql = `${sqlBase} SET ${fields.join(', ')} WHERE mail = ?`;
-        values.push(email);
+        const sql = `${sqlBase} SET ${fields.join(', ')} WHERE idUsers = ?`;
+        values.push(userData.id);
 
         // Execute the query with the constructed SQL and values
         const [result] = await pool.query(sql, values);
@@ -212,6 +212,23 @@ export const checkUserExists = async (email) => {
 
         // Check the result to see if any rows were returned
         return rows[0]?.email_exists > 0;
+    } catch (error) {
+        console.error('Database query error:', error);
+        throw new Error('Failed to check user existence.');
+    }
+}
+
+export const checkUserExistsById = async (id) => {
+    try {
+        // Read the SQL query from file
+        const sql = await readFile('./src/sql/checkUserExistsId', 'utf-8');
+
+        // Execute the query, passing the id as a parameter
+        const [rows] = await pool.execute(sql, [id]);
+
+        // Check the result to see if any rows were returned
+        return rows[0]?.id_exists > 0;
+
     } catch (error) {
         console.error('Database query error:', error);
         throw new Error('Failed to check user existence.');

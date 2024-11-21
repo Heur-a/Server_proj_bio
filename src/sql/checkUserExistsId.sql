@@ -1,0 +1,1 @@
+SELECT COUNT(*) AS id_exists FROM Users WHERE idUsers = ?

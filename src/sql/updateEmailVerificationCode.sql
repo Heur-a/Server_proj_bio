@@ -1,0 +1,1 @@
+UPDATE EmailValidated SET code = ? WHERE email = ?;

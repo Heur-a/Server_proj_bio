@@ -15,7 +15,7 @@
     flex-wrap: wrap;
 }
 
-.content, .map {
+.content {
     flex: 1;
 }
 
@@ -30,7 +30,9 @@
 }
 
 .content p{
-    margin: 1.5rem 6rem 1.5rem 0;
+    width: 70%;
+    margin: 1.5rem 0;
+    line-height: 1.4rem;
 }
 
 .botonSuscribirse {
@@ -39,12 +41,13 @@
 }
 
 .map {
+    flex: 1;
     position: relative;
     z-index: 10;
 }
 
 #map {
-    height: 26.25rem;
+    height: 40rem;
 }
 
 #locationButton {
@@ -65,14 +68,6 @@
     text-shadow: 0.125rem 0.125rem 0.25rem rgba(255, 255, 255, 0.7);
 }
 
-
-@media (max-width: 1041px){
-    .content p{
-        margin: 1.5rem 4rem 1.5rem 0;
-
-    }
-}
-
 @media (max-width: 842px){
     .vacio {
         height: 6.5rem;
@@ -84,18 +79,21 @@
         gap: 3rem;
     }
 
-    .container h1,
-    .content,
-    .botonSuscribirse {
+    .content{
         text-align: center;
+        align-items: center;
+        width: 100%;
     }
 
     .content p{
-        margin: 1.5rem;
+        width: 100%;
     }
 
-    .content,
-    .map {
+    .botonSuscribirse{
+        width: 70%;
+    }
+
+    .map{
         width: 100%;
     }
 

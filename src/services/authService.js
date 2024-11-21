@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { getUserByEmail, getUserPasswordById, createUser } from './userService.js';
+import { getUserByEmail, getUserPasswordById, createUser, updateUser, getUserById } from './userService.js';
 import { config } from 'dotenv';
 import session from 'express-session';
 import { HttpError } from '../components/HttpErrorClass.js';
@@ -7,6 +7,8 @@ import nodemailer from 'nodemailer';
 import { readFile } from 'fs/promises';
 import pool from '../config/db_conection.js';
 import { emailValidated } from '../components/emailValidatedClass.js';
+import { UserUpdate } from '../components/userClass.js';
+import { get } from 'http';
 // Load environment variables from .env file
 config();
 
@@ -89,13 +91,14 @@ const isAuthenticated = (session) => {
  * @async
  * @function
  * @param {object} newUser - Object containing new user data.
+ * @param {object} session - Express session.
  * @returns {Promise<object>} Returns the user session if registration is successful.
  * @throws {HttpError} Throws an error if user data is invalid or user already exists.
  */
-const registerUser = async (newUser) => {
+const registerUser = async (newUser, session) => {
 
     // User validations
-    if (!newUser.name || !newUser.surname_1 || !newUser.surname_2 || !newUser.email || !newUser.telephone || !newUser.password) {
+    if (!newUser.name || !newUser.surname_1  || !newUser.email || !newUser.telephone || !newUser.password) {
         throw new HttpError(400, 'All fields are required');
     }
 
@@ -130,7 +133,9 @@ const registerUser = async (newUser) => {
 
     try {
         const createdUser = await createUser(newUser);
+        console.log('User created:', createdUser);
         session.user = { id: createdUser.id, email: createdUser.email };
+        console.log('User registered:', session.user);
         return session;
     } catch (error) {
         throw new HttpError(500, error.message);
@@ -146,6 +151,7 @@ const registerUser = async (newUser) => {
  * @returns {void} Calls next middleware if authenticated, otherwise sends a 401 response.
  */
 const verifyIdentity = (req, res, next) => {
+    console.log('User request: ', req)
     if (req.session.user) {
         console.log('User is authenticated');
         next(); // User is authenticated, proceed to the next middleware
@@ -153,6 +159,58 @@ const verifyIdentity = (req, res, next) => {
         res.status(401).json({ message: 'Unauthorized access' }); // User is not authenticated
     }
 };
+
+const updateUserData = async (user) => {
+    try {
+
+        //mirar si user es un objeto UserUpdate
+        if (!(user instanceof UserUpdate)) {
+            throw new HttpError(400, 'Invalid user object');
+        }
+
+        //mirar si el id del usuario no es null
+        if (!user.id) {
+            throw new HttpError(400, 'Invalid user id');
+        }
+
+        //mirar si el id del usuario es un número
+        if (typeof user.id !== 'number') {
+            throw new HttpError(400, 'Invalid user id');
+        }
+
+        //mirar si el id del usuario es mayor que 0
+        if (user.id <= 0) {
+            throw new HttpError(400, 'Invalid user id');
+        }
+
+        //mirar si el id del usuario existe
+        if (!(await getUserByEmail(user.email))) {
+            throw new HttpError(404, 'User not found');
+        }
+
+        await updateUser(user);
+    } catch (error) {
+
+        // Detailed logging to debug issues with email verification
+        console.error('Error in verifyEmail function:', error);
+
+        // Check for specific error cases and throw meaningful HttpError
+        if (error instanceof HttpError) {
+            // Re-throw known errors as-is, preserving status and message
+            throw error;
+        } else {
+            // For other errors, respond with a generic server error message
+            throw new HttpError(500, 'Failed to verify email');
+        }
+
+    }
+};
+
+
+
+
+
+
 
 /**
  * @brief Sends email for verifying email using JWT and Nodemailer.
@@ -169,7 +227,7 @@ const sendVerificationEmail = async (email) => {
     if (!emailRegex.test(email)) {
         throw new HttpError(400, 'Invalid email');
     }
-    
+
     const emailVerified = await isEmailVerified(email);
     if (emailVerified) {
         throw new HttpError(400, 'Email already verified');
@@ -354,9 +412,18 @@ const sendNewPasswordEmail = async (email) => {
  * @throws {HttpError} Throws an error if adding verification fails.
  */
 const addEmailVerification = async (email, hashedCode) => {
+
+    //check if entry already exists
+    const emailVerified = await getEmailVerification(email);
+    if (emailVerified) {
+        updateVerificationCode(email, hashedCode);
+        return;
+    }
+    
     try {
         const sql = await readFile('./src/sql/addEmailVerification.sql', 'utf-8');
         await pool.query(sql, [email, hashedCode]);
+        return;
     } catch (error) {
         throw new HttpError(500, error.message);
     }
@@ -378,10 +445,12 @@ const getEmailVerification = async (email) => {
         if (result.length) {
             const row = result[0];
             return new emailValidated(row.idEmailValidated, row.email, row.code, row.isValidated);
+        } else {
+            return null;
         }
 
     } catch (error) {
-        throw new HttpError(500, 'Failed to get email verification');
+        throw new HttpError(500, error.message);
     }
 };
 
@@ -397,9 +466,12 @@ const makeEmailValid = async (email) => {
 const isEmailVerified = async (email) => {
     try {
         const emailVerifiedRow = await getEmailVerification(email);
+        if (!emailVerifiedRow || emailVerifiedRow === null){
+            return false;
+        }
         return emailVerifiedRow.isValidated;
     } catch (error) {
-        throw new HttpError(500, 'Failed to check email verification');
+        throw new HttpError(500, error.message);
     }
 }
 
@@ -434,7 +506,14 @@ const generateRandomPassword = () => {
     return mandatoryChars.join("");
 };
 
-console.log(generateRandomPassword());
+const updateVerificationCode = async (email, code) => {
+    try {
+        const sql = await readFile('./src/sql/updateEmailVerificationCode.sql', 'utf-8');
+        await pool.query(sql, [code, email]);
+    } catch (error) {
+        throw new HttpError(500, error.message);
+    }
+}
 
 
 
@@ -452,5 +531,6 @@ export {
     getEmailVerification,
     makeEmailValid,
     isEmailVerified,
-    changePassword
+    changePassword,
+    updateUserData
 };

@@ -21,20 +21,21 @@
                 <img src="img/logotipo_modoClaro.png" alt="Logo de la empresa" class="logo-img">
             </a>
         </div>
-        <button class="menu-toggle">&#9776;</button>
-        <nav class="nav">
-            <ul>
-                <li><a href="index.html">PRINCIPAL</a></li>
-                <li><a href="sensor.html">SENSOR</a></li>
-                <li><a href="acerca_de.html">ACERCA DE</a></li>
-                <li><a href="suscripcion.html">SUSCRIPCIÓN</a></li>
-                <li><a href="contacto.html">CONTACTO</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="gases.html">GASES</a></li>
-            </ul>
-        </nav>
-        <div class="user"><a href="log-in.html"><i class="bi bi-person-circle"></i></a></div>
-
+            <div class="menu">
+            <button class="menu-toggle">&#9776;</button>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">PRINCIPAL</a></li>
+                    <li><a href="sensor.html">SENSOR</a></li>
+                    <li><a href="acerca_de.html">ACERCA DE</a></li>
+                    <li><a href="suscripcion.html">SUSCRIPCIÓN</a></li>
+                    <li><a href="contacto.html">CONTACTO</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="gases.html">GASES</a></li>
+                </ul>
+            </nav>
+            <div class="user"><a href="log-in.html"><i class="bi bi-person-circle"></i></a></div>
+        </div>
     </header>
 
     <main>
@@ -42,7 +43,9 @@
             <h2 id="titulo">Formulario de Compra</h2>
             <form method="post" id="purchaseForm">
                 <div class="step active" id="step1">
-                    <a href="suscripcion.html" class="flecha"><i class="bi bi-arrow-left"></i></a>
+                    <div class="divFlecha">
+                        <a href="suscripcion.html" class="flecha"><i class="bi bi-arrow-left"></i></a>
+                    </div>
                     
                     <h4>Paso 1</h4>
                     <p>Verifique su identidad</p>
@@ -65,7 +68,9 @@
                 </div>
 
                 <div class="step" id="step2">
-                    <a href="#" class="flecha" onclick="nextStep(1)"><i class="bi bi-arrow-left"></i></a>
+                    <div class="divFlecha">
+                        <a href="#" class="flecha" onclick="nextStep(1)"><i class="bi bi-arrow-left"></i></a>
+                    </div>
                         
                     <h4>Paso 2</h4>
                     <p>Verifique su código</p>
@@ -88,8 +93,10 @@
                 </div>
 
                 <div class="step" id="step3">
-                    <a href="#" class="flecha" onclick="nextStep(2)"><i class="bi bi-arrow-left"></i></a>
-                        
+                    <div class="divFlecha">
+                        <a href="#" class="flecha" onclick="nextStep(2)"><i class="bi bi-arrow-left"></i></a>
+                    </div>
+
                     <h4>Paso 3</h4>
                     <p>Introduzca sus datos personales</p>
                     <div class="progress-container">
@@ -108,11 +115,18 @@
                     <div class="grupo">
                         <div class="escribir">
                             <label for="name">Contraseña*</label>
-                            <input id="password" type="password" required>
+                            <div class="contraseña">
+                                <input id="password" type="password" required>
+                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePassword()"></i>
+                            </div>
                         </div>
                         <div class="escribir">
                             <label for="name">Repetir Contraseña*</label>
-                            <input id="repeat_password" type="password" required>
+                            <div class="contraseña">
+                                <input id="repeat_password" type="password" required>
+                                <i class="bi bi-eye-slash-fill toggle-password2" onclick="togglePassword2()"></i>
+                            </div>
+
                         </div>
                     </div>
                     <div class="grupo">
@@ -139,16 +153,20 @@
                 </div>
 
                 <div class="step" id="step4">
-                    <a href="#" class="flecha" onclick="nextStep(3)"><i class="bi bi-arrow-left"></i></a>
-
+                    <div class="divFlecha">
+                        <a href="#" class="flecha" onclick="nextStep(3)"><i class="bi bi-arrow-left"></i></a>
+                    </div>
+                    
                     <h4>Paso 4</h4>
                     <p>Introduzca sus datos de compra</p>
                     <div class="progress-container">
                         <div class="progress-bar" id="myBar4"></div>
                     </div>
-                    <div class="medio">
-                        <label for="card">Número de Tarjeta*</label>
-                        <input id="card" type="text"required>
+                    <div class="grupo">
+                            <div class="escribir">
+                            <label for="card">Número de Tarjeta*</label>
+                            <input id="card" type="text"required>
+                        </div>
                     </div>
                     <div class="grupo">
                         <div class="escribir">
@@ -163,7 +181,7 @@
                     <div class="grupo">
                         <div class="privacidad">
                             <input type="checkbox" id="privacy" name="privacy" required>
-                            <label for="privacy">He leído y acepto la <a href="#">política de privacidad</a></label>
+                            <label for="privacy">He leído y acepto la <a href="#" class="politica">política de privacidad</a></label>
                         </div>
                     </div>
                     <button class="boton" type="button" onclick="submitForm()">Comprar</button>

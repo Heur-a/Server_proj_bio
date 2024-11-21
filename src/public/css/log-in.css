@@ -1,72 +1,69 @@
 body {
     height: 100vh;
-    background: #3a5335;
+    display: flex;
+    align-items: center;
+    background: var(--verdeOscuro);
 }
 
-header {
-    height: 15%;
-    display: block;
-
+.login-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;    
 }
 
-#enlace{
-    width: 50%;
-    height: 30%;
-
+.contenido{
+    width: 60%;
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0rem 0 2rem 0 var(--negro);
 }
 
-#flecha{
-    position: relative;
+.encabezado{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flecha {
+    position: absolute;
     top: 3rem;
     left: 3rem;
+    font-size: 2rem;
     color: var(--beige);
-
+    text-decoration: none;
 }
 
-.logo {
-    position: relative;
-    top: -10%;
-}
-
-.logo img {
-    width: 100%;
-    height: auto;
-    padding-left: 10%;
-}
-
-.container {
-    flex: 1;
+.logo-img{
+    width: 50%;
     display: flex;
+    position: relative;
 }
 
 .formulario {
-    width: 60%;
-    height: 110%;
-    padding: 1.25rem;
+    margin: 0 3rem;
     position: relative;
-    top: -17.5%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    box-shadow: 0.625rem 0 0.625rem rgba(0,0,0,.5);
 }
 
-.formulario h1 {
-    margin-bottom: 1.25rem;
-    padding-left: 10%;
-    font-size: 2rem;
+h1 {
     color: var(--beige);
+    font-size: 2.5rem;
 }
 
 .formulario form {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .escribir {
-    width: 80%;
+    width: 100%;
     margin: 0.625rem 0;
     border-bottom: 0.125rem solid var(--verdeClaro);
 }
@@ -97,6 +94,7 @@ header {
     cursor: pointer;
     outline: none;
     border: none;
+    align-self: center;
 }
 
 .boton:hover {
@@ -107,6 +105,7 @@ header {
 .recordar {
     color: var(--beige);
     cursor: pointer;
+    text-align: center;
 }
 
 .recordar a {
@@ -133,34 +132,40 @@ header {
     top: -10%;
 }
 
-@media (max-width: 800px) {
 
-    header{
-        height: 50%;
-    }
+@media (max-width: 1100px) {
 
-    .logo {
-        width: 50%;
-        padding: 0;
-        margin: 2rem auto;
-        display: block;
-        }
-
-    .logo img{
-        padding: 0;
+    .logo-img{
+        position: relative;
+        top: 0;
+        right: 0;
     }
     
-    .container {
+    .login-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    .formulario {
-        padding: 0;
+    .contenido{
         width: 100%;
+    }
+
+    .formulario {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        align-items: center;
         box-shadow: none;
     }
+
+    .formulario form{
+        width: 80%;
+    }
+    
+
+
+
     .foto img {
         display: none;
     }
