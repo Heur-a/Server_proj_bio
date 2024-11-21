@@ -1,3 +1,9 @@
+/*
+ * @Author: Alex Escrivà Caravaca 
+ * @Date: 2024-11-21 09:19:49 
+ * @Last Modified by: Alex Escrivà Caravaca
+ * @Last Modified time: 2024-11-21 09:57:23
+ */
 let userFields = {
     email: '',
     name: '',
@@ -10,7 +16,7 @@ let userFields = {
 
 
 function nextStep(step) {
-    document.getElementById('popup-step2').style.display = 'none'; 
+    document.getElementById('popup-step2').style.display = 'none';
     document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
     document.getElementById('step' + step).classList.add('active');
 }
@@ -31,21 +37,28 @@ async function verifyEmail() {
         if (userExists) {
             showError('email', 'El correo electrónico ya está en uso');
         } else {
-            popupCorreoEnviado();
+            clearErrors();
+            await popupCorreoEnviado();
         }
     }
 }
 
-function popupCorreoEnviado() {
-    document.getElementById('popup-step2').style.display = 'block'; 
+async function popupCorreoEnviado() {
+    let emailsent = await sendVerficationEmail(userFields.email);
+    if (!emailsent) {
+        showError('email', 'Error al enviar el correo de verificación');
+    } else {
+        clearErrors();
+        document.getElementById('popup-step2').style.display = 'block';
+    }
 }
 
-function verifyStep2() {
+async function verifyStep2() {
     const codigo = document.getElementById('codigo').value.trim();
     const codigoPattern = /^\d{6}$/;
     const existingError = document.querySelector('#codigo + .error-message');
 
-//comprobar codigo bbdd
+    //comprobar codigo bbdd
 
 
     if (!codigoPattern.test(codigo)) {
@@ -53,10 +66,14 @@ function verifyStep2() {
             showError('codigo', 'El código debe tener 6 dígitos');
         }
     } else {
-        clearErrors();
-        
-        popupCorreoEnviado();
-        nextStep(3);
+
+        let codeSent = await sendVerificationCode(userFields.email, codigo);
+        if (!codeSent) {
+            showError('codigo', 'El código no es correcto');
+        } else {
+            clearErrors();
+            nextStep(3);
+        }
     }
 }
 
@@ -191,32 +208,33 @@ async function checkEmailAvailability(email) {
     }
 }
 
-function togglePassword() {
-    const passwordInput = document.getElementById('password');
-    const toggleIcon = document.querySelector('.toggle-password');
-        
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleIcon.classList.remove('bi-eye-slash-fill');
-        toggleIcon.classList.add('bi-eye-fill'); 
-    } else {
-        passwordInput.type = 'password';
-        toggleIcon.classList.remove('bi-eye-fill');
-        toggleIcon.classList.add('bi-eye-slash-fill'); 
+async function sendVerficationEmail(email) {
+    try {
+        const response = await fetch(`auth/sendVerificationEmail?email=${email}`, {
+            method: 'POST'
+        });
+        if (!response.ok) {
+            return false;
+        } else {
+            return true;
+        }
+    } catch (error) {
+        alert(error.message);
     }
 }
 
-function togglePassword2() {
-    const passwordRepeatInput = document.getElementById('repeat_password');
-    const toggleIcon2 = document.querySelector('.toggle-password2');
-        
-    if (passwordRepeatInput.type === 'password') {
-        passwordRepeatInput.type = 'text';
-        toggleIcon2.classList.remove('bi-eye-slash-fill');
-        toggleIcon2.classList.add('bi-eye-fill'); 
-    } else {
-        passwordRepeatInput.type = 'password';
-        toggleIcon2.classList.remove('bi-eye-fill');
-        toggleIcon2.classList.add('bi-eye-slash-fill'); 
+async function sendVerificationCode(email, code) {
+    try {
+        const response = await fetch(`auth/verifyEmail?email=${email}&code=${code}`,
+            {
+                method: 'PUT'
+            });
+        if (!response.ok) {
+            return false;
+        } else {
+            return true;
+        }
+    } catch (error) {
+        alert(error.message);
     }
 }
