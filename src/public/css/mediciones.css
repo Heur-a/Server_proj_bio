@@ -31,7 +31,7 @@ canvas {
   padding: 15px;
   border: 1px solid #ffc107;
   border-radius: 5px;
-  width: 100%;
+  width: 95%;
 }
 
 .alert img {
@@ -152,6 +152,10 @@ canvas {
 
 .measurement:nth-child(2) h4 {
   color: #5A5A5A;
+}
+
+#downloadHistory {
+  width: 95%;
 }
 
 /* Diseño responsive para pantallas medianas */
