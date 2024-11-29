@@ -11,7 +11,24 @@
  * @requires medicionesService
  */
 
-import { getMedicionesDB, insertMedicionDB, getUltimaMedicionDB } from '../services/medicionesService.js';
+import { getMedicionesDB, insertMedicionDB, getUltimaMedicionDB} from '../services/medicionesService.js';
+import pool from '../config/db_conection.js';
+/**
+ * @function getMapaCalorData
+ * @description Retrieves the coordinates and values for the heatmap.
+ * @param {Request} req - The HTTP request.
+ * @param {Response} res - The HTTP response containing an array of data for the heatmap.
+ */
+export const getMapaCalorData = async (req, res) => {
+    try {
+        const query = 'SELECT LocX, LocY, value FROM Measurements';
+        const [rows] = await pool.query(query);
+        res.json(rows);
+    } catch (error) {
+        console.error('Error retrieving heatmap data:', error);
+        res.status(500).send('Error retrieving heatmap data');
+    }
+};
 
 /**
  * @function getMediciones

@@ -30,8 +30,8 @@ export const getMedicionesDB = async () => {
         console.log(rows);
         return rows;
     } catch (error) {
-        console.error('Error fetching all readings:', error);
-        throw new Error('Database query error');
+        console.error('Error obtaining readings:', error);
+        res.status(500).send('Error obtaining readings');
     }
 };
 
