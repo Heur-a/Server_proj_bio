@@ -27,3 +27,30 @@ export const createNode = async (uuid, idUser) => {
         throw new HttpError(500, 'Database insertion error');
     }
 };
+
+
+/**
+ * @function getNode
+ * @brief Gets the node associated with a user
+ * @param {string} id - User id
+ * @returns {string} Node uuid
+ */
+export const getNode = async (id) => {
+    try {
+        const query = await readFile('./src/sql/getNodeById.sql', 'utf-8');
+        const [rows] = await pool.query(query, [id]); // Usa la desestructuració per obtenir directament `rows`
+
+        if (!rows.length) {
+            return null; // Si no hi ha resultats
+        }
+
+        return rows[0];
+
+    } catch (error) {
+        if (error instanceof HttpError) {
+            throw error;
+        } else {
+            throw new HttpError(500, 'Internal Server Error');
+        }
+    }
+}
