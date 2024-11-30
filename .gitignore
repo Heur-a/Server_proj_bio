@@ -102,7 +102,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Docusaurus cache and generated files
 .docusaurus
@@ -138,13 +137,4 @@ node_modules/.json
 .42c/conf.yaml
 .42c/scan/api-de-mediciones/scanconf.json
 
-.idea
-.idea/dataSources.local.xml
-.idea/dataSources.xml
-.idea/jsLibraryMappings.xml
-.idea/dataSources/41161d0b-3c38-4b34-8d0d-fce58509dc4c.xml
-.idea/dataSources/41161d0b-3c38-4b34-8d0d-fce58509dc4c/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
-.idea/dataSources/41161d0b-3c38-4b34-8d0d-fce58509dc4c/storage_v2/_src_/schema/mysql.osA4Bg.meta
-.idea/dataSources/41161d0b-3c38-4b34-8d0d-fce58509dc4c/storage_v2/_src_/schema/OZONE_DB.wnqoMg.meta
-.idea/dataSources/41161d0b-3c38-4b34-8d0d-fce58509dc4c/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
-.idea/dataSources/41161d0b-3c38-4b34-8d0d-fce58509dc4c/storage_v2/_src_/schema/sys.zb4BAA.meta
+.idea/
