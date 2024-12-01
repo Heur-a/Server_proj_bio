@@ -47,8 +47,9 @@ export const createNode = async (req, res) => {
         }
 
         //Ver si ya existe un nodo
-        const uuidNodeExists = getNodeUuid(idUser);
+        const uuidNodeExists =  await getNodeUuid(idUser);
         if (uuidNodeExists) {
+            console.log("nodeController.createNode, uuid of already existing node: ", uuidNodeExists);
             throw new HttpError(403, 'A node already exists');
         }
 

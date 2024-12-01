@@ -33,7 +33,7 @@ export const createNode = async (uuid, idUser) => {
  * @function getNodeUuid
  * @brief Gets the node associated with a user
  * @param {string} id - User id
- * @returns {string} Node uuid
+ * @returns {Promise<string>} Node uuid
  */
 export const getNodeUuid = async (id) => {
     try {
