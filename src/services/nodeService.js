@@ -69,8 +69,6 @@ export const getNodeUuid = async (id) => {
                 return null;
             }
             const result = rows[0];
-            console.log(rows[0]);
-            console.log(result.idnodes);
             return result.idnodes;
 
         } catch (error) {

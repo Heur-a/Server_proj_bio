@@ -123,11 +123,6 @@ export const postMedicion = async (req, res) => {
             typeof uuid !== 'string'
         ) {
             console.log('Error retrieving postMedicion');
-            console.log(value);
-            console.log(LocX);
-            console.log(LocY);
-            console.log(gasId);
-            console.log(uuid);
             return res.status(400).send('Invalid or incomplete measurement data');
         }
         //Tranform uuid into id
