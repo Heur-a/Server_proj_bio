@@ -12,14 +12,17 @@
 // Import the express module
 import express from 'express';
 // Import the node controller
-import {createNode} from '../controllers/nodeController.js';
+import {createNode, handleGetNode} from '../controllers/nodeController.js';
 import { verifyIdentity } from '../services/authService.js';
+import {getNodeUuid} from "../services/nodeService.js";
 
 // Create a new router object
 const nodeRoutes = express.Router();
 
 // Set up the routes for the nodes endpoints verifying is user is logged in
 nodeRoutes.post('/', verifyIdentity, createNode);
+
+nodeRoutes.get('/', verifyIdentity, handleGetNode );
 
 // Export the router object
 export default nodeRoutes;

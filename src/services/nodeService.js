@@ -27,3 +27,56 @@ export const createNode = async (uuid, idUser) => {
         throw new HttpError(500, 'Database insertion error');
     }
 };
+
+
+/**
+ * @function getNodeUuid
+ * @brief Gets the node associated with a user
+ * @param {string} id - User id
+ * @returns {string} Node uuid
+ */
+export const getNodeUuid = async (id) => {
+    try {
+        const query = await readFile('./src/sql/getNodeById.sql', 'utf-8');
+        const [rows] = await pool.query(query, [id]); // Usa la desestructuració per obtenir directament `rows`
+
+        if (!rows.length) {
+            return null; // Si no hi ha resultats
+        }
+
+        return rows[0];
+
+    } catch (error) {
+        if (error instanceof HttpError) {
+            throw error;
+        } else {
+            throw new HttpError(500, 'Internal Server Error');
+        }
+    }
+}
+
+    /**
+     * getNodeIdWithUuid
+     * Gets the node id with a given uuid
+     * @param {string} uuid - Uuid of the node to search for
+     * @returns {Promise<number>} Id of the requested node
+     */
+    export const getNodeIdWithUuuid = async (uuid) => {
+        try {
+            const query = await readFile('./src/sql/getNodeIdWithUuid.sql', 'utf-8');
+            const [rows] = await pool.query(query, [uuid]);
+            if (!rows.length) {
+                return null;
+            }
+            const result = rows[0];
+            return result.idnodes;
+
+        } catch (error) {
+            if (error instanceof HttpError) {
+                throw error;
+            } else {
+                throw new HttpError(500, error.message);
+            }
+        }
+
+    }

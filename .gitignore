@@ -102,7 +102,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Docusaurus cache and generated files
 .docusaurus
@@ -137,3 +136,5 @@ node_modules/.json
 .vscode
 .42c/conf.yaml
 .42c/scan/api-de-mediciones/scanconf.json
+
+.idea/
