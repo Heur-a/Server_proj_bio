@@ -14,7 +14,7 @@ import express from 'express';
 // Import the node controller
 import {createNode, handleGetNode} from '../controllers/nodeController.js';
 import { verifyIdentity } from '../services/authService.js';
-import {getNode} from "../services/nodeService.js";
+import {getNodeUuid} from "../services/nodeService.js";
 
 // Create a new router object
 const nodeRoutes = express.Router();

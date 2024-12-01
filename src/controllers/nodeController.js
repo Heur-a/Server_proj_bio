@@ -18,7 +18,7 @@ import {HttpError} from '../components/HttpErrorClass.js';
 //Import the user by id form userService module
 import {getUserById} from '../services/userService.js';
 import session from 'express-session';
-import {getNode} from "../services/nodeService.js";
+import {getNodeUuid} from "../services/nodeService.js";
 
 
 /**
@@ -47,7 +47,7 @@ export const createNode = async (req, res) => {
         }
 
         //Ver si ya existe un nodo
-        const uuidNodeExists = getNode(idUser);
+        const uuidNodeExists = getNodeUuid(idUser);
         if (uuidNodeExists) {
             throw new HttpError(403, 'A node already exists');
         }
@@ -85,7 +85,7 @@ export const handleGetNode = async (req, res) => {
 
         console.log('handleGetNode, idUser: ' + id);
 
-        const node = await nodeService.getNode(id);
+        const node = await nodeService.getNodeUuid(id);
 
         if (!node) {
             throw new HttpError(400, 'User has no associated node');

@@ -13,6 +13,9 @@
 
 import { getMedicionesDB, insertMedicionDB, getUltimaMedicionDB} from '../services/medicionesService.js';
 import pool from '../config/db_conection.js';
+import {Medida} from "../components/medidaClass.js";
+import {getNodeIdWithUuuid} from "../services/nodeService.js";
+import {HttpError} from "../components/HttpErrorClass.js";
 /**
  * @function getMapaCalorData
  * @description Retrieves the coordinates and values for the heatmap.
@@ -79,10 +82,11 @@ export const getMediciones = async (req, res) => {
  * Submits a new measurement to the server, expecting a JSON object in the request body.
  * 
  * @param {Request} req - The HTTP request containing a JSON object with the following properties:
- * - `medida` (number, required): The value of the measurement taken by the sensor.
- * - `lugar` (string, required): The location where the measurement was taken.
- * - `tipo_gas` (string, required): The type of gas being measured.
- * - `hora` (string, date-time, required): The time when the measurement was taken.
+ * - `value` (number, required): The value of the measurement taken by the sensor.
+ * - `LocX` (number, required): The longitude where the measurement was taken.
+ * - `LocY` (number,required): The latitude where the measurement was taken.
+ * - `gasId` (number, required): The type of gas being measured.
+ * - `uuid` (string,required)
  * 
  * @param {Response} res - The HTTP response indicating the result of the operation.
  * 
@@ -93,35 +97,61 @@ export const getMediciones = async (req, res) => {
  * 
  * @response 201 - The measurement was successfully created.
  * @response 400 - Invalid or incomplete measurement data.
+ * @response 404 - Invalid uuid
  * @response 500 - Error creating the measurement.
  * 
  * @example
  * // Example request body
  * {
- *   "medida": 75.3,
- *   "lugar": "Park Area",
- *   "tipo_gas": "O3",
- *   "hora": "2024-10-08T12:00:00Z"
+ *   "value": 2.3,
+ *   "LocX" : -2.5,
+ *   "LocY": 40,
+ *   "gasId": 1,
+ *   "uuid": "abcdefgh12345678"
  * }
  */
 export const postMedicion = async (req, res) => {
     try {
-        const { medida, lugar, tipo_gas, hora } = req.body;
+        // Parse and validate the request body
+        const {value, LocX, LocY, gasId, uuid} = req.body;
 
-        // Check if all required fields are present
-        if (!medida || !lugar || !tipo_gas || !hora) {
-            console.error('Incomplete data');
-            return res.status(400).send('Incomplete data');
+        if (
+            typeof value !== 'number' ||
+            typeof LocX !== 'number' ||
+            typeof LocY !== 'number' ||
+            typeof gasId !== 'number' ||
+            typeof uuid !== 'string'
+        ) {
+            console.log('Error retrieving postMedicion');
+            console.log(value);
+            console.log(LocX);
+            console.log(LocY);
+            console.log(gasId);
+            console.log(uuid);
+            return res.status(400).send('Invalid or incomplete measurement data');
+        }
+        //Tranform uuid into id
+        const nodeId = await getNodeIdWithUuuid(uuid);
+
+        if(!nodeId) {
+            return res.status(404).send('Node sensor doesn\'t exist');
         }
 
+
+        // Create a new Medida instance
+        const medida = new Medida(value, LocX, LocY, gasId, nodeId);
+
         // Insert the new measurement into the database
-        const success = await insertMedicionDB(medida, lugar, tipo_gas, hora);
-        success ? res.status(201).send('Reading created') : res.status(500).send('Error creating reading');
+        await insertMedicionDB(medida);
+
+        //Send created successfully
+        return res.status(201).send('Measurement added successfully');
+
     } catch (error) {
-        console.error('Error sending reading:', error);
-        res.status(500).send('Error sending reading');
+        console.error('Error creating measurement:', error.message);
+        res.status(500).send(error.message);
     }
-};
+}
 
 /**
  * @function getUltimaMedicion

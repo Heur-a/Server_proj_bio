@@ -11,5 +11,4 @@
 -- SQL file to insert a measurement
 -- -----------------------------------------------------
 
-
 INSERT INTO Measurements (value, LocX, LocY, date, nodes_idnodes, gasType_idgasType) VALUES   (?,?,?,NOW(),?,?)
