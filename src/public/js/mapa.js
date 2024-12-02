@@ -34,13 +34,13 @@ async function cargarDatosMapaCalor() {
         // Mostrar los puntos en el mapa
         data.forEach(d => {
             const marker = L.marker([d.LocY, d.LocX]).addTo(map);
-            marker.bindPopup(`<b>Valor:</b> ${d.value}<br><b>Ubicación:</b> ${d.LocY}, ${d.LocX}`);
+            marker.bindPopup(`<b>Valor:</b> ${d.value}<b>ppm</b><br><b>Ubicación:</b> ${d.LocY}, ${d.LocX}`);
         });
 
         // Añadir capa de calor con colores dependientes de la intensidad del gas
         L.heatLayer(heatData, {
-            radius: 25,    // Ajusta el tamaño del radio
-            blur: 15,      // Ajusta la suavidad
+            radius: 70,    // Ajusta el tamaño del radio
+            blur: 10,      // Ajusta la suavidad
             maxZoom: 17,   // Zoom máximo para mostrar datos
             gradient: {
                 0.0: 'green',
