@@ -9,8 +9,8 @@ let heatLayer; // Para actualizar dinámicamente la capa de calor
 let markerGroup = L.layerGroup().addTo(map); // Grupo para manejar marcadores
 
 const calidadAire = {
-    buena: { mensaje: 'Calidad del aire buena 😊', color: 'green', icon: '😄' },
-    mala: { mensaje: 'Calidad del aire mala 😞', color: 'red', icon: '☹️' }
+    buena: { mensaje: 'Calidad del aire buena', color: 'green', icon: '😄' },
+    mala: { mensaje: 'Calidad del aire mala', color: 'red', icon: '☹️' }
 };
 
 // Función para cargar datos y agregar chinchetas
@@ -120,6 +120,27 @@ document.getElementById('contaminanteSelect').addEventListener('change', (event)
     } else {
         cargarDatosMapaCalor(contaminante);
     }
+});
+
+//Función para obtener la ubicación del usuario
+function obtenerUbicacion() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            map.setView([lat, lon], 12); // Centrar el mapa en la ubicación del usuario
+            generarDatosAleatorios(lat, lon); // Mostrar datos de calidad del aire
+        }, function () {
+            alert("No se pudo obtener la ubicación.");
+        });
+    } else {
+        alert("La geolocalización no está soportada por este navegador.");
+    }
+}
+
+// Configurar el botón para obtener la ubicación
+document.getElementById('locationButton').addEventListener('click', function () {
+    obtenerUbicacion();
 });
 
 // Cargar mapa inicial con el contaminante por defecto
