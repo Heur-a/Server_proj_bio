@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
-import { loginUser, logoutUser, isAuthenticated, registerUser, verifyIdentity, sendVerificationEmail, validateEmailCode, sendNewPasswordEmail, addEmailVerification, getEmailVerification, makeEmailValid, isEmailVerified, changePassword } from './authService';
+import { loginUser, logoutUser, isAuthenticated, registerUser, verifyIdentity, sendVerificationEmail, validateEmailCode, sendNewPasswordEmail, addEmailVerification, getEmailVerification, makeEmailVerified, isEmailVerified, changePassword } from './authService';
 import { getUserByEmail, getUserPasswordById, createUser } from './userService';
 import pool from '../config/db_conection';
 import { HttpError } from '../components/HttpErrorClass';

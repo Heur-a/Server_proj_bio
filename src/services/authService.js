@@ -311,7 +311,7 @@ const validateEmailCode = async (email, code) => {
         }
 
         // If code matches, mark the email as valid in the database
-        await makeEmailValid(email);
+        await makeEmailVerified(email);
 
     } catch (error) {
         // Detailed logging to debug issues with email verification
@@ -454,7 +454,18 @@ const getEmailVerification = async (email) => {
     }
 };
 
-const makeEmailValid = async (email) => {
+/**
+ * Marks the provided email as verified in the database.
+ *
+ * This asynchronous function reads an SQL query from a file and executes it to update the specified email's verification status.
+ * If an error occurs during file reading or database querying, an HttpError is thrown.
+ *
+ * @async
+ * @function makeEmailVerified
+ * @param {string} email - The email address to be marked as verified.
+ * @throws {HttpError} Throws an error with a 500 status code if the operation fails.
+ */
+const makeEmailVerified = async (email) => {
     try {
         const sql = await readFile('./src/sql/makeEmailValid.sql', 'utf-8');
         await pool.query(sql, [email]);
@@ -463,6 +474,20 @@ const makeEmailValid = async (email) => {
     }
 }
 
+
+/**
+ * Checks if the provided email is verified in the database.
+ *
+ * This asynchronous function retrieves the email verification status from the database.
+ * It returns `false` if no verification record is found, or the value of `isValidated` if a record exists.
+ * An HttpError is thrown if an error occurs during the retrieval process.
+ *
+ * @async
+ * @function isEmailVerified
+ * @param {string} email - The email address to check for verification status.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the email is verified, otherwise `false`.
+ * @throws {HttpError} Throws an error with a 500 status code if the operation fails.
+ */
 const isEmailVerified = async (email) => {
     try {
         const emailVerifiedRow = await getEmailVerification(email);
@@ -475,6 +500,15 @@ const isEmailVerified = async (email) => {
     }
 }
 
+/**
+ * Generates a random password containing at least one lowercase letter, one uppercase letter, and one number.
+ *
+ * This function constructs a password of at least 8 characters by ensuring the inclusion of mandatory character types
+ * and filling the rest with random characters from a combined set. The resulting password is shuffled to avoid predictable patterns.
+ *
+ * @function generateRandomPassword
+ * @returns {string} A randomly generated password that meets the specified criteria.
+ */
 const generateRandomPassword = () => {
     const getRandomChar = (charSet) =>
         charSet[Math.floor(Math.random() * charSet.length)];
@@ -506,6 +540,18 @@ const generateRandomPassword = () => {
     return mandatoryChars.join("");
 };
 
+/**
+ * Updates the email verification code for the specified email address in the database.
+ *
+ * This asynchronous function reads an SQL query from a file and executes it to update the verification code associated with the provided email.
+ * If an error occurs during file reading or database querying, an HttpError is thrown.
+ *
+ * @async
+ * @function updateVerificationCode
+ * @param {string} email - The email address for which the verification code is to be updated.
+ * @param {string} code - The new verification code to be set for the specified email.
+ * @throws {HttpError} Throws an error with a 500 status code if the operation fails.
+ */
 const updateVerificationCode = async (email, code) => {
     try {
         const sql = await readFile('./src/sql/updateEmailVerificationCode.sql', 'utf-8');
@@ -529,7 +575,7 @@ export {
     sendNewPasswordEmail,
     addEmailVerification,
     getEmailVerification,
-    makeEmailValid,
+    makeEmailVerified,
     isEmailVerified,
     changePassword,
     updateUserData

@@ -217,6 +217,30 @@ export const checkUserExists = async (email) => {
         throw new Error('Failed to check user existence.');
     }
 }
+/**
+ * Checks if a user exists in the database by their ID.
+ * @async
+ * @function checkUserExistsById
+ * @param {number} id - The ID of the user to check for existence.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the user exists, otherwise `false`.
+ * @throws {Error} Throws a generic error if the database query fails.
+ */
+export const checkUserExistsById = async (id) => {
+    try {
+        // Read the SQL query from file
+        const sql = await readFile('./src/sql/checkUserExistsId', 'utf-8');
+
+        // Execute the query, passing the id as a parameter
+        const [rows] = await pool.execute(sql, [id]);
+
+        // Check the result to see if any rows were returned
+        return rows[0]?.id_exists > 0;
+
+    } catch (error) {
+        console.error('Database query error:', error);
+        throw new Error('Failed to check user existence.');
+    }
+}
 
 export const checkUserExistsById = async (id) => {
     try {
