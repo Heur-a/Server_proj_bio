@@ -38,8 +38,15 @@
 .botonSuscribirse {
     width: 40%;
     text-align: center;
+    font-size: 2rem;
 }
 
+.content p {
+    width: 70%;
+    margin: 1.5rem 0;
+    line-height: 2rem;
+    font-size: 1.125rem;
+}
 .map {
     flex: 1;
     position: relative;

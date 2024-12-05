@@ -13,7 +13,10 @@
     <!--iconos bootstrap-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />      
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />  
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgrH68jSR4s9vD70uWD67izi5nAaJJJV8"></script>
+
+    
 </head>
 <body>
     <header>
@@ -54,7 +57,7 @@
                     toma decisiones informadas. ¡Empieza ahora!
                 </p>
                 <a href="suscripcion.html">
-                    <button class="botonSuscribirse">Ver suscripción</button>
+                    <button class="botonSuscribirse">Suscríbete Ya</button>
                 </a>
             </div>
             <div class="map">
@@ -66,6 +69,7 @@
                     <option value="General">Mapa General</option>
                 </select>
                 <button id="locationButton">Usar mi ubicación</button>
+                <button id="loadStationsButton">Mostrar Estaciones Oficiales</button>
             </div>
             
         </section>
