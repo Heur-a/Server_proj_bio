@@ -241,20 +241,3 @@ export const checkUserExistsById = async (id) => {
         throw new Error('Failed to check user existence.');
     }
 }
-
-export const checkUserExistsById = async (id) => {
-    try {
-        // Read the SQL query from file
-        const sql = await readFile('./src/sql/checkUserExistsId', 'utf-8');
-
-        // Execute the query, passing the id as a parameter
-        const [rows] = await pool.execute(sql, [id]);
-
-        // Check the result to see if any rows were returned
-        return rows[0]?.id_exists > 0;
-
-    } catch (error) {
-        console.error('Database query error:', error);
-        throw new Error('Failed to check user existence.');
-    }
-}
