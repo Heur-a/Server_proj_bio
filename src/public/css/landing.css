@@ -75,6 +75,44 @@
     text-shadow: 0.125rem 0.125rem 0.25rem rgba(255, 255, 255, 0.7);
 }
 
+.legend {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    background: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.875rem;
+}
+
+.legend div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.legend div span {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+}
+
+.legend .good {
+    background: green;
+}
+
+.legend .moderate {
+    background: yellow;
+}
+
+.legend .bad {
+    background: red;
+}
+
 @media (max-width: 842px){
     .vacio {
         height: 6.5rem;

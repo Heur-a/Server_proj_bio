@@ -12,6 +12,16 @@ const waqiUrl = `https://api.waqi.info/feed/geo:38.5382;-0.1300/?token=${waqiTok
 let heatLayer; // Para actualizar dinámicamente la capa de calor
 let markerGroup = L.layerGroup().addTo(map); // Grupo para manejar marcadores
 
+// estaciones de medida que va a mostrar el mapa
+const estaciones = [
+    { nombre: "Benidorm", coords: [38.5382, -0.1300] },
+    { nombre: "Madrid", coords: [40.4168, -3.7038] },
+    { nombre: "Barcelona", coords: [41.3851, 2.1734] },
+    { nombre: "Valencia", coords: [39.4699, -0.3763] },
+    { nombre: "Sevilla", coords: [37.3891, -5.9845] },
+    { nombre: "Bilbao", coords: [43.2630, -2.9350] }
+  ];
+
 const calidadAire = {
     buena: { mensaje: 'Calidad del aire buena', color: 'green', icon: '😄' },
     mala: { mensaje: 'Calidad del aire mala', color: 'red', icon: '☹️' }
@@ -204,61 +214,97 @@ const context = canvas.getContext('2d', { willReadFrequently: true });
 
 
 // Función para cargar datos de la estación y agregar una chincheta
+// Función modificada para cargar datos de múltiples estaciones
 async function cargarDatosWAQI() {
     try {
+      // Limpiar marcadores antiguos
+      markerGroup.clearLayers();
+  
+      // Cargar datos para cada estación
+      for (const estacion of estaciones) {
+        const waqiUrl = `https://api.waqi.info/feed/geo:${estacion.coords[0]};${estacion.coords[1]}/?token=${waqiToken}`;
         const response = await fetch(waqiUrl);
         const data = await response.json();
-
+  
         if (data.status === "ok") {
-            const aqi = data.data.aqi; // Índice de calidad del aire
-            const iaqi = data.data.iaqi; // Detalles por contaminante
-            const stationCoords = [38.5382, -0.1300]; // Coordenadas de Benidorm
-
-            // Añadir marcador
-            const marker = L.marker(stationCoords, { icon: crearIconoRojo() })
-                .addTo(markerGroup)
-                .bindPopup(generarPopup(aqi, iaqi));
-
-            marker.on('click', () => {
-                marker.openPopup();
-            });
-
-            map.setView(stationCoords, 12); // Centrar mapa en la estación
-        } else {
-            console.error("Error en la respuesta de la API de WAQI:", data.data);
+          const aqi = data.data.aqi;
+          const iaqi = data.data.iaqi;
+  
+          // Determinar el color del marcador según el AQI
+          const icon = determinarIconoAQI(aqi);
+  
+          // Añadir marcador
+          const marker = L.marker(estacion.coords, { icon })
+            .addTo(markerGroup)
+            .bindPopup(generarPopup(estacion.nombre, aqi, iaqi));
+  
+          marker.on('click', () => {
+            marker.openPopup();
+          });
         }
+      }
+  
+      // Ajustar la vista para mostrar todas las estaciones
+      const bounds = L.latLngBounds(estaciones.map(e => e.coords));
+      map.fitBounds(bounds);
+  
     } catch (error) {
-        console.error("Error al cargar los datos de WAQI:", error);
+      console.error("Error al cargar los datos de WAQI:", error);
     }
-}
+  }
 
-// Función para crear un icono rojo
-function crearIconoRojo() {
+// Función para determinar el icono según el AQI
+function determinarIconoAQI(aqi) {
+    let iconUrl;
+    if (aqi <= 50) {
+      iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png';
+    } else if (aqi <= 100) {
+      iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png';
+    } else if (aqi <= 150) {
+      iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png';
+    } else {
+      iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
+    }
+  
     return L.icon({
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
+      iconUrl,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
     });
-}
-
-// Función para generar el contenido del popup
-function generarPopup(aqi, iaqi) {
-    let mediciones = "<b>Mediciones:</b><br>";
-
-    // Recorrer los contaminantes
-    for (const [contaminante, detalle] of Object.entries(iaqi)) {
-        mediciones += `- ${contaminante.toUpperCase()}: ${detalle.v}<br>`;
+  }
+  
+  // Función modificada para generar el popup con más información
+  function generarPopup(nombreEstacion, aqi, iaqi) {
+    let calidadTexto;
+    let color;
+    
+    if (aqi <= 50) {
+      calidadTexto = "Buena";
+      color = "green";
+    } else if (aqi <= 100) {
+      calidadTexto = "Moderada";
+      color = "orange";
+    } else {
+      calidadTexto = "Mala";
+      color = "red";
     }
-
+  
+    let mediciones = "<b>Mediciones:</b><br>";
+    for (const [contaminante, detalle] of Object.entries(iaqi)) {
+      mediciones += `- ${contaminante.toUpperCase()}: ${detalle.v}<br>`;
+    }
+  
     return `
-        <div>
-            <b>Índice de Calidad del Aire (AQI):</b> ${aqi}<br>
-            ${mediciones}
-        </div>
+      <div>
+        <h3>${nombreEstacion}</h3>
+        <b>Calidad del aire:</b> <span style="color: ${color}">${calidadTexto}</span><br>
+        <b>AQI:</b> ${aqi}<br>
+        ${mediciones}
+      </div>
     `;
-}
+  }  
 
 // Llamar a la función para cargar los datos y mostrar en el mapa
 cargarDatosWAQI();
