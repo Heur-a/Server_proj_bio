@@ -113,6 +113,37 @@
     background: red;
 }
 
+#contaminanteSelect {
+    position: absolute;
+    top: 0.625rem;
+    left:227px;
+    z-index: 1000;
+    margin-left: 4rem;
+  }
+
+  #tituloselector{
+
+    position: absolute;
+    top: 0.625rem;
+    left: 0.625rem;
+    left:1.5rem;
+    z-index: 1000;
+    margin-left: 2rem;
+
+  }
+
+/* Map */
+main .map{
+    transform:translatex(0px) translatey(0px);
+   }
+   
+   /* Legend */
+   .container .map .legend{
+    transform:translatex(-17px) translatey(-5px);
+   }
+   
+   
+
 @media (max-width: 842px){
     .vacio {
         height: 6.5rem;

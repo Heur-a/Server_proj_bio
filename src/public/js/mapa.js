@@ -306,6 +306,23 @@ function determinarIconoAQI(aqi) {
     `;
   }  
 
+  // Actualizar el mapa según el contaminante seleccionado
+document.getElementById('contaminanteSelect').addEventListener('change', (event) => {
+    const contaminante = event.target.value;
+    
+    // Cambiar colores de la leyenda para CO2
+    const legend = document.querySelector('.legend');
+    if (contaminante === "CO2") {
+      legend.querySelector('.good').style.background = 'cyan';
+      legend.querySelector('.moderate').style.background = 'lightblue';
+      legend.querySelector('.bad').style.background = 'darkblue';
+    } else {
+      legend.querySelector('.good').style.background = 'green';
+      legend.querySelector('.moderate').style.background = 'yellow';
+      legend.querySelector('.bad').style.background = 'red';
+    }
+});  
+
 // Llamar a la función para cargar los datos y mostrar en el mapa
 cargarDatosWAQI();
 // Cargar mapa inicial con el contaminante por defecto
