@@ -217,7 +217,14 @@ export const checkUserExists = async (email) => {
         throw new Error('Failed to check user existence.');
     }
 }
-
+/**
+ * Checks if a user exists in the database by their ID.
+ * @async
+ * @function checkUserExistsById
+ * @param {number} id - The ID of the user to check for existence.
+ * @returns {Promise<boolean>} A promise that resolves to `true` if the user exists, otherwise `false`.
+ * @throws {Error} Throws a generic error if the database query fails.
+ */
 export const checkUserExistsById = async (id) => {
     try {
         // Read the SQL query from file

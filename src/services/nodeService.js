@@ -10,13 +10,18 @@ import pool from '../config/db_conection.js';
 import { readFile } from 'fs/promises';
 
 /**
-*
-* @function createNode
-* @brief Creates a new node in the database.
-* @param {string} uuid - Unique identifier for the node.
-* @param {number} idUser - ID of the user who owns the node.
-*/
-
+ * Creates a new node in the database associated with a specific user.
+ *
+ * This asynchronous function reads an SQL query from a file and executes it to insert a new node using the provided UUID and user ID.
+ * It returns the ID of the newly created node. If an error occurs during the process, it logs the error and throws an HttpError.
+ *
+ * @async
+ * @function createNode
+ * @param {string} uuid - The unique identifier for the node to be created.
+ * @param {number} idUser - The ID of the user associated with the new node.
+ * @returns {Promise<number>} A promise that resolves to the ID of the newly created node.
+ * @throws {HttpError} Throws an error with a 500 status code if the database insertion fails.
+ */
 export const createNode = async (uuid, idUser) => {
     try {
         const query = await readFile('./src/sql/createNode.sql', 'utf-8');
@@ -30,10 +35,16 @@ export const createNode = async (uuid, idUser) => {
 
 
 /**
+ * Retrieves the UUID of a node based on its ID from the database.
+ *
+ * This asynchronous function reads an SQL query from a file and executes it to fetch the node details associated with the provided ID.
+ * If no results are found, it returns `null`. If an error occurs, it throws an HttpError with a 500 status code for unexpected errors.
+ *
+ * @async
  * @function getNodeUuid
- * @brief Gets the node associated with a user
- * @param {string} id - User id
- * @returns {Promise<string>} Node uuid
+ * @param {number} id - The ID of the node whose UUID is to be retrieved.
+ * @returns {Promise<Object|null>} A promise that resolves to the node object containing the UUID, or `null` if no node is found.
+ * @throws {HttpError} Throws an error with a 500 status code if an unexpected error occurs during the operation.
  */
 export const getNodeUuid = async (id) => {
     try {
@@ -55,12 +66,18 @@ export const getNodeUuid = async (id) => {
     }
 }
 
-    /**
-     * getNodeIdWithUuid
-     * Gets the node id with a given uuid
-     * @param {string} uuid - Uuid of the node to search for
-     * @returns {Promise<number>} Id of the requested node
-     */
+/**
+ * Retrieves the node ID associated with a given UUID from the database.
+ *
+ * This asynchronous function reads an SQL query from a file and executes it to fetch the node ID corresponding to the provided UUID.
+ * If no results are found, it returns `null`. If an error occurs, it throws an HttpError with a 500 status code for unexpected errors.
+ *
+ * @async
+ * @function getNodeIdWithUuuid
+ * @param {string} uuid - The UUID of the node whose ID is to be retrieved.
+ * @returns {Promise<number|null>} A promise that resolves to the ID of the node, or `null` if no node is found.
+ * @throws {HttpError} Throws an error with a 500 status code if an unexpected error occurs during the operation.
+ */
     export const getNodeIdWithUuuid = async (uuid) => {
         try {
             const query = await readFile('./src/sql/getNodeIdWithUuid.sql', 'utf-8');

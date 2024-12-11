@@ -5,7 +5,6 @@
  * @Last Modified time: 2024-10-21 20:32:54
  */
 
-//todo: CAMBIAR ESTO PARA QUE FUNCIONE CON BASE DE DATOS NUEVA YEY
 /**
  * @module medicionesService
  * @description Database logic for managing measurements.
@@ -31,7 +30,7 @@ export const getMedicionesDB = async () => {
         console.log(rows);
         return rows;
     } catch (error) {
-        console.error('Error obtaining readings:', error);
+        throw new HttpError(500, error.message);
     }
 };
 
@@ -71,8 +70,7 @@ export const getUltimaMedicionDB = async () => {
         const [rows] = await pool.query(query);
         return rows.length ? rows[0] : null;
     } catch (error) {
-        console.error('Error fetching last reading:', error);
-        throw new Error('Database query error');
+        throw new HttpError(500, error.message);
     }
 };
 
