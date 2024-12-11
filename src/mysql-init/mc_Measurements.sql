@@ -46,6 +46,6 @@ INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes
 INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (45, 0.998, -3.234, 38.671, '1979-06-08 03:51:12', 3, 2, 3);
 INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (46, 2.784, -0.943, 39.486, '1917-01-13 22:48:45', 2, 1, 1);
 INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (47, 1.987, -2.189, 40.334, '1933-04-24 14:30:38', 1, 1, 3);
-INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (48, 1.231, -0.512, 39.469, '1964-10-18 16:05:29', 2, 2, 2);
+INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (48, 1.231, -0.165, 38.995, '1964-10-18 16:05:29', 2, 2, 2);
 INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (49, 0.875, -6.324, 41.876, '1921-12-09 12:12:12', 3, 1, 3);
 INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (50, 2.482, -0.789, 40.789, '2025-03-05 18:14:47', 2, 1, 1);

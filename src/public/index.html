@@ -13,7 +13,10 @@
     <!--iconos bootstrap-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />      
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />  
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgrH68jSR4s9vD70uWD67izi5nAaJJJV8"></script>
+
+    
 </head>
 <body>
     <header>
@@ -54,13 +57,24 @@
                     toma decisiones informadas. ¡Empieza ahora!
                 </p>
                 <a href="suscripcion.html">
-                    <button class="botonSuscribirse">Ver suscripción</button>
+                    <button class="botonSuscribirse">Suscríbete Ya</button>
                 </a>
             </div>
             <div class="map">
                 <div id="map"></div>
+                <label id= "tituloselector" for="contaminanteSelect">Selecciona un contaminante:</label>
+                <select id="contaminanteSelect">
+                    <option value="O3">O3</option>
+                    <option value="CO2">CO2</option>
+                </select>
+                <div class="legend">
+                    <div><span class="good"></span>Buena calidad de aire</div>
+                    <div><span class="moderate"></span>Calidad del aire moderada</div>
+                    <div><span class="bad"></span>Mala calidad de aire</div>
+                </div>
                 <button id="locationButton">Usar mi ubicación</button>
             </div>
+            
         </section>
     </main>
 
