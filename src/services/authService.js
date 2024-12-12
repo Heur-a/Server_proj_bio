@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { getUserByEmail, getUserPasswordById, createUser, updateUser, getUserById } from './userService.js';
+import { getUserByEmail, getUserPasswordById, createUser, updateUser } from './userService.js';
 import { config } from 'dotenv';
 import session from 'express-session';
 import { HttpError } from '../components/HttpErrorClass.js';
@@ -8,7 +8,6 @@ import { readFile } from 'fs/promises';
 import pool from '../config/db_conection.js';
 import { emailValidated } from '../components/emailValidatedClass.js';
 import { UserUpdate } from '../components/userClass.js';
-import { get } from 'http';
 // Load environment variables from .env file
 config();
 
@@ -205,6 +204,38 @@ const updateUserData = async (user) => {
 
     }
 };
+
+/**
+ * Retrieves user data based on the provided email address.
+ *
+ * This asynchronous function calls `getUserByEmail` to fetch user data associated with the given email.
+ * If no user data is found, it throws an HttpError with a 400 status code. If user data is retrieved successfully, it constructs a user object using the `UserUpdate.Builder` and logs the user information before returning it.
+ *
+ * @async
+ * @function getUserDataByEmail
+ * @param {string} email - The email address of the user whose data is to be retrieved.
+ * @returns {Promise<Object>} A promise that resolves to a user object containing the user's details.
+ * @throws {HttpError} Throws an error with a 400 status code if the email is invalid or no user data is found.
+ */
+export const getUserDataByEmail = async (email) => {
+    const userData = await getUserByEmail(email);
+    if (!userData) {
+        throw new HttpError(400, 'Invalid email');
+    }
+    const user = new UserUpdate.Builder()
+        .setId(userData.id)
+        .setEmail(email)
+        .setName(userData.name)
+        .setLastName1(userData.surname_1)
+        .setLastName2(userData.surname_2)
+        .setTel(userData.telephone)
+        .build();
+
+    console.log("AuthService, getUserDataByEmail, getUser: ", user);
+
+    return user;
+}
+
 
 
 /**
@@ -479,7 +510,11 @@ const sendNewPasswordEmail = async (email) => {
                 }
             }
         }
-        throw new HttpError(500, 'Failed to send new password email');
+        if (error instanceof HttpError) {
+            throw error;
+        } else {
+            throw new HttpError(500, 'Failed to send new password email');
+        }
     }
 };
 
@@ -497,7 +532,7 @@ const addEmailVerification = async (email, hashedCode) => {
     //check if entry already exists
     const emailVerified = await getEmailVerification(email);
     if (emailVerified) {
-        updateVerificationCode(email, hashedCode);
+        await updateVerificationCode(email, hashedCode);
         return;
     }
     

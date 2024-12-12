@@ -1,4 +1,6 @@
+
 const loginHref = '/user/login.html';  // Modifica aquest camí si cal
+const recupContrasenya = document.getElementById('recupContrasenya');
 
 // Escolta l'esdeveniment DOMContentLoaded per inicialitzar el formulari
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,4 +34,43 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(error.message);
         }
     });
+
+
+
+
 });
+
+recupContrasenya.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById('emailInput').value;
+    const emailPattern = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+    if(!emailPattern.test(email)) {
+        alert("Email no valido")
+    } else {
+        await sendRecupContrasenya(email);
+    }
+
+})
+
+async function sendRecupContrasenya(email) {
+
+    //create URL
+    const url = new URL('/auth/resetPassword',window.location.origin);
+    url.searchParams.set('email', email)
+
+    try {
+        const response = await fetch(url.toString(), {
+            method: 'POST',
+        })
+
+        if (response.ok) {
+            alert("Se ha enviado el correo con la nueva contraseña")
+        } else if(response.statusCode === 401) {
+            alert("El correo no tiene usuario asociado")
+        }
+    } catch (e) {
+        alert(e.message);
+    }
+
+}

@@ -32,9 +32,9 @@ export class UserUpdate {
      */
     static Builder = class {
         constructor() {
-            this.user = new UserUpdate();
+            this.user = new UserUpdate(0, "", "", "", "", "", "");
         }
-    
+
         setId(id) {
             if (id == null) {
                 throw new Error("ID is required and cannot be null or undefined.");
@@ -42,49 +42,49 @@ export class UserUpdate {
             this.user.id = id;
             return this;
         }
-    
+
         setName(name) {
             if (name != null) {
                 this.user.name = name;
             }
             return this;
         }
-    
+
         setEmail(email) {
             if (email != null) {
                 this.user.email = email;
             }
             return this;
         }
-    
+
         setPassword(password) {
             if (password != null) {
                 this.user.password = password;
             }
             return this;
         }
-    
+
         setLastName1(lastName1) {
             if (lastName1 != null) {
                 this.user.lastName1 = lastName1;
             }
             return this;
         }
-    
+
         setLastName2(lastName2) {
             if (lastName2 != null) {
                 this.user.lastName2 = lastName2;
             }
             return this;
         }
-    
+
         setTel(tel) {
             if (tel != null) {
                 this.user.tel = tel;
             }
             return this;
         }
-    
+
         build() {
             if (this.user.id == null) {
                 throw new Error("Cannot build UserUpdate: ID is required.");
@@ -92,5 +92,5 @@ export class UserUpdate {
             return this.user;
         }
     }
-    
+
 }

@@ -1,5 +1,16 @@
 import { UserUpdate } from '../components/userClass.js';
-import { loginUser, logoutUser, isAuthenticated, registerUser, sendVerificationEmail, sendNewPasswordEmail, validateEmailCode, updateUserData } from '../services/authService.js';
+import {
+    loginUser,
+    logoutUser,
+    isAuthenticated,
+    registerUser,
+    sendVerificationEmail,
+    sendNewPasswordEmail,
+    validateEmailCode,
+    updateUserData,
+    getUserDataByEmail
+} from '../services/authService.js';
+import {getUserById} from "../services/userService.js";
 
 /**
  * Handles user registration and session management.
@@ -32,6 +43,36 @@ export const login = async (req, res) => {
         res.status(error.statusCode).json({ message: error.message });
     }
 };
+
+/**
+ * Retrieves user data based on the email stored in the session.
+ *
+ * This asynchronous function extracts the user's email from the session and calls `getUserDataByEmail` to fetch the corresponding user data.
+ * If no user data is found, it responds with a 404 status code and an error message. If an error occurs during the process, it responds with the appropriate status code and error message.
+ *
+ * @async
+ * @function handleGetUserData
+ * @param {Object} req - The request object containing the user's session information.
+ * @param {Object} res - The response object used to send back the desired HTTP response.
+ * @returns {Promise<void>} A promise that resolves when the user data retrieval process is complete.
+ * @throws {Error} Throws an error if the user data retrieval process fails, which is handled by sending an error response.
+ */
+export const handleGetUserData = async (req, res) => {
+    try{
+        const  user  = req.session.user;
+        console.log("handleGetUserData, authController: " + user);
+        const {id: userId, email: email } = user
+        const userData = await getUserDataByEmail(email);
+        if (!userData) {
+            return res.status(404).json({ message: 'No user found' });
+        }
+        return res.json(userData);
+    } catch (error) {
+        return res.status(error.statusCode || 500).json({ message: error.message  ||  'Server error'});
+    }
+
+
+}
 
 /**
  * Handles user logout and session termination.
