@@ -207,11 +207,6 @@ const updateUserData = async (user) => {
 };
 
 
-
-
-
-
-
 /**
  * @brief Sends email for verifying email using JWT and Nodemailer.
  * @async
@@ -252,13 +247,99 @@ const sendVerificationEmail = async (email) => {
             pass: process.env.EMAIL_PASS,
         },
     });
+    // Crear contenido HTML del email
+    const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {
+                    font-family: 'Montserrat', sans-serif;
+                    background-color: #f9f9f9;
+                    margin: 0;
+                    padding: 0;
+                }
+                .email-container {
+                    max-width: 600px;
+                    margin: 20px auto;
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+                .header {
+                    background-color: #3a5335;
+                    color: #fff;
+                    text-align: center;
+                    padding: 20px;
+                }
+                .header img {
+                    max-height: 10rem;
+                    margin-top: -40px;
+                    margin-bottom: -40px;
+                }
+                .body {
+                    padding: 20px;
+                    color: black;
+                }
+                .body p {
+                    margin: 10px 0;
+                }
+                .code {
+                    display: inline-block;
+                    font-size: 20px;
+                    color: #3a5335;
+                    background-color: #ddd2ba;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    margin: 20px 0;
+                }
+                .footer {
+                    text-align: center;
+                    padding: 10px;
+                    background-color: #f0f0f0;
+                    font-size: 12px;
+                    color: #666;
+                }
+                .im {
+                    color: black;
+                    text-decoration: none;
+                }       
+            </style>
+        </head>
+        <body>
+            <div class="email-container">
+                <div class="header">
+                    <img src="cid:logotipoozone" alt="Logo Ozone" />  
+                </div>
+                <div class="body">
+                    <h1>Verifique su correo</h1>
+                    <p>¡Gracias por registrarte en nuestra plataforma! Para continuar, por favor usa el siguiente código de verificación:</p>
+                    <div class="code">${randomCode}</div>
+                    <p>Si no solicitaste esta verificación, por favor ignora este correo.</p>
+                </div>
+                <div class="footer">
+                    <p> Ozone | Todos los derechos reservados </p>
+                </div>
+            </div>
+        </body>
+        </html>
+    `;
 
-    // Create email
+    // Crear datos del email
     const emailData = {
         from: process.env.EMAIL_USER,
         to: email,
-        subject: 'Ozone - Email Verification',
-        text: `Your verification code is: ${randomCode}`,
+        subject: 'Ozone - Correo de Verificación',
+        html: htmlContent,
+        attachments: [{
+            filename: 'logotipo_modoClaro.png',
+            path: './src/public/img/logotipo_modoClaro.png',
+            cid: 'logotipoozone' //same cid value as in the html img src
+        }]
     };
 
     // Add email verification to the database, if successful send mail

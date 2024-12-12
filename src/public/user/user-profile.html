@@ -36,42 +36,90 @@
     <main>
        
         <section class="formulario">
-            <h2>Editar perfil</h2>
+            <h2>Perfil</h2>
             <form id="simpleForm">
                 <div class="form-group">
                     <label for="name">Nombre</label>
-                    <input id="name" type="text" placeholder="Introduzca su nombre" required>
+                    <input id="name" type="text" placeholder="Introduzca su nombre" required disabled>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                        </svg>
                     <span class="error-message" id="nameError"></span>
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña</label>
-                    <input id="password" type="password" placeholder="Introduzca su contraseña" required>
+                    <input id="password" type="password" placeholder="Introduzca su contraseña" required disabled>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                        </svg>
                     <span class="error-message" id="passwordError"></span>
                 </div>
                 <div class="form-group">
                     <label for="repeat_password">Repetir Contraseña</label>
-                    <input id="repeat_password" type="password" placeholder="Repita su contraseña" required>
+                    <input id="repeat_password" type="password" placeholder="Repita su contraseña" required disabled>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                    </svg>
                     <span class="error-message" id="repeatPasswordError"></span>
                 </div>
                 <div class="form-group">
                     <label for="telephone">Teléfono</label>
-                    <input id="telephone" type="tel" placeholder="Introduzca su teléfono" required>
+                    <input id="telephone" type="tel" placeholder="Introduzca su teléfono" required disabled>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                    </svg>
                     <span class="error-message" id="telephoneError"></span>
                 </div>
                 <div class="form-group">
                     <label for="postal">Apellidos</label>
-                    <input id="postal" type="text" placeholder="Introduzca sus apellidos a cambiar" required>
+                    <input id="postal" type="text" placeholder="Introduzca sus apellidos a cambiar" required disabled>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                        </svg>
                     <span class="error-message" id="postalError"></span>
                 </div>
-                <button type="button" onclick="validateForm()">Enviar</button>
-                <button type="button" id="logoutButton">Log Out</button> 
+                <button type="button" class="btn" onclick="validateForm()">Enviar</button>
+                <button type="button" class="btn" id="logoutButton">Log Out</button> 
                 <div>
-            
         </div>
             </form>
             <div id="statusMessage"></div>
         </section>
+        <div id="confirmationPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+              <p>¿Estás seguro de que deseas guardar los cambios?</p>
+              <button id="confirmYes">Sí</button>
+              <button id="confirmNo">No</button>
+            </div>
+          </div>
+          
+          <!-- Popup de éxito -->
+          <div id="successPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+              <p>Cambios guardados con éxito.</p>
+              <button id="successOk">Aceptar</button>
+            </div>
+          </div>
+          
+          <!-- Popup de sin cambios -->
+          <div id="noChangePopup" class="popup" style="display: none;">
+            <div class="popup-content">
+              <p>No se han realizado cambios.</p>
+              <button id="noChangeOk">Aceptar</button>
+            </div>
+          </div>
     </main>
+
 
     <footer>
         <p>&copy; 2024 Ozone. Todos los derechos reservados.</p>
@@ -80,5 +128,6 @@
     <script src="/js/menu.js"></script>
     <script src="/js/updateUser-UserProfile.js"></script>
     <script src="/js/logout.js"></script>
+    <script src="/js/botonesEditar.js"></script>
 </body>
 </html>
