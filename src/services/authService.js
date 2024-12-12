@@ -398,7 +398,11 @@ const sendNewPasswordEmail = async (email) => {
                 }
             }
         }
-        throw new HttpError(500, 'Failed to send new password email');
+        if (error instanceof HttpError) {
+            throw error;
+        } else {
+            throw new HttpError(500, 'Failed to send new password email');
+        }
     }
 };
 

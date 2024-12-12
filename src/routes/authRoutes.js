@@ -79,7 +79,7 @@ router.put('/verifyEmail', handleMakeEmailVerified);
 
 /**
  * @brief Initiates the password reset process.
- * @route GET /auth/resetPassword
+ * @route POST /auth/resetPassword
  * @group Authentication - Operations related to user authentication.
  * @param {string} email.query.required - The email address of the user requesting a password reset.
  * @returns {object} 200 - Password reset email sent successfully.
