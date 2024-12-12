@@ -5,7 +5,17 @@
  */
 
 import express from 'express';
-import { login, register, logout, checkAuthentication, handleEmailVerification, handleMakeEmailVerified, handleResetPassword, handleUpdateUserData } from '../controllers/authController.js';
+import {
+    login,
+    register,
+    logout,
+    checkAuthentication,
+    handleEmailVerification,
+    handleMakeEmailVerified,
+    handleResetPassword,
+    handleUpdateUserData,
+    handleGetUserData
+} from '../controllers/authController.js';
 import { verifyIdentity } from '../services/authService.js';
 
 const router = express.Router();
@@ -87,6 +97,9 @@ router.put('/verifyEmail', handleMakeEmailVerified);
  * @returns {object} 500 - Server error.
  */
 router.post('/resetPassword', handleResetPassword);
+
+
+router.get('/getUserData', verifyIdentity, handleGetUserData)
 
 
 router.put('/updateUserData', verifyIdentity , handleUpdateUserData);
