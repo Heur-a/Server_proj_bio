@@ -1,0 +1,144 @@
+/* privacidad.css */
+
+/* General */
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    background-color: #3A5335;
+    color: #fff;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .logo img {
+    width: 150px;
+    height: auto;
+}
+
+header .menu {
+    display: flex;
+    align-items: center;
+}
+
+header .menu-toggle {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #fff;
+    display: none;
+}
+
+header .nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+header .nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+header .nav ul li a:hover {
+    text-decoration: underline;
+}
+
+header .user a {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-left: 1rem;
+}
+
+/* Main Content */
+.privacidad {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.privacidad h2#titulo {
+    color: #3A5335;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.privacidad h3 {
+    color: #333;
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.privacidad p, .privacidad ul {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.privacidad ul {
+    padding-left: 20px;
+    list-style: disc;
+}
+
+.privacidad a {
+    color: #3A5335;
+    text-decoration: none;
+}
+
+.privacidad a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: #3A5335;
+    color: #fff;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header .menu-toggle {
+        display: block;
+    }
+
+    header .nav {
+        display: none;
+        flex-direction: column;
+        background: #3A5335;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    header .nav ul {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    header .menu-toggle.active + .nav {
+        display: flex;
+    }
+}
