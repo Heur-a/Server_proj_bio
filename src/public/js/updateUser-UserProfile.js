@@ -21,6 +21,18 @@ async function updateUserData(validatedFields) {
     }
 }
 
+async function getUserData() {
+    try {
+        const response = await fetch('/auth/getUserData', {})
+
+        if (response.ok) {
+            return response.json();
+        }
+    } catch (error) {
+        document.getElementById('statusMessage').innerText = `Error: ${error.message}`;
+    }
+}
+
 async function validateForm() {
     const fields = [
         { 
@@ -100,6 +112,9 @@ async function validateForm() {
     // Enviar la petición si hay al menos un campo válido
     if (isValid && Object.keys(validatedFields).length > 0) {
         delete validatedFields['repeat_password']; // No enviar 'repeat_password'
+        //TODO:
+        // const oldPassword = document.getElementbyId('oldPassword').value
+        // validatedFields.oldPassword = oldPassword
         await updateUserData(validatedFields);
     } else if (Object.keys(validatedFields).length === 0) {
         document.getElementById('statusMessage').innerText = 'Rellena al menos un campo para actualizar.';
@@ -120,3 +135,10 @@ function clearErrors() {
         error.innerText = '';
     });
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const user = await getUserData();
+    if (user) {
+        document.getElementById('name').value = user.name;
+    }
+})

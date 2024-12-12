@@ -10,7 +10,9 @@ import {
     updateUserData,
     getUserDataByEmail
 } from '../services/authService.js';
-import {getUserById} from "../services/userService.js";
+import {getUserById, getUserPasswordById} from "../services/userService.js";
+import bcrypt from "bcryptjs";
+import {HttpError} from "../components/HttpErrorClass.js";
 
 /**
  * Handles user registration and session management.
@@ -178,8 +180,29 @@ export const handleResetPassword = async (req, res) => {
  */
 export const handleUpdateUserData = async (req, res) => {
     try {
-        const userId = req.session.user?.id;
-        const email = req.session.user?.email;
+        const userSession = req.session.user;
+        const {id : userId, email: email} = userSession;
+        const olPassword = req.body.oldPassword;
+
+        console.log(olPassword);
+        console.log(email);
+        console.log(userId);
+        console.log(userSession);
+
+        const resPassword = await getUserPasswordById(userId);
+
+        console.log(res);
+
+
+        if(!olPassword) {
+            throw new HttpError(400, "Se necesita la contraseña")
+        }
+
+        const isMatch = await bcrypt.compare(olPassword, resPassword.password);
+        if (!isMatch) {
+            throw new HttpError(400, 'Contraseña incorrecta');
+        }
+
         if (!userId || !email) {
             return res.status(400).json({ message: "User ID and email is required and missing in the session." });
         }

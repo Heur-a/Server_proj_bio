@@ -88,7 +88,7 @@
                         </svg>
                     <span class="error-message" id="postalError"></span>
                 </div>
-                <button type="button" class="btn" onclick="validateForm()">Enviar</button>
+                <button type="button" class="btn" >Enviar</button>
                 <button type="button" class="btn" id="logoutButton">Log Out</button> 
                 <div>
         </div>
@@ -98,7 +98,7 @@
         <div id="confirmationPopup" class="popup" style="display: none;">
             <div class="popup-content">
               <p>¿Estás seguro de que deseas guardar los cambios?</p>
-              <button id="confirmYes">Sí</button>
+              <button id="confirmYes" onclick="validateForm()">Sí</button>
               <button id="confirmNo">No</button>
             </div>
           </div>
@@ -128,6 +128,6 @@
     <script src="/js/menu.js"></script>
     <script src="/js/updateUser-UserProfile.js"></script>
     <script src="/js/logout.js"></script>
-    <script src="/js/botonesEditar.js"></script>
+    <!--<script src="/js/botonesEditar.js"></script>-->
 </body>
 </html>
