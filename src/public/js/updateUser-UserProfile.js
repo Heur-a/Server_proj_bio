@@ -9,8 +9,9 @@ async function updateUserData(validatedFields) {
         });
 
         if (response.ok) {
-            document.getElementById('statusMessage').innerText = '¡Datos actualizados correctamente!';
-            document.getElementById('statusMessage').style.color = 'green';
+            document.getElementById('confirmationPopup').style.display = 'none';
+            document.getElementById('successPopup').style.display = "block";
+            clearErrors();
         } else {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Error en la actualización.');
@@ -35,20 +36,20 @@ async function getUserData() {
 
 async function validateForm() {
     const fields = [
-        { 
-            id: 'name', 
-            message: 'El nombre debe contener al menos 2 caracteres.', 
+        {
+            id: 'name',
+            message: 'El nombre debe contener al menos 2 caracteres.',
             pattern: /^.{2,}$/,
         },
-        { 
-            id: 'password', 
-            message: 'La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, una minúscula y un número.', 
+        {
+            id: 'password',
+            message: 'La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, una minúscula y un número.',
             pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
             isPassword: true,
         },
-        { 
-            id: 'repeat_password', 
-            message: 'Las contraseñas no coinciden.', 
+        {
+            id: 'repeat_password',
+            message: 'Las contraseñas no coinciden.',
             customCheck: () => {
                 const password = document.getElementById('password').value.trim();
                 const repeatPassword = document.getElementById('repeat_password').value.trim();
@@ -56,14 +57,14 @@ async function validateForm() {
             },
             isPassword: true,
         },
-        { 
-            id: 'telephone', 
-            message: 'El teléfono debe tener 9 dígitos y empezar por 6, 7 o 9.', 
+        {
+            id: 'telephone',
+            message: 'El teléfono debe tener 9 dígitos y empezar por 6, 7 o 9.',
             pattern: /^[679]\d{8}$/,
         },
-        { 
-            id: 'postal', 
-            message: 'El campo de apellidos debe contener como máximo dos palabras.', 
+        {
+            id: 'postal',
+            message: 'El campo de apellidos debe contener como máximo dos palabras.',
             customCheck: () => {
                 const postalValue = document.getElementById('postal').value.trim();
                 const names = postalValue.split(/\s+/).filter(Boolean); // Eliminar espacios extra
@@ -82,7 +83,7 @@ async function validateForm() {
         const value = document.getElementById(field.id).value.trim();
         if (value) {
             // Validación del patrón o comprobación personalizada
-            if ((field.pattern && !field.pattern.test(value)) || 
+            if ((field.pattern && !field.pattern.test(value)) ||
                 (field.customCheck && !field.customCheck())) {
                 showError(field.id, field.message);
                 isValid = false;
@@ -112,9 +113,8 @@ async function validateForm() {
     // Enviar la petición si hay al menos un campo válido
     if (isValid && Object.keys(validatedFields).length > 0) {
         delete validatedFields['repeat_password']; // No enviar 'repeat_password'
-        //TODO:
-        // const oldPassword = document.getElementbyId('oldPassword').value
-        // validatedFields.oldPassword = oldPassword
+        const oldPassword = document.getElementById('oldPassword').value
+        validatedFields.oldPassword = oldPassword
         await updateUserData(validatedFields);
     } else if (Object.keys(validatedFields).length === 0) {
         document.getElementById('statusMessage').innerText = 'Rellena al menos un campo para actualizar.';
@@ -140,5 +140,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     const user = await getUserData();
     if (user) {
         document.getElementById('name').value = user.name;
+        document.getElementById('telephone').value = user.tel;
+        document.getElementById('postal').value = `${user.lastName1} ${user.lastName2}`;        
     }
 })
+
+// Función para abrir el popup
+document.getElementById("openPopup").addEventListener("click", function () {
+    document.getElementById("confirmationPopup").style.display = "block";
+});
+
+// Función para cerrar el popup cuando se presiona "No"
+document.getElementById("confirmNo").addEventListener("click", function () {
+    document.getElementById("confirmationPopup").style.display = "none";
+});
+
+document.getElementById("successOk").addEventListener("click", function () {
+    document.getElementById("successPopup").style.display = "none";
+    window.location.reload(); // Recargar la página
+});
