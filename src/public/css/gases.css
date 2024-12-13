@@ -3,14 +3,17 @@
 }
 
 .gas-container {
-    margin: 2rem 0;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;   
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+    grid-template-columns: repeat(1fr); /* Dos columnas */
+    gap: 1.25rem; /* Espaciado entre tarjetas */
 }
 
 .gas-item {
-    width: 90%;
+    width: 100%; /* Asegura que cada tarjeta use todo el espacio disponible en su celda */
     padding: 0.625rem 1.25rem;
     background-color: var(--formularios);
     border-radius: 1rem;
@@ -37,7 +40,7 @@
     width: 90%;
 }
 
-.gas-question span{
+.gas-question span {
     width: 5%;
     align-self: center;
 }
@@ -61,6 +64,17 @@
 
 .gas-item.active .toggle-sign {
     transform: rotate(45deg); 
+}
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .gas-container {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+
+    .gas-icon {
+        width: 50%;
+    }
 }
 
 
