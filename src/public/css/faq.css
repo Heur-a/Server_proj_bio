@@ -3,10 +3,13 @@
 }
 
 .faq-container {
-    margin: 2rem 0;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;   
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+    grid-template-columns: repeat(1fr); /* Dos columnas */
+    gap: 1.25rem; /* Espaciado entre tarjetas */
 }
 
 .faq-item {

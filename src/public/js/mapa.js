@@ -76,6 +76,7 @@ async function cargarDatosMapaCalor(contaminante) {
                     <b>Medición:</b> ${d.value}<br>
                     <b>Calidad:</b> ${calidad.mensaje}<br>
                     <span style="font-size: 2em;">${calidad.icon}</span>
+                    <button onClick="window.location.href='/gases.html'" >Ver información</button>
                 `);
         });
     } catch (error) {
