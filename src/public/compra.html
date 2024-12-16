@@ -56,6 +56,12 @@
                         <label for="email">Correo Electrónico*</label>
                         <input id="email" type="email" required placeholder="Introduzca su correo electrónico">
                     </div>
+                    <div class="grupo">
+                        <div class="privacidad">
+                            <input type="checkbox" id="privacy" name="privacy" required>
+                            <label for="privacy">He leído y acepto la <a href="privacidad.html" style="text-decoration: underline;" class="politica">política de privacidad</a></label>
+                        </div>
+                    </div>
                     <button class="boton" id="bb" type="button" onclick="verifyEmail()">Siguiente</button>
                     
                 </div>
@@ -178,12 +184,7 @@
                             <input id="cvc" type="text" required>
                         </div>
                     </div>
-                    <div class="grupo">
-                        <div class="privacidad">
-                            <input type="checkbox" id="privacy" name="privacy" required>
-                            <label for="privacy">He leído y acepto la <a href="privacidad.html" style="text-decoration: underline;" class="politica">política de privacidad</a></label>
-                        </div>
-                    </div>
+                    
                     <button class="boton" type="button" onclick="submitForm()">Comprar</button>
                 </div>
             </form> 

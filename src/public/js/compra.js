@@ -25,8 +25,8 @@ async function verifyEmail() {
     const email = document.getElementById('email').value.trim();
     const emailPattern = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
     const existingError = document.querySelector('#email + .error-message');
-
-    if (!emailPattern.test(email)) {
+    const privacidad = document.getElementById('privacy');
+    if (!emailPattern.test(email)|| !privacidad.checked) {
         if (!existingError) {
             showError('email', 'El correo electrónico no es válido');
         }
@@ -125,7 +125,6 @@ function submitForm() {
         { id: 'card', message: 'El número de tarjeta debe tener 16 dígitos', pattern: /^\d{16}$/ },
         { id: 'expiration', message: 'La fecha de expiración debe tener el formato MM/AA', pattern: /^(0[1-9]|1[0-2])\/\d{2}$/ },
         { id: 'cvc', message: 'El CVC debe tener 3 dígitos', pattern: /^\d{3}$/ },
-        { id: 'privacy', message: 'El checkbox de privacidad debe estar marcado', isCheckbox: true }
     ];
 
     let isValid = true;
