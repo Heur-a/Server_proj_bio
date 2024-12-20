@@ -13,8 +13,6 @@ let userFields = {
     password: ''
 }
 
-
-
 function nextStep(step) {
     document.getElementById('popup-step2').style.display = 'none';
     document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
@@ -22,15 +20,25 @@ function nextStep(step) {
 }
 
 async function verifyEmail() {
+    clearErrors();
     const email = document.getElementById('email').value.trim();
     const emailPattern = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
     const existingError = document.querySelector('#email + .error-message');
+    const errorPrivacy = document.querySelector('#privacy + .error-message');
     const privacidad = document.getElementById('privacy');
-    if (!emailPattern.test(email)|| !privacidad.checked) {
+    if (!emailPattern.test(email)) {
         if (!existingError) {
             showError('email', 'El correo electrónico no es válido');
         }
-    } else {
+    }
+
+    else if (!privacidad.checked) {
+        if (!errorPrivacy) {
+            showError('checkbox-container', 'Debes aceptar la política de privacidad')
+        }
+    }
+
+    else {
         clearErrors();
         userFields.email = email;
         let userExists = await checkEmailAvailability(email);
@@ -41,6 +49,7 @@ async function verifyEmail() {
             await popupCorreoEnviado();
         }
     }
+
 }
 
 async function popupCorreoEnviado() {
@@ -59,8 +68,6 @@ async function verifyStep2() {
     const existingError = document.querySelector('#codigo + .error-message');
 
     //comprobar codigo bbdd
-
-
     if (!codigoPattern.test(codigo)) {
         if (!existingError) {
             showError('codigo', 'El código debe tener 6 dígitos');
@@ -157,7 +164,7 @@ function closePopup() {
 
 function showError(fieldId, message) {
     const field = document.getElementById(fieldId);
-    const error = document.createElement('span');
+    const error = document.createElement('div');
     error.className = 'error-message';
     error.style.color = 'red';
     error.innerText = message;
@@ -241,29 +248,29 @@ async function sendVerificationCode(email, code) {
 function togglePassword() {
     const passwordInput = document.getElementById('password');
     const toggleIcon = document.querySelector('.toggle-password');
-        
+
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
         toggleIcon.classList.remove('bi-eye-slash-fill');
-        toggleIcon.classList.add('bi-eye-fill'); 
+        toggleIcon.classList.add('bi-eye-fill');
     } else {
         passwordInput.type = 'password';
         toggleIcon.classList.remove('bi-eye-fill');
-        toggleIcon.classList.add('bi-eye-slash-fill'); 
+        toggleIcon.classList.add('bi-eye-slash-fill');
     }
 }
 
 function togglePassword2() {
     const passwordRepeatInput = document.getElementById('repeat_password');
     const toggleIcon2 = document.querySelector('.toggle-password2');
-        
+
     if (passwordRepeatInput.type === 'password') {
         passwordRepeatInput.type = 'text';
         toggleIcon2.classList.remove('bi-eye-slash-fill');
-        toggleIcon2.classList.add('bi-eye-fill'); 
+        toggleIcon2.classList.add('bi-eye-fill');
     } else {
         passwordRepeatInput.type = 'password';
         toggleIcon2.classList.remove('bi-eye-fill');
-        toggleIcon2.classList.add('bi-eye-slash-fill'); 
+        toggleIcon2.classList.add('bi-eye-slash-fill');
     }
 }
