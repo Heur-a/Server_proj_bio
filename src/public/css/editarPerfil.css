@@ -7,6 +7,32 @@
     max-width: 500px;
 }
 
+.divFlecha {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.flecha {
+    position: relative;
+    top: 1rem;
+    left: 1rem;
+
+}
+
+.flecha i {
+    color: var(--verdeOscuro);
+    font-size: 200%;
+}
+
+.flecha i:hover {
+    color: var(--verdeClaro);
+}
+
+
+
 h2 {
     margin-bottom: 1.5rem;
 }

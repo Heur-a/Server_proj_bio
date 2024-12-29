@@ -1,28 +1,32 @@
-// Funció de logout universal
-function logout() {
-   fetch('/auth/logout', {
-       method: 'POST',
-       headers: {
-           'Content-Type': 'application/json',
-       },
-   }).then(response => {
-       if (response.ok) {
-           window.location.href = '/index.html';
-       } else {
-           throw new Error('Error al tancar la sessió');
-       }
-   }).catch(error => alert(error.message));
-    
+ // Función de logout universal
+ function logout() {
+    fetch('/auth/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = '/index.html';
+        } else {
+            throw new Error('Error al cerrar la sesión');
+        }
+    }).catch(error => alert(error.message));
 }
 
-// Afegeix l'esdeveniment de logout al botó o enllaç amb ID 'logoutButton'
-document.addEventListener('DOMContentLoaded', () => {
-    const logoutButton = document.getElementById('logoutButton');
-
-    if (logoutButton) {
-        logoutButton.addEventListener('click', (event) => {
-            event.preventDefault();  // Evita el comportament per defecte de l'enllaç o botó
-            logout();
-        });
-    }
+// Abrir el popup al hacer clic en el botón de logout
+document.getElementById("logoutButton").addEventListener("click", function () {
+    document.getElementById("confirmationPopupLogout").style.display = "block";
 });
+
+// Cerrar el popup al hacer clic en "No"
+document.getElementById("logoutConfirmNo").addEventListener("click", function () {
+    document.getElementById("confirmationPopupLogout").style.display = "none";
+});
+
+// Confirmar logout al hacer clic en "Sí"
+document.getElementById("logoutConfirmYes").addEventListener("click", function () {
+    logout(); // Llamar a la función de logout
+    document.getElementById("confirmationPopupLogout").style.display = "none";
+});
+
