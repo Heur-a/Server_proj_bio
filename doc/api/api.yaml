@@ -29,7 +29,7 @@ paths:
         - Autenticación
       summary: Inicia sesión
       operationId: login
-      security: [] # Sin autenticación requerida
+      security: [ ] # Sin autenticación requerida
       requestBody:
         description: Datos de inicio de sesión
         required: true
@@ -61,7 +61,7 @@ paths:
         - Autenticación
       summary: Registra un nuevo usuario
       operationId: register
-      security: [] # Sin autenticación requerida
+      security: [ ] # Sin autenticación requerida
       requestBody:
         description: Datos del nuevo usuario
         required: true
@@ -84,7 +84,7 @@ paths:
         - Autenticación
       summary: Envía un email de verificación
       operationId: sendVerificationEmail
-      security: [] # Sin autenticación requerida
+      security: [ ] # Sin autenticación requerida
       parameters:
         - name: email
           in: query
@@ -105,7 +105,7 @@ paths:
         - Autenticación
       summary: Resetea la contraseña
       operationId: resetPassword
-      security: [] # Sin autenticación requerida
+      security: [ ] # Sin autenticación requerida
       parameters:
         - name: email
           in: query
@@ -264,6 +264,38 @@ paths:
           description: Datos inválidos
         "500":
           description: Error en el servidor
+  # --- RUTAS MEDICIONES ---
+  /mediciones/diaria:
+    get:
+      tags:
+        - Mediciones
+      summary: Obtiene todas las medidas hechas en la fecha correspondiente
+      operationId: get_mediciones_diarias
+      parameters:
+        - name: user_id
+          in: cookie
+          description: Identificador del usuario
+          required: true
+          schema:
+            type: integer
+        - name: date
+          in: query
+          description: Fecha de la distancia diaria
+          required: true
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: OK
+        400:
+          description: La fecha no esta bien escrita
+        401:
+          description: Sin autorización
+
+
+
+
 
 components:
   schemas:

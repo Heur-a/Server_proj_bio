@@ -11,7 +11,12 @@
  * @requires medicionesService
  */
 
-import { getMedicionesDB, insertMedicionDB, getUltimaMedicionDB} from '../services/medicionesService.js';
+import {
+    getMedicionesDB,
+    insertMedicionDB,
+    getUltimaMedicionDB,
+    getMedicionesDiariasDB
+} from '../services/medicionesService.js';
 import pool from '../config/db_conection.js';
 import {Medida} from "../components/medidaClass.js";
 import {getNodeIdWithUuuid} from "../services/nodeService.js";
@@ -186,3 +191,40 @@ export const getUltimaMedicion = async (req, res) => {
         res.status(500).send('Error obtaining last reading');
     }
 };
+
+export const handleGetMedicionesDiarias = async (req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.status(401).send('Not authorized');
+        }
+        const userSession = req.session.user;
+        const {id: userId, email: email} = userSession;
+
+        if (!userId || !email) {
+            return res.status(401).send('Not authorized');
+        }
+
+        if (!req.query.date) {
+            return res.status(400).send('Date not found');
+        }
+
+        const {date} = req.query;
+
+        const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+
+        if (!regex.test(date)) {
+            res.status(400).send('Invalid date, not a YYYY-MM-DD format date');
+        }
+
+        const mediciones = await getMedicionesDiariasDB(userId, date);
+
+        return res.json(mediciones || []); // Si mediciones és null o undefined, envia un array buit
+
+    } catch (error) {
+        console.error('Error retrieving mediciones:', error);
+        if (!res.headersSent) {
+            return res.status(500).send('Error obtaining mediciones data');
+        }
+    }
+    
+}

@@ -13,7 +13,14 @@
  */
 
 import { Router } from 'express';  // Import the Router from Express
-import { getMediciones, postMedicion, getUltimaMedicion, getMapaCalorData } from '../controllers/medicionesController.js';  // Import the controller functions
+import {
+    getMediciones,
+    postMedicion,
+    getUltimaMedicion,
+    getMapaCalorData,
+    handleGetMedicionesDiarias
+} from '../controllers/medicionesController.js';
+import {verifyIdentity} from "../services/authService.js";  // Import the controller functions
 
 // Initialize the router
 const router = Router();
@@ -52,7 +59,10 @@ router.post('/', postMedicion);
  * @route GET /mediciones/ultima
  * @see getUltimaMedicion
  */
-router.get('/ultima', getUltimaMedicion);
+router.get('/ultima', verifyIdentity, getUltimaMedicion);
+
+router.get("/diaria",verifyIdentity, handleGetMedicionesDiarias)
+
 
 
 

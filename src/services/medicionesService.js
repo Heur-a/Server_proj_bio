@@ -74,4 +74,15 @@ export const getUltimaMedicionDB = async () => {
     }
 };
 
+export const getMedicionesDiariasDB = async (userId,date) => {
+    try{
+        const query = await readFile('./src/sql/getMeasurementsUserDay.sql', 'utf-8');
+        const params = [userId, date];
+        const [rows] = await pool.query(query, params);
+        return rows.length ? rows[0] : null;
+    } catch (e) {
+        throw new HttpError(500, e.message);
+    }
+}
+
 export default { getMedicionesDB, insertMedicionDB, getUltimaMedicionDB };
