@@ -15,6 +15,7 @@ import express from 'express';
 import {createNode, handleGetNode} from '../controllers/nodeController.js';
 import { verifyIdentity } from '../services/authService.js';
 import {getNodeUuid} from "../services/nodeService.js";
+import {handleGetAllNodesWithLastDate} from "../controllers/medicionesController.js";
 
 // Create a new router object
 const nodeRoutes = express.Router();
@@ -23,6 +24,8 @@ const nodeRoutes = express.Router();
 nodeRoutes.post('/', verifyIdentity, createNode);
 
 nodeRoutes.get('/', verifyIdentity, handleGetNode );
+
+nodeRoutes.get('/all', verifyIdentity, handleGetAllNodesWithLastDate);
 
 // Export the router object
 export default nodeRoutes;

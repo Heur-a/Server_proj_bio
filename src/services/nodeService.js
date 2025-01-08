@@ -97,3 +97,19 @@ export const getNodeUuid = async (id) => {
         }
 
     }
+
+/**
+ * Retrieves all nodes with their last date from the database.
+ *
+ * This asynchronous function reads a SQL query from a file and executes it against the database connection pool.
+ * It returns the rows retrieved from the query or null if no rows are found.
+ *
+ * @async
+ * @function getAllNodesWithLastDate
+ * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of node objects or null if no nodes are found.
+ */
+    export const getAllNodesWithLastDate = async () => {
+        const query = await readFile('./src/sql/getAllNodesWithLastDate.sql', 'utf-8');
+        const [rows] = await pool.query(query)
+        return rows || null;
+    }
