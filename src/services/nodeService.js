@@ -108,10 +108,17 @@ export const getNodeUuid = async (id) => {
  * @function getAllNodesWithLastDate
  * @returns {Promise<Array<Object>|null>} A promise that resolves to an array of node objects or null if no nodes are found.
  */
-    export const getAllNodesWithLastDate = async () => {
-        const query = await readFile('./src/sql/getAllNodesWithLastDate.sql', 'utf-8');
-        const [rows] = await pool.query(query)
+export const getAllNodesWithLastDate = async () => {
+    const query = await readFile('./src/sql/getAllNodesWithLastDate.sql', 'utf-8');
+    const [rows] = await pool.query(query);
 
+    // Transformar directament en aquesta funció
+    const transformedRows = rows.map((row) => ({
+        ...row,
+        last_measurement_date: Buffer.isBuffer(row.last_measurement_date)
+            ? row.last_measurement_date.toString()
+            : row.last_measurement_date,
+    }));
 
-        return rows || null;
-    }
+    return transformedRows || null;
+};

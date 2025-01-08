@@ -10,7 +10,8 @@ const pool = createPool({
     user: process.env.MYSQLDB_USER,
     password: process.env.MYSQLDB_PASSWORD,
     port: process.env.MYSQLDB_PORT || 3306,
-    database: process.env.MYSQLDB_DATABASE
+    database: process.env.MYSQLDB_DATABASE,
+    dateStrings: true
 });
 
 // Exportar el pool per utilitzar-lo en altres arxius
