@@ -111,5 +111,7 @@ export const getNodeUuid = async (id) => {
     export const getAllNodesWithLastDate = async () => {
         const query = await readFile('./src/sql/getAllNodesWithLastDate.sql', 'utf-8');
         const [rows] = await pool.query(query)
+
+
         return rows || null;
     }
