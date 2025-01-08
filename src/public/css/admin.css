@@ -1,0 +1,23 @@
+
+.usuarios{
+    display: flex;
+    flex-direction: column;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+}
+th, td {
+    border: 0.01rem solid var(--verdeClaro);
+    padding: 1rem;
+    text-align: left;
+    color: var(--gris);
+}
+th {
+    background-color: var(--verdeClaro);
+}
+tr:nth-child(even) {
+    background-color: var(--formularios);
+}

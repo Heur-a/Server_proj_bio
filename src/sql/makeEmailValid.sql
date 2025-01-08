@@ -1,0 +1,1 @@
+UPDATE EmailValidated SET isValidated = true WHERE email = ?;

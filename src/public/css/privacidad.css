@@ -1,0 +1,67 @@
+
+/* Main Content */
+.privacidad {
+    max-width: 50rem;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--formularios);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+}
+
+
+.divFlecha {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: left;
+}
+
+.flecha {
+    position: relative;
+    top: 1rem;
+    left: 1rem;
+
+}
+
+.flecha i {
+    color: var(--verdeOscuro);
+    font-size: 200%;
+}
+
+.flecha i:hover {
+    color: var(--verdeClaro);
+}
+
+
+.privacidad h2#titulo {
+    color: var(--verdeOscuro);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.privacidad h3 {
+    color: var(--gris);
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.privacidad p, .privacidad ul {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.privacidad ul {
+    padding-left: 1.25rem;
+    list-style: disc;
+}
+
+.privacidad a {
+    color: var(--verdeOscuro);
+    text-decoration: none;
+}
+
+.privacidad a:hover {
+    text-decoration: underline;
+}

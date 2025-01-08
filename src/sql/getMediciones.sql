@@ -9,4 +9,5 @@
 -- SQL file to get all the measurements
 -- -----------------------------------------------------
 
-SELECT * FROM Mediciones;
+SELECT * FROM Measurements;
+

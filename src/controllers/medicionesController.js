@@ -2,7 +2,7 @@
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 09:51:18 
  * @Last Modified by: Alex Escrivà Caravaca
- * @Last Modified time: 2024-10-09 09:51:39
+ * @Last Modified time: 2024-10-22 11:41:25
  */
 
 /**
@@ -11,7 +11,32 @@
  * @requires medicionesService
  */
 
-import { getMedicionesDB, insertMedicionDB, getUltimaMedicionDB } from '../services/medicionesService.js';
+import {
+    getMedicionesDB,
+    insertMedicionDB,
+    getUltimaMedicionDB,
+    getMedicionesDiariasDB
+} from '../services/medicionesService.js';
+import pool from '../config/db_conection.js';
+import {Medida} from "../components/medidaClass.js";
+import {getNodeIdWithUuuid} from "../services/nodeService.js";
+import {HttpError} from "../components/HttpErrorClass.js";
+/**
+ * @function getMapaCalorData
+ * @description Retrieves the coordinates and values for the heatmap.
+ * @param {Request} req - The HTTP request.
+ * @param {Response} res - The HTTP response containing an array of data for the heatmap.
+ */
+export const getMapaCalorData = async (req, res) => {
+    try {
+        const query = 'SELECT LocX, LocY, value FROM Measurements';
+        const [rows] = await pool.query(query);
+        res.json(rows);
+    } catch (error) {
+        console.error('Error retrieving heatmap data:', error);
+        res.status(500).send('Error retrieving heatmap data');
+    }
+};
 
 /**
  * @function getMediciones
@@ -62,10 +87,11 @@ export const getMediciones = async (req, res) => {
  * Submits a new measurement to the server, expecting a JSON object in the request body.
  * 
  * @param {Request} req - The HTTP request containing a JSON object with the following properties:
- * - `medida` (number, required): The value of the measurement taken by the sensor.
- * - `lugar` (string, required): The location where the measurement was taken.
- * - `tipo_gas` (string, required): The type of gas being measured.
- * - `hora` (string, date-time, required): The time when the measurement was taken.
+ * - `value` (number, required): The value of the measurement taken by the sensor.
+ * - `LocX` (number, required): The longitude where the measurement was taken.
+ * - `LocY` (number,required): The latitude where the measurement was taken.
+ * - `gasId` (number, required): The type of gas being measured.
+ * - `uuid` (string,required)
  * 
  * @param {Response} res - The HTTP response indicating the result of the operation.
  * 
@@ -76,35 +102,56 @@ export const getMediciones = async (req, res) => {
  * 
  * @response 201 - The measurement was successfully created.
  * @response 400 - Invalid or incomplete measurement data.
+ * @response 404 - Invalid uuid
  * @response 500 - Error creating the measurement.
  * 
  * @example
  * // Example request body
  * {
- *   "medida": 75.3,
- *   "lugar": "Park Area",
- *   "tipo_gas": "O3",
- *   "hora": "2024-10-08T12:00:00Z"
+ *   "value": 2.3,
+ *   "LocX" : -2.5,
+ *   "LocY": 40,
+ *   "gasId": 1,
+ *   "uuid": "abcdefgh12345678"
  * }
  */
 export const postMedicion = async (req, res) => {
     try {
-        const { medida, lugar, tipo_gas, hora } = req.body;
+        // Parse and validate the request body
+        const {value, LocX, LocY, gasId, uuid} = req.body;
 
-        // Check if all required fields are present
-        if (!medida || !lugar || !tipo_gas || !hora) {
-            console.error('Incomplete data');
-            return res.status(400).send('Incomplete data');
+        if (
+            typeof value !== 'number' ||
+            typeof LocX !== 'number' ||
+            typeof LocY !== 'number' ||
+            typeof gasId !== 'number' ||
+            typeof uuid !== 'string'
+        ) {
+            console.log('Error retrieving postMedicion');
+            return res.status(400).send('Invalid or incomplete measurement data');
+        }
+        //Tranform uuid into id
+        const nodeId = await getNodeIdWithUuuid(uuid);
+
+        if(!nodeId) {
+            return res.status(404).send('Node sensor doesn\'t exist');
         }
 
+
+        // Create a new Medida instance
+        const medida = new Medida(value, LocX, LocY, gasId, nodeId);
+
         // Insert the new measurement into the database
-        const success = await insertMedicionDB(medida, lugar, tipo_gas, hora);
-        success ? res.status(201).send('Reading created') : res.status(500).send('Error creating reading');
+        await insertMedicionDB(medida);
+
+        //Send created successfully
+        return res.status(201).send('Measurement added successfully');
+
     } catch (error) {
-        console.error('Error sending reading:', error);
-        res.status(500).send('Error sending reading');
+        console.error('Error creating measurement:', error.message);
+        res.status(500).send(error.message);
     }
-};
+}
 
 /**
  * @function getUltimaMedicion
@@ -144,3 +191,40 @@ export const getUltimaMedicion = async (req, res) => {
         res.status(500).send('Error obtaining last reading');
     }
 };
+
+export const handleGetMedicionesDiarias = async (req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.status(401).send('Not authorized');
+        }
+        const userSession = req.session.user;
+        const {id: userId, email: email} = userSession;
+
+        if (!userId || !email) {
+            return res.status(401).send('Not authorized');
+        }
+
+        if (!req.query.date) {
+            return res.status(400).send('Date not found');
+        }
+
+        const {date} = req.query;
+
+        const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+
+        if (!regex.test(date)) {
+            res.status(400).send('Invalid date, not a YYYY-MM-DD format date');
+        }
+
+        const mediciones = await getMedicionesDiariasDB(userId, date);
+
+        return res.json(mediciones || []); // Si mediciones és null o undefined, envia un array buit
+
+    } catch (error) {
+        console.error('Error retrieving mediciones:', error);
+        if (!res.headersSent) {
+            return res.status(500).send('Error obtaining mediciones data');
+        }
+    }
+    
+}

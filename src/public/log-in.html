@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OZONE | Iniciar sesión</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/log-in.css">
+    
+    <!--tipografia-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!--iconos bootstrap-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="login-container">
+
+        <div class="contenido">
+            <div class="encabezado">
+                <!-- Flecha y Logo -->
+                <a href="index.html" class="flecha"><i class="bi bi-arrow-left"></i></a>
+                <img src="img/logotipo_modoClaro.png" alt="Logo de la empresa" class="logo-img">
+            </div>
+            <!-- Login Form -->
+            <div class="formulario">
+                <h1>Iniciar sesion</h1>
+                <form method="post">
+                    <div class="escribir">
+                        <label>Correo electrónico*</label>
+                        <input id="emailInput" type="text" required>
+                    </div>
+                    <div class="escribir">
+                        <label>Contraseña*</label>
+                        <input type="password" required>
+                    </div>
+                    <input class=boton type="submit" value="Iniciar sesión">
+        
+                    <div class="recordar">¿Has olvidado tu contraseña?</div>
+                    <div id="recupContrasenya" class="recordar"><a href="#">Recuperar contraseña</a></div>
+                
+                </form>
+            </div>
+        </div>
+
+        <!-- Illustration Area -->
+        <div class="foto">
+            <img src="img/imagen_login.png" alt="Imagen de inicio de sesión">
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+
+</body>
+</html>

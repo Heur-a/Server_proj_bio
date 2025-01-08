@@ -1,0 +1,179 @@
+.vacio {
+    height: 8rem;
+    width: 100%;
+    position: absolute;
+    top: 6.3rem;
+    background-color: var(--verdeOscuro);
+    z-index: 1;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.content {
+    flex: 1;
+}
+
+.content h1 {
+    margin: 0;
+}
+
+#marron {
+    color: var(--beige);
+    z-index: 10;
+    position: relative;
+}
+
+.content p{
+    width: 70%;
+    margin: 1.5rem 0;
+    line-height: 1.4rem;
+}
+
+.botonSuscribirse {
+    width: 40%;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.content p {
+    width: 70%;
+    margin: 1.5rem 0;
+    line-height: 2rem;
+    font-size: 1.125rem;
+}
+.map {
+    flex: 1;
+    position: relative;
+    z-index: 10;
+}
+
+#map {
+    height: 40rem;
+}
+
+#locationButton {
+    padding: 0.625rem 1.25rem;
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    z-index: 1000;
+    border: none;
+    border-radius: 0.313rem;
+    cursor: pointer;
+}
+
+.medicion {
+    font-size: 1.125rem;
+    color: var(--negro);
+    font-weight: bold;
+    text-shadow: 0.125rem 0.125rem 0.25rem rgba(255, 255, 255, 0.7);
+}
+
+.legend {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    background: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.875rem;
+}
+
+.legend div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.legend div span {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+}
+
+.legend .good {
+    background: green;
+}
+
+.legend .moderate {
+    background: yellow;
+}
+
+.legend .bad {
+    background: red;
+}
+
+#contaminanteSelect {
+    position: absolute;
+    top: 0.625rem;
+    left:227px;
+    z-index: 1000;
+    margin-left: 4rem;
+  }
+
+  #tituloselector{
+
+    position: absolute;
+    top: 0.625rem;
+    left: 0.625rem;
+    left:1.5rem;
+    z-index: 1000;
+    margin-left: 2rem;
+
+  }
+
+/* Map */
+main .map{
+    transform:translatex(0px) translatey(0px);
+   }
+   
+   /* Legend */
+   .container .map .legend{
+    transform:translatex(-17px) translatey(-5px);
+   }
+   
+   
+
+@media (max-width: 842px){
+    .vacio {
+        height: 6.5rem;
+    }
+
+    .container {
+        position: relative;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .content{
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .content p{
+        width: 100%;
+    }
+
+    .botonSuscribirse{
+        width: 70%;
+    }
+
+    .map{
+        width: 100%;
+    }
+
+    #map {
+        height: 18.75rem;
+    }
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>OZONE | Editar perfil</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/editarPerfil.css">
+    
+    <!--tipografia-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!--iconos bootstrap-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index_log.html">
+                <img src="/img/logotipo_modoClaro.png" alt="Logo de la empresa" class="logo-img">
+            </a>
+        </div>
+        <button class="menu-toggle">&#9776;</button>
+        <nav class="nav">
+            <ul>
+                <li><a href="index_log.html">PRINCIPAL</a></li>
+                <li><a href="mediciones.html">MEDICIONES</a></li>
+                <li><a href="contacto_log.html">CONTACTO</a></li>
+                <li><a href="faq_log.html">FAQ</a></li>
+                <li><a href="gases_log.html">GASES</a></li>
+            </ul>
+        </nav>
+        <div class="user"><a href="user-profile.html"><i class="bi bi-person-circle"></i></a></div>
+
+    </header>
+    <main>
+       
+        <section class="formulario">
+            <div class="divFlecha">
+                <a href="mediciones.html" class="flecha"><i class="bi bi-arrow-left"></i></a>
+                <button type="button" class="btn" id="logoutButton">Log Out</button> 
+            </div>
+            <h2>Editar Perfil</h2>
+            <form id="simpleForm">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input id="name" type="text" placeholder="Introduzca su nombre" required>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                        </svg>
+                    <span class="error-message" id="nameError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="postal">Apellidos</label>
+                    <input id="postal" type="text" placeholder="Introduzca sus apellidos a cambiar" required>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                        </svg>
+                    <span class="error-message" id="postalError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="oldPassword">Contraseña Actual*</label>
+                    <input id="oldPassword" type="password" placeholder="Introduzca su contraseña actual" required>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                        </svg>
+                    <span class="error-message" id="oldPasswordError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña Nueva</label>
+                    <input id="password" type="password" placeholder="Introduzca su contraseña nueva" required>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                        </svg>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="repeat_password">Repetir Contraseña</label>
+                    <input id="repeat_password" type="password" placeholder="Repita su contraseña" required>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                    </svg>
+                    <span class="error-message" id="repeatPasswordError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Teléfono</label>
+                    <input id="telephone" type="tel" placeholder="Introduzca su teléfono" required>
+                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                    </svg>
+                    <span class="error-message" id="telephoneError"></span>
+                </div>
+            
+                <button type="button" class="btn" id="openPopup">Enviar</button>
+        </div>
+            </form>
+            <div id="statusMessage"></div>
+        </section>
+        <div id="confirmationPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+              <p>¿Estás seguro de que deseas guardar los cambios?</p>
+              <button id="confirmYes" onclick="validateForm()">Sí</button>
+              <button id="confirmNo">No</button>
+            </div>
+          </div>
+          
+          <!-- Popup de éxito -->
+          <div id="successPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+              <p>Cambios guardados con éxito.</p>
+              <button id="successOk">Aceptar</button>
+            </div>
+          </div>
+          
+          <!-- Popup de sin cambios -->
+          <div id="noChangePopup" class="popup" style="display: none;">
+            <div class="popup-content">
+              <p>No se han realizado cambios.</p>
+              <button id="noChangeOk">Aceptar</button>
+            </div>
+          </div>
+
+            <!-- Popup de confirmación para Logout -->
+            <div id="confirmationPopupLogout" class="popup" style="display: none;">
+                <div class="popup-content">
+                    <p>¿Estás seguro de que deseas cerrar la sesión?</p>
+                    <button id="logoutConfirmYes">Sí</button>
+                    <button id="logoutConfirmNo">No</button>
+                </div>
+            </div>
+    </main>
+
+
+    <footer>
+        <p>&copy; 2024 Ozone. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+    <script src="/js/updateUser-UserProfile.js"></script>
+    <script src="/js/logout.js"></script>
+</body>
+</html>

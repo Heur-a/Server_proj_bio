@@ -1,0 +1,109 @@
+main{
+    padding-bottom: 0;
+}
+
+.formulario {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.formulario h2{
+    flex: 0 0 auto;
+}
+
+.formulario form {
+    width: 80%;
+    margin-top: 3rem;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    justify-content: space-between;
+    background: var(--formularios);
+    border-radius: 0.938rem 0.938rem 0 0;
+}
+
+.grupo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.escribir {
+    width: 40%;
+    margin: 2rem 2.5rem 0 2.5rem;
+}
+
+label{
+    color: var(--verdeOscuro);
+    font-size: 1rem;
+}
+
+input, select {
+    width: 100%;
+    height: 1.875rem;
+    background: none;
+    color: var(--gris);
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    border-bottom: 0.125rem solid var(--linea-input);
+}
+
+.descripcion{
+    width: 90%;
+    margin: 2rem 2.5rem 0 2.5rem;
+}
+
+.boton {
+    width: 30%;
+    height: 2.5rem;
+    margin: 2rem 0;
+    background: var(--verdeClaro);
+    border-radius: 1.563rem;
+    font-size: 1.125rem;
+    color: var(--blanco);
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+.boton:hover {
+    background-color: var(--hover);
+    transition: .3s;
+}
+
+@media (max-width: 1120px) {
+    .escribir {
+        margin-left: 2rem;
+        margin-right: 2rem; 
+    }
+}
+
+
+@media (max-width: 920px) {
+
+    .formulario form {
+        width: 100%;
+        background: none;
+    }
+
+    .escribir, .descripcion {
+        width: 100%; 
+        margin: 1.875rem 0rem;
+    }
+
+    .boton{
+        width: 60%;
+    }
+}
+
+

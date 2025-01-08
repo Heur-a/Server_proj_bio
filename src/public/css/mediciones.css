@@ -1,0 +1,202 @@
+/* Contenedor principal para limitar el ancho */
+main {
+  max-width: 1200px; /* Limita el ancho del contenido */
+  margin: 0 auto; /* Centra el contenido horizontalmente */
+  padding: 20px;
+}
+
+/* Ajustes del contenedor de la gráfica */
+#grafica-container {
+  background-color: #f7f4ec;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  grid-area: graph;
+  width: 100%;
+  max-width: 800px; /* Ancho máximo para evitar que se expanda demasiado */
+  margin: 0 auto; /* Centra el contenedor de la gráfica */
+}
+
+canvas {
+  max-height: 400px;
+  width: 100%;
+}
+
+/* Ajustes del contenedor de alertas */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #fffbe0;
+  padding: 15px;
+  border: 1px solid #ffc107;
+  border-radius: 5px;
+  width: 95%;
+}
+
+.alert img {
+  width: 80px;
+  height: auto;
+}
+
+.alert p {
+  margin: 0;
+}
+
+.alert .alert-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.alert .alert-time {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.alert h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Botón de Ver Histórico de Datos */
+#downloadHistory {
+  background-color: var(--verdeClaro);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  margin: 20px auto 0 auto;
+  display: block;
+}
+
+#downloadHistory:hover {
+  background-color: var(--hover);
+}
+
+/* Ajustar la cuadrícula */
+.dashboard {
+  display: grid;
+  grid-template-columns: 3fr 2fr; /* Más espacio para la gráfica */
+  gap: 30px; /* Mayor espacio entre columnas */
+  grid-template-areas: 
+      "graph summary"
+      "alerts location"
+      "alerts button"; /* Botón debajo de alertas */
+  width: 100%; /* Usar todo el ancho disponible */
+  max-width: 1200px; /* Ancho máximo de la cuadrícula */
+  margin: 0 auto; /* Centrar la cuadrícula */
+}
+
+.summary {
+  grid-area: summary;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.location {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  grid-area: location;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.location #map {
+  width: 100%;
+  height: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.measurement {
+  background-color: #324B38;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.measurement h4 {
+  color: #D1E7DD;
+  font-weight: bold;
+}
+
+.measurement p {
+  font-size: 2.5em;
+}
+
+.measurement small {
+  color: #A6B9AC;
+}
+
+.measurement:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.measurement:nth-child(2) {
+  background-color: #E8E3D8;
+  color: #333;
+}
+
+.measurement:nth-child(2) h4 {
+  color: #5A5A5A;
+}
+
+#downloadHistory {
+  width: 95%;
+}
+
+/* Diseño responsive para pantallas medianas */
+@media (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+        "graph"
+        "summary"
+        "alerts"
+        "location"
+        "button"; /* Botón debajo */
+  }
+
+  #grafica-container {
+    max-width: 100%; /* Permite que el gráfico se ajuste */
+  }
+}
+
+/* Diseño responsive para pantallas pequeñas */
+@media (max-width: 480px) {
+  main {
+    padding: 10px;
+  }
+
+  .dashboard {
+    gap: 15px;
+  }
+
+  #grafica-container {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  canvas {
+    max-height: 300px;
+  }
+
+  .alerts,
+  .summary,
+  .location {
+    padding: 10px;
+  }
+}

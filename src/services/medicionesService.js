@@ -1,8 +1,8 @@
 /*
  * @Author: Alex Escrivà Caravaca 
  * @Date: 2024-10-09 09:51:26 
- * @Last Modified by:   Alex Escrivà Caravaca 
- * @Last Modified time: 2024-10-09 09:51:26 
+ * @Last Modified by: Alex Escrivà Caravaca
+ * @Last Modified time: 2024-10-21 20:32:54
  */
 
 /**
@@ -14,6 +14,7 @@
 
 import pool from '../config/db_conection.js';
 import { readFile } from 'fs/promises';
+import {HttpError} from "../components/HttpErrorClass.js";
 
 /**
  * Fetches all measurements from the database.
@@ -26,32 +27,33 @@ export const getMedicionesDB = async () => {
     try {
         const query = await readFile('./src/sql/getMediciones.sql', 'utf-8');
         const [rows] = await pool.query(query);
+        console.log(rows);
         return rows;
     } catch (error) {
-        console.error('Error fetching all readings:', error);
-        throw new Error('Database query error');
+        throw new HttpError(500, error.message);
     }
 };
 
 /**
  * Inserts a new measurement into the database.
  * @function insertMedicionDB
- * @param {string} medida - Measurement value taken by the sensor.
- * @param {string} lugar - Location where the measurement was taken.
- * @param {string} tipo_gas - Type of gas measured by the sensor.
- * @param {string} hora - Time when the measurement was taken.
+ * @param {Medida} medida - Object containing the measurement
  * @returns {Promise<boolean>} True if the measurement was successfully inserted.
  * @throws Will throw an error if the insertion fails.
  * @description This corresponds to the `POST /mediciones` operation, where the data of the new measurement is provided in the request body.
  */
-export const insertMedicionDB = async (medida, lugar, tipo_gas, hora) => {
+export const insertMedicionDB = async (medida) => {
     try {
+        console.log(medida);
         const query = await readFile('./src/sql/insertMedicion.sql', 'utf-8');
-        const result = await pool.query(query, [medida, lugar, tipo_gas, hora]);
+        const result = await pool.query(query, [medida.value,medida.LocX,medida.LocY,medida.nodeId,medida.gasId]);
         return result[0].affectedRows === 1;
     } catch (error) {
-        console.error('Error inserting new reading:', error);
-        throw new Error('Database insertion error');
+        if (error instanceof HttpError) {
+            throw error;
+        } else {
+            throw new HttpError(500,error.message);
+        }
     }
 };
 
@@ -68,7 +70,19 @@ export const getUltimaMedicionDB = async () => {
         const [rows] = await pool.query(query);
         return rows.length ? rows[0] : null;
     } catch (error) {
-        console.error('Error fetching last reading:', error);
-        throw new Error('Database query error');
+        throw new HttpError(500, error.message);
     }
 };
+
+export const getMedicionesDiariasDB = async (userId,date) => {
+    try{
+        const query = await readFile('./src/sql/getMeasurementsUserDay.sql', 'utf-8');
+        const params = [userId, date];
+        const [rows] = await pool.query(query, params);
+        return rows.length ? rows[0] : null;
+    } catch (e) {
+        throw new HttpError(500, e.message);
+    }
+}
+
+export default { getMedicionesDB, insertMedicionDB, getUltimaMedicionDB };

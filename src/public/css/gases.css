@@ -1,0 +1,89 @@
+.gases{
+    width: 100%;
+}
+
+.gas-container {
+    margin-left: 4rem;
+    margin-right: 4rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;   
+    display: grid;
+    grid-template-columns: repeat(1fr); /* Dos columnas */
+    gap: 1.25rem; /* Espaciado entre tarjetas */
+}
+
+.gas-item {
+    width: 100%; /* Asegura que cada tarjeta use todo el espacio disponible en su celda */
+    padding: 0.625rem 1.25rem;
+    background-color: var(--formularios);
+    border-radius: 1rem;
+    justify-self: center;
+}
+
+.gas-icon {
+    width: 12.5rem;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+.gas-question {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-principal); 
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    align-items: center;
+}
+
+.gas-question h3 {
+    width: 90%;
+}
+
+.gas-question span {
+    width: 5%;
+    align-self: center;
+}
+
+.gas-info {
+    padding: 0.625rem 0;
+    display: none;
+    color: var(--gris);
+}
+
+.toggle-sign {
+    font-size: 2rem;  
+    font-weight: normal;
+    color: var(--verdeOscuro);
+    transition: transform 0.3s ease;  
+}
+
+.gas-item.active .gas-info {
+    display: block;
+}
+
+.gas-item.active .toggle-sign {
+    transform: rotate(45deg); 
+}
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .gas-container {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+
+    .gas-icon {
+        width: 50%;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .gas-container {
+        grid-template-columns: 1fr; 
+    }
+
+    .gas-icon {
+        width: 50%;
+    }
+}

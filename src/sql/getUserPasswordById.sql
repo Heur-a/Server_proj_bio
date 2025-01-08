@@ -1,0 +1,1 @@
+SELECT password FROM Users WHERE idUsers = ?;

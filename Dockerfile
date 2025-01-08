@@ -1,11 +1,11 @@
-FROM node:latest
+FROM node:23-alpine
 
 # Set the working directory in the container
 WORKDIR /myapp
 
 # Copy package.json and install dependencies
 COPY package.json /myapp
-RUN npm install
+RUN npm install --verbose --force
 
 
 
