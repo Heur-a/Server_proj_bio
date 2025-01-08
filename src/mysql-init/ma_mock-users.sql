@@ -1,4 +1,4 @@
-use OZONE_DB
+use OZONE_DB;
 insert into Users (idUsers, name, lastName1, lastName2, password, UserTypes_idUserType, mail, verifiedMail, tel) values (1, 'Roley', 'Semmens', 'Budgey', '$2a$04$RfZ6j2nY01NG7BQLCM0NIOoQrXX9TIp.TRRdNHyT/t1Z9iNHXknxS', 2, 'rbudgey0@google.com.hk', true, '808549579');
 insert into Users (idUsers, name, lastName1, lastName2, password, UserTypes_idUserType, mail, verifiedMail, tel) values (2, 'Emmaline', 'Tommasuzzi', 'Staries', '$2a$04$LKWtGOQdpCxGsuX3AuCHlu11R6yuV1aq3OFpaLOHZXWZjDedIETBy', 2, 'estaries1@dell.com', true, '763959739');
 insert into Users (idUsers, name, lastName1, lastName2, password, UserTypes_idUserType, mail, verifiedMail, tel) values (3, 'Charmane', 'Dineges', 'Farthin', '$2a$04$K6/AGyuHteyQb6hWyPdmQ.fhejvRso/GOZ/YpmQ8hbKujRbFaxHLK', 2, 'cfarthin2@yellowpages.com', false, '727225443');

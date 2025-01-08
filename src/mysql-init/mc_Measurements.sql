@@ -1,4 +1,4 @@
-use OZONE_DB
+use OZONE_DB;
 INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (1, 2.419, -0.872, 39.469, '2039-12-18 23:33:00', 1, 1, 2);
 INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (2, 1.837, -6.546, 38.345, '2055-02-20 04:50:55', 3, 2, 3);
 INSERT INTO Measurements (idMeasurements, value, LocX, LocY, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold) VALUES (3, 1.266, -0.872, 41.387, '1981-11-27 22:01:53', 3, 2, 1);
