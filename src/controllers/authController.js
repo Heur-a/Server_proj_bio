@@ -10,7 +10,7 @@ import {
     updateUserData,
     getUserDataByEmail
 } from '../services/authService.js';
-import {getUserById, getUserPasswordById} from "../services/userService.js";
+import {getUserById, getUserPasswordById, getUserTypeByUserId} from "../services/userService.js";
 import bcrypt from "bcryptjs";
 import {HttpError} from "../components/HttpErrorClass.js";
 
@@ -40,9 +40,16 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         req.session = await loginUser(req.body.email, req.body.password, req.session);
-        res.redirect(200,'/user/mediciones.html');
+        console.log('Login req.session.user:' + req.session.user);
+        const userTypeId = await getUserTypeByUserId(req.session.user.id);
+        if (!userTypeId || userTypeId === 2) {
+            return res.redirect(200,'/user/mediciones.html');
+        } else {
+            return res.redirect(200,'/admin/admin.html');
+        }
+
     } catch (error) {
-        res.status(error.statusCode).json({ message: error.message });
+        res.status(error.statusCode || 500).json({ message: error.message || "Internal Server Error" });
     }
 };
 

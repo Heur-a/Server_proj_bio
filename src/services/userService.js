@@ -1,6 +1,7 @@
 import { readFile } from 'fs/promises';
 import pool from '../config/db_conection.js';
 import bcrypt from 'bcrypt';
+import {HttpError} from "../components/HttpErrorClass.js";
 
 /**
  * @file userService.js
@@ -41,6 +42,43 @@ export const getUserByEmail = async (email) => {
         throw new Error('Failed to fetch user: ' + error.message);
     }
 };
+
+/**
+ * Retrieves the user type ID associated with a given user ID from the database.
+ *
+ * This asynchronous function reads an SQL query from a file and executes it to fetch the user type based on the provided user ID.
+ * If a user type is found, it returns the user type ID; otherwise, it returns `null`. In case of an error, it logs the error and throws an appropriate HttpError.
+ *
+ * @async
+ * @function getUserTypeByUserId
+ * @param {number} userId - The ID of the user whose type is to be retrieved.
+ * @returns {Promise<number|null>} A promise that resolves to the user type ID if found, or `null` if no user type exists for the given ID.
+ * @throws {HttpError} Throws an error with a 500 status code if the database query fails or if an unexpected error occurs.
+ */
+export const getUserTypeByUserId = async (userId) => {
+    try {
+        const sql = await readFile('./src/sql/getUserTypeByUserId.sql', 'utf-8');
+        const [rows] = await pool.query(sql, [userId]);
+        if (rows.length) {
+            const res = rows[0];
+            return res.userTypeId;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        // Detailed logging to debug issues with email verification
+        console.error('Error in userService/getUserTypeById function:', error);
+
+        // Check for specific error cases and throw meaningful HttpError
+        if (error instanceof HttpError) {
+            // Re-throw known errors as-is, preserving status and message
+            throw error;
+        } else {
+            // For other errors, respond with a generic server error message
+            throw new HttpError(500, 'Failed to fetch user type ');
+        }
+    }
+}
 
 /**
  * Retrieves a user by their ID.
