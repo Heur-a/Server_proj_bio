@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/admin.css">
     
-    <!--tipografia-->
+    <!--tipografía-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <!--iconos bootstrap-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -18,14 +18,14 @@
     <header>
         <div class="logo">
             <a href="admin.html">
-                <img src="img/logotipo_modoClaro.png" alt="Logo de la empresa" class="logo-img">
+                <img src="../img/logotipo_modoClaro.png" alt="Logo de la empresa" class="logo-img">
             </a>
         </div>
         <div class="menu">
             <button class="menu-toggle">&#9776;</button>
             <nav class="nav">
                 <ul>
-                    <li><a href="log-in.html"style="font-weight: bold;">CERRAR SESIÓN</a></li>
+                    <li><a href="../log-in.html" style="font-weight: bold;">CERRAR SESIÓN</a></li>
                 </ul>
             </nav>    
         </div>
@@ -36,7 +36,7 @@
         <section class="usuarios">
             <h2>Tabla de Información de Nodos</h2>
     
-    <table>
+    <table id="table">
         <thead>
             <tr>
                 <th>Correo Usuario</th>
@@ -46,7 +46,7 @@
                 <th>Última medición</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
             <tr>
                 <td>juanperez@example.com</td>
                 <td>Node-12345</td>
@@ -88,7 +88,7 @@
         
         <section class="mapas">
             <h2>Histórico de mapas</h2>
-            <img src="img/mapa.png" alt="Mapa de la ciudad" class="mapa">
+            <img src="../img/mapa.png" alt="Mapa de la ciudad" class="mapa">
         </section>          
     </main>
     
@@ -96,6 +96,7 @@
         <p>&copy; 2024 Ozone. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="js/menu.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/admin.js" ></script>
 </body>
 </html>

@@ -98,6 +98,12 @@ app.use('/node', nodeRoutes);
 app.use('/user', verifyIdentity, express.static(path.join(__dirname, 'public/user')));
 
 /**
+ * Serves static files for authenticated users from the public/user directory.
+ * @route /admin
+ */
+app.use('/admin', verifyIdentity, express.static(path.join(__dirname, 'public/admin')));
+
+/**
  * Serves static files from the public directory.
  * @route /
  */

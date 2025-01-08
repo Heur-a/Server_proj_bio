@@ -19,7 +19,7 @@ import {
 } from '../services/medicionesService.js';
 import pool from '../config/db_conection.js';
 import {Medida} from "../components/medidaClass.js";
-import {getNodeIdWithUuuid} from "../services/nodeService.js";
+import {getAllNodesWithLastDate, getNodeIdWithUuuid} from "../services/nodeService.js";
 import {HttpError} from "../components/HttpErrorClass.js";
 /**
  * @function getMapaCalorData
@@ -227,4 +227,25 @@ export const handleGetMedicionesDiarias = async (req, res) => {
         }
     }
     
+}
+/**
+ * Handles the HTTP request to retrieve all nodes with their last date.
+ *
+ * This asynchronous function calls the `getAllNodesWithLastDate` function to fetch node data and sends it as a JSON response.
+ * In case of an error during the data retrieval, it logs the error and responds with a 500 status code.
+ *
+ * @async
+ * @function handleGetAllNodesWithLastDate
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<void>} A promise that resolves when the response has been sent.
+ */
+export const handleGetAllNodesWithLastDate = async (req, res) => {
+    try {
+        const readings = await getAllNodesWithLastDate();
+        return res.json(readings);
+    } catch (error) {
+        console.error('Error retrieving getAllNodesWithLastDate');
+        res.status(500).send('Error obtaining getAllNodesWithLastDate');
+    }
 }
