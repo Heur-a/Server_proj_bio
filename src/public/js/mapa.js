@@ -43,100 +43,34 @@ async function cargarDatosMapaCalor(contaminante) {
         // Configurar colores según contaminante
         const gradient = contaminante === "CO2" ? {
             0.0: 'cyan',
-            0.3: 'lightblue',
-            0.7: 'blue',
+            0.5: 'lightblue',
             1.0: 'darkblue'
-        } : {
+        } 
+        : contaminante === "O3" ? {
+            0.0: 'lightgreen',
+            0.5: 'green',
+            1.0: 'darkgreen'
+        }
+        : {
             0.0: 'green',
-            0.3: 'yellow',
-            0.7: 'orange',
+            0.5: 'yellow',
             1.0: 'red'
         };
 
         // Eliminar capa anterior si existe
         if (heatLayer) map.removeLayer(heatLayer);
         heatLayer = L.heatLayer(heatData, {
-            radius: 70,
+            radius: 50,
             blur: 10,
             gradient: gradient,
-            minOpacity: 0.2
+            minOpacity: 0.5
         }).addTo(map);
 
-        // Limpiar marcadores antiguos
-        markerGroup.clearLayers();
-
-        // Añadir marcadores
-        data.forEach(d => {
-            const calidad = d.value < 100 ? calidadAire.buena : calidadAire.mala;
-
-            L.marker([d.LocY, d.LocX])
-                .addTo(markerGroup)
-                .bindPopup(`
-                    <b>Gas:</b> ${contaminante}<br>
-                    <b>Medición:</b> ${d.value}<br>
-                    <b>Calidad:</b> ${calidad.mensaje}<br>
-                    <span style="font-size: 2em;">${calidad.icon}</span>
-                    <button onClick="window.location.href='/gases.html'" >Ver información</button>
-                `);
-        });
+        
     } catch (error) {
         console.error("Error al cargar los datos del mapa de calor:", error);
     }
 }
-
-// Función para mostrar mapa general combinando contaminantes
-async function mostrarMapaGeneral() {
-    try {
-        const response = await fetch('/mediciones/general');
-        const data = await response.json();
-
-        const estadoO3 = data.O3 < 100 ? "buena" : "mala";
-        const estadoCO2 = data.CO2 < 400 ? "buena" : "mala";
-
-        const calidad =
-            estadoO3 === "mala" || estadoCO2 === "mala"
-                ? calidadAire.mala
-                : calidadAire.buena;
-
-        document.getElementById('calidadAire').innerHTML = `
-            <div style="color: ${calidad.color}; font-size: 1.5em;">
-                ${calidad.mensaje}
-            </div>
-        `;
-
-        // Limpiar marcadores antiguos
-        markerGroup.clearLayers();
-
-        // Añadir marcadores combinados
-        data.mediciones.forEach(d => {
-            const estado = d.O3 < 100 && d.CO2 < 400 ? calidadAire.buena : calidadAire.mala;
-
-            L.marker([d.LocY, d.LocX])
-                .addTo(markerGroup)
-                .bindPopup(`
-                    <b>Gas:</b> General<br>
-                    <b>O3:</b> ${d.O3} µg/m³<br>
-                    <b>CO2:</b> ${d.CO2} ppm<br>
-                    <b>Calidad:</b> ${estado.mensaje}<br>
-                    <span style="font-size: 2em;">${estado.icon}</span>
-                `);
-        });
-    } catch (error) {
-        console.error("Error al mostrar el mapa general:", error);
-    }
-}
-
-// Actualizar el mapa según el contaminante seleccionado
-document.getElementById('contaminanteSelect').addEventListener('change', (event) => {
-    const contaminante = event.target.value;
-
-    if (contaminante === "General") {
-        mostrarMapaGeneral();
-    } else {
-        cargarDatosMapaCalor(contaminante);
-    }
-});
-
 //Función para obtener la ubicación del usuario
 function obtenerUbicacion() {
     if (navigator.geolocation) {
@@ -158,53 +92,11 @@ document.getElementById('locationButton').addEventListener('click', function () 
     obtenerUbicacion();
 });
 
-// Función para mostrar mapa general combinando contaminantes
-async function mostrarMapaGeneral() {
-    try {
-        const response = await fetch('/mediciones/general');
-        const data = await response.json();
-
-        const estadoO3 = data.O3 < 100 ? "buena" : "mala";
-        const estadoCO2 = data.CO2 < 400 ? "buena" : "mala";
-
-        const calidad =
-            estadoO3 === "mala" || estadoCO2 === "mala"
-                ? calidadAire.mala
-                : calidadAire.buena;
-
-        document.getElementById('calidadAire').innerHTML = `
-            <div style="color: ${calidad.color}; font-size: 1.5em;">
-                ${calidad.mensaje}
-            </div>
-        `;
-
-        // Limpiar marcadores antiguos
-        markerGroup.clearLayers();
-
-        // Añadir marcadores combinados
-        data.mediciones.forEach(d => {
-            const estado = d.O3 < 100 && d.CO2 < 400 ? calidadAire.buena : calidadAire.mala;
-
-            L.marker([d.LocY, d.LocX])
-                .addTo(markerGroup)
-                .bindPopup(`
-                    <b>Gas:</b> General<br>
-                    <b>O3:</b> ${d.O3} µg/m³<br>
-                    <b>CO2:</b> ${d.CO2} ppm<br>
-                    <b>Calidad:</b> ${estado.mensaje}<br>
-                    <span style="font-size: 2em;">${estado.icon}</span>
-                `);
-        });
-    } catch (error) {
-        console.error("Error al mostrar el mapa general:", error);
-    }
-}
 // Actualizar el mapa según el contaminante seleccionado
 document.getElementById('contaminanteSelect').addEventListener('change', (event) => {
     const contaminante = event.target.value;
-
     if (contaminante === "General") {
-        mostrarMapaGeneral();
+      cargarDatosMapaCalor(contaminante);
     } else {
         cargarDatosMapaCalor(contaminante);
     }
@@ -212,100 +104,111 @@ document.getElementById('contaminanteSelect').addEventListener('change', (event)
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d', { willReadFrequently: true });
 
-
-
 // Función para cargar datos de la estación y agregar una chincheta
 // Función modificada para cargar datos de múltiples estaciones
 async function cargarDatosWAQI() {
-    try {
-      // Limpiar marcadores antiguos
-      markerGroup.clearLayers();
-  
-      // Cargar datos para cada estación
-      for (const estacion of estaciones) {
-        const waqiUrl = `https://api.waqi.info/feed/geo:${estacion.coords[0]};${estacion.coords[1]}/?token=${waqiToken}`;
-        const response = await fetch(waqiUrl);
-        const data = await response.json();
-  
-        if (data.status === "ok") {
-          const aqi = data.data.aqi;
-          const iaqi = data.data.iaqi;
-  
-          // Determinar el color del marcador según el AQI
-          const icon = determinarIconoAQI(aqi);
-  
-          // Añadir marcador
-          const marker = L.marker(estacion.coords, { icon })
-            .addTo(markerGroup)
-            .bindPopup(generarPopup(estacion.nombre, aqi, iaqi));
-  
-          marker.on('click', () => {
-            marker.openPopup();
-          });
-        }
+  try {
+    // Limpiar marcadores antiguos
+    markerGroup.clearLayers();
+
+    // Cargar datos para cada estación
+    for (const estacion of estaciones) {
+      const waqiUrl = `https://api.waqi.info/feed/geo:${estacion.coords[0]};${estacion.coords[1]}/?token=${waqiToken}`;
+      const response = await fetch(waqiUrl);
+      const data = await response.json();
+
+      if (data.status === "ok") {
+        const aqi = data.data.aqi;
+        const iaqi = data.data.iaqi;
+
+        // Obtener el contaminante con el AQI más alto
+        const peorMedicion = Object.entries(iaqi).reduce(
+          (max, [contaminante, detalle]) =>
+            detalle.v > max.valor ? { contaminante, valor: detalle.v } : max,
+          { contaminante: null, valor: 0 }
+        );
+
+        // Determinar el color del marcador según el AQI
+        const icon = determinarIconoAQI(aqi);
+
+        // Añadir marcador
+        const marker = L.marker(estacion.coords, { icon })
+          .addTo(markerGroup)
+          .bindPopup(
+            generarPopup(
+              estacion.nombre,
+              aqi,
+              peorMedicion.contaminante,
+              peorMedicion.valor
+            )
+          );
+
+        marker.on("click", () => {
+          marker.openPopup();
+        });
       }
-  
-      // Ajustar la vista para mostrar todas las estaciones
-      const bounds = L.latLngBounds(estaciones.map(e => e.coords));
-      map.fitBounds(bounds);
-  
-    } catch (error) {
-      console.error("Error al cargar los datos de WAQI:", error);
     }
+
+    // Ajustar la vista para mostrar todas las estaciones
+    const bounds = L.latLngBounds(estaciones.map((e) => e.coords));
+    map.fitBounds(bounds);
+  } catch (error) {
+    console.error("Error al cargar los datos de WAQI:", error);
   }
+}
 
 // Función para determinar el icono según el AQI
 function determinarIconoAQI(aqi) {
-    let iconUrl;
-    if (aqi <= 50) {
-      iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png';
-    } else if (aqi <= 100) {
-      iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png';
-    } else if (aqi <= 150) {
-      iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png';
-    } else {
-      iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
-    }
-  
-    return L.icon({
-      iconUrl,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
+  let iconUrl;
+  if (aqi <= 50) {
+    iconUrl =
+      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png";
+  } else if (aqi <= 100) {
+    iconUrl =
+      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png";
+  } else if (aqi <= 150) {
+    iconUrl =
+      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png";
+  } else {
+    iconUrl =
+      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png";
   }
-  
-  // Función modificada para generar el popup con más información
-  function generarPopup(nombreEstacion, aqi, iaqi) {
-    let calidadTexto;
-    let color;
-    
-    if (aqi <= 50) {
-      calidadTexto = "Buena";
-      color = "green";
-    } else if (aqi <= 100) {
-      calidadTexto = "Moderada";
-      color = "orange";
-    } else {
-      calidadTexto = "Mala";
-      color = "red";
-    }
-  
-    let mediciones = "<b>Mediciones:</b><br>";
-    for (const [contaminante, detalle] of Object.entries(iaqi)) {
-      mediciones += `- ${contaminante.toUpperCase()}: ${detalle.v}<br>`;
-    }
-  
-    return `
-      <div>
-        <h3>${nombreEstacion}</h3>
-        <b>Calidad del aire:</b> <span style="color: ${color}">${calidadTexto}</span><br>
-        <b>AQI:</b> ${aqi}<br>
-        ${mediciones}
-      </div>
-    `;
-  }  
+
+  return L.icon({
+    iconUrl,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
+}
+
+// Función modificada para generar el popup
+function generarPopup(nombreEstacion, aqi, contaminante, valor) {
+  let calidadTexto;
+  let color;
+
+  if (aqi <= 50) {
+    calidadTexto = "Buena";
+    color = "green";
+  } else if (aqi <= 100) {
+    calidadTexto = "Moderada";
+    color = "orange";
+  } else {
+    calidadTexto = "Mala";
+    color = "red";
+  }
+
+  return `
+    <div>
+      <h3>${nombreEstacion}</h3>
+      <b>Calidad del aire:</b> <span style="color: ${color}">${calidadTexto}</span><br>
+      <b>AQI:</b> ${aqi}<br>
+      <b>Peor medición:</b> ${contaminante.toUpperCase()} (${valor})
+    </div>
+  `;
+}
+ 
 
   // Actualizar el mapa según el contaminante seleccionado
 document.getElementById('contaminanteSelect').addEventListener('change', (event) => {
@@ -317,7 +220,13 @@ document.getElementById('contaminanteSelect').addEventListener('change', (event)
       legend.querySelector('.good').style.background = 'cyan';
       legend.querySelector('.moderate').style.background = 'lightblue';
       legend.querySelector('.bad').style.background = 'darkblue';
-    } else {
+    }
+    if (contaminante === "O3") {
+      legend.querySelector('.good').style.background = 'lightgreen';
+      legend.querySelector('.moderate').style.background = 'green';
+      legend.querySelector('.bad').style.background = 'darkgreen';
+    }
+    else {
       legend.querySelector('.good').style.background = 'green';
       legend.querySelector('.moderate').style.background = 'yellow';
       legend.querySelector('.bad').style.background = 'red';
@@ -327,4 +236,4 @@ document.getElementById('contaminanteSelect').addEventListener('change', (event)
 // Llamar a la función para cargar los datos y mostrar en el mapa
 cargarDatosWAQI();
 // Cargar mapa inicial con el contaminante por defecto
-cargarDatosMapaCalor("O3");
+cargarDatosMapaCalor("General");
