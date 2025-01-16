@@ -72,14 +72,29 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Grupo para manejar los marcadores
 let markerGroup = L.layerGroup().addTo(map);
 
-// Crear un icono personalizado para los marcadores
-const customIcon = L.icon({
-    iconUrl: 'path/to/pin-icon.png', // Ruta al archivo de imagen del icono
-    iconSize: [32, 32], // Tamaño del icono
-    iconAnchor: [16, 32], // Punto de anclaje del icono (centro en la base)
-    popupAnchor: [0, -32] // Ubicación del popup respecto al icono
-});
+// Función para determinar el icono según el valor de la medición
+function determinarIconoPorMedicion(value) {
+    let iconUrl;
 
+    // Definir rangos y colores según el valor
+    if (value <= 1) {
+        iconUrl = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png";
+    } else if (value <= 2.5) {
+        iconUrl = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png";
+    } else if (value <= 5) {
+        iconUrl = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png";
+    } else {
+        iconUrl = "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png";
+    }
+
+    return L.icon({
+        iconUrl,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+    });
+}
 // Función para obtener las mediciones y mostrarlas en el mapa
 // Función para obtener las mediciones y mostrarlas en el mapa
 // Función para obtener las mediciones y mostrarlas en el mapa
@@ -113,7 +128,8 @@ async function obtenerMediciones() {
 
                 data.forEach(medicion => {
                     const { LocX, LocY, value, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold } = medicion;
-                    const marker = L.marker([LocY, LocX], { icon: customIcon }).addTo(markerGroup)
+                    const icono = determinarIconoPorMedicion(value);
+                    const marker = L.marker([LocY, LocX], { icon: icono }).addTo(markerGroup)
                         .bindPopup(`
                             <b>Fecha:</b> ${date} <br>
                             <b>Valor:</b> ${value} <br>
@@ -132,5 +148,7 @@ async function obtenerMediciones() {
         alert("Hubo un error al realizar la consulta.");
     }
 }
+
+
 
 
