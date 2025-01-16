@@ -1,5 +1,5 @@
 .sensor-form {
-  width: 50%; 
+  width: 30%; 
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -20,6 +20,6 @@
 
 @media (max-width: 720px) {
   .sensor-form {
-    width: 70%;
+    width: 30%;
   }
 }
