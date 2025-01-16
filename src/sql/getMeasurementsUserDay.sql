@@ -1,5 +1,9 @@
 SELECT
-    m.*
+    m.value,
+    m.LocX,
+    m.Locy,
+    m.gasType_idgasType AS gasId
+
 FROM
     `OZONE_DB`.`Measurements` m
         JOIN
