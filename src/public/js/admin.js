@@ -108,10 +108,10 @@ async function obtenerMediciones() {
             console.log("Datos recibidos:", data); // Añadido para ver la respuesta completa
 
             // Verificar si 'mediciones' está presente y es un array
-            if (Array.isArray(data.mediciones)) {
+            if (Array.isArray(data)) {
                 markerGroup.clearLayers();
 
-                data.mediciones.forEach(medicion => {
+                data.forEach(medicion => {
                     const { LocX, LocY, value, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold } = medicion;
                     const marker = L.marker([LocY, LocX], { icon: customIcon }).addTo(markerGroup)
                         .bindPopup(`
