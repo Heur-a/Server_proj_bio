@@ -79,7 +79,18 @@ export const getMedicionesDiariasDB = async (userId,date) => {
         const query = await readFile('./src/sql/getMeasurementsUserDay.sql', 'utf-8');
         const params = [userId, date];
         const [rows] = await pool.query(query, params);
-        return rows.length ? rows[0] : null;
+        return rows.length ? rows : null;
+    } catch (e) {
+        throw new HttpError(500, e.message);
+    }
+}
+
+export const getMedicionesRangoFechasDB = async (date1,date2) => {
+    try{
+        const query = await readFile('./src/sql/getMedicionesRangoFecha.sql', 'utf-8');
+        const params = [date1, date2];
+        const [rows] = await pool.query(query, params);
+        return rows.length ? rows : null;
     } catch (e) {
         throw new HttpError(500, e.message);
     }
