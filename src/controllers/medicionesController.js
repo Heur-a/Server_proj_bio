@@ -15,7 +15,7 @@ import {
     getMedicionesDB,
     insertMedicionDB,
     getUltimaMedicionDB,
-    getMedicionesDiariasDB
+    getMedicionesDiariasDB, getMedicionesRangoFechasDB
 } from '../services/medicionesService.js';
 import pool from '../config/db_conection.js';
 import {Medida} from "../components/medidaClass.js";
@@ -256,35 +256,34 @@ export const handleGetMedicionesRangoFechas = async (req, res) => {
             return res.status(401).send('Not authorized');
         }
         const userSession = req.session.user;
-        const {id: userId, email: email} = userSession;
+        const { id: userId, email } = userSession;
 
         if (!userId || !email) {
             return res.status(401).send('Not authorized');
         }
 
-        if (!req.query.date1 || req.query.date2) {
+        console.log("MedicionesController, datosRangoFecha, query:", req.query);
+
+        const { date1, date2 } = req.query;
+
+        if (!date1 || !date2) {
             return res.status(400).send('Date not found');
         }
-
-        const {date1} = req.query.date1;
-        const {date2} = req.query.date2;
-
 
         const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
         if (!regex.test(date1) || !regex.test(date2)) {
-            res.status(400).send('Invalid date, not a YYYY-MM-DD format date');
+            return res.status(400).send('Invalid date, not a YYYY-MM-DD format date');
         }
 
-        const mediciones = await getMedicionesDiariasDB(userId, date);
+        const mediciones = await getMedicionesRangoFechasDB(date1, date2);
 
-        return res.json(mediciones || []); // Si mediciones és null o undefined, envia un array buit
-
+        return res.json(mediciones || []); // If mediciones is null or undefined, return an empty array
     } catch (error) {
         console.error('Error retrieving mediciones:', error);
         if (!res.headersSent) {
-            return res.status(500).send('Error obtaining mediciones data');
+            return res.status(500).send('Error obtaining mediciones data: ' + error);
         }
     }
+};
 
-}
