@@ -61,3 +61,65 @@ function createTableRow(jsonObject) {
     });
     return row;
 }
+// Inicializar el mapa
+const map = L.map('map').setView([40.4168, -3.7038], 6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+}).addTo(map);
+
+let markerGroup = L.layerGroup().addTo(map); // Grupo para manejar marcadores
+
+async function obtenerMediciones() {
+    // Obtener las fechas seleccionadas por el usuario
+    const date1 = document.getElementById('fecha-inicial').value;
+    const date2 = document.getElementById('fecha-final').value;
+
+    // Verificar que las fechas sean válidas
+    if (!date1 || !date2) {
+        alert('Por favor, selecciona ambas fechas.');
+        return;
+    }
+
+    try {
+        // Realizar la petición GET al servidor
+        const respuesta = await fetch(`/medicion/admin?date1=${date1}&date2=${date2}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        // Procesar la respuesta
+        const data = await respuesta.json();
+
+        if (data.success) {
+            // Mostrar las mediciones obtenidas en la página
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = '<h3>Mediciones:</h3><ul>';
+
+            // Limpiar los marcadores anteriores en el mapa
+            markerGroup.clearLayers();
+
+            // Mostrar las mediciones en el mapa
+            data.mediciones.forEach(medicion => {
+                // Suponiendo que las mediciones tienen propiedades `lat` y `lng` para la ubicación
+                const { lat, lng, medida, lugar, tipo_gas, hora } = medicion;
+
+                // Crear un marcador para cada medición
+                const marker = L.marker([lat, lng]).addTo(markerGroup)
+                    .bindPopup(`<b>Lugar:</b> ${lugar} <br><b>Tipo de Gas:</b> ${tipo_gas} <br><b>Medida:</b> ${medida} <br><b>Hora:</b> ${hora}`);
+                
+                // También se puede agregar iconos personalizados si se necesita
+            });
+
+            resultadoDiv.innerHTML += '</ul>';
+        } else {
+            console.error("Error al obtener las mediciones:", data.error);
+            alert("No se pudieron obtener las mediciones.");
+        }
+    } catch (error) {
+        console.error("Error al hacer la petición:", error);
+        alert("Hubo un error al realizar la consulta.");
+    }
+}
