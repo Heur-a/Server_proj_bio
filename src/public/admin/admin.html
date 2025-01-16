@@ -14,7 +14,9 @@
     <!--iconos bootstrap-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
         rel="stylesheet">
-
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgrH68jSR4s9vD70uWD67izi5nAaJJJV8"></script>
 </head>
 
 <body>
@@ -103,8 +105,10 @@
                 <button onclick="obtenerMediciones()">Obtener Mediciones</button>
             </div>
 
-            <div id="resultado">
-            </div>
+            <div id="resultado"></div>
+
+            <!-- Contenedor para el mapa -->
+            <div id="map" style="height: 500px;"></div>
 
         </section>
 

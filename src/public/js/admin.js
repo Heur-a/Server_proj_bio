@@ -62,14 +62,27 @@ function createTableRow(jsonObject) {
     return row;
 }
 // Inicializar el mapa
+// Inicializar el mapa
 const map = L.map('map').setView([40.4168, -3.7038], 6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
 }).addTo(map);
 
-let markerGroup = L.layerGroup().addTo(map); // Grupo para manejar marcadores
+// Grupo para manejar los marcadores
+let markerGroup = L.layerGroup().addTo(map);
 
+// Crear un icono personalizado para los marcadores
+const customIcon = L.icon({
+    iconUrl: 'path/to/pin-icon.png', // Ruta al archivo de imagen del icono
+    iconSize: [32, 32], // Tamaño del icono
+    iconAnchor: [16, 32], // Punto de anclaje del icono (centro en la base)
+    popupAnchor: [0, -32] // Ubicación del popup respecto al icono
+});
+
+// Función para obtener las mediciones y mostrarlas en el mapa
+// Función para obtener las mediciones y mostrarlas en el mapa
+// Función para obtener las mediciones y mostrarlas en el mapa
 async function obtenerMediciones() {
     // Obtener las fechas seleccionadas por el usuario
     const date1 = document.getElementById('fecha-inicial').value;
@@ -83,43 +96,41 @@ async function obtenerMediciones() {
 
     try {
         // Realizar la petición GET al servidor
-        const respuesta = await fetch(`/medicion/admin?date1=${date1}&date2=${date2}`, {
+        const respuesta = await fetch(`/mediciones/admin?date1=${date1}&date2=${date2}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
 
-        // Procesar la respuesta
-        const data = await respuesta.json();
+        if (respuesta.ok) {
+            const data = await respuesta.json();
+            console.log("Datos recibidos:", data); // Añadido para ver la respuesta completa
 
-        if (data.success) {
-            // Mostrar las mediciones obtenidas en la página
-            const resultadoDiv = document.getElementById('resultado');
-            resultadoDiv.innerHTML = '<h3>Mediciones:</h3><ul>';
+            // Verificar si 'mediciones' está presente y es un array
+            if (Array.isArray(data.mediciones)) {
+                markerGroup.clearLayers();
 
-            // Limpiar los marcadores anteriores en el mapa
-            markerGroup.clearLayers();
-
-            // Mostrar las mediciones en el mapa
-            data.mediciones.forEach(medicion => {
-                // Suponiendo que las mediciones tienen propiedades `lat` y `lng` para la ubicación
-                const { lat, lng, medida, lugar, tipo_gas, hora } = medicion;
-
-                // Crear un marcador para cada medición
-                const marker = L.marker([lat, lng]).addTo(markerGroup)
-                    .bindPopup(`<b>Lugar:</b> ${lugar} <br><b>Tipo de Gas:</b> ${tipo_gas} <br><b>Medida:</b> ${medida} <br><b>Hora:</b> ${hora}`);
-                
-                // También se puede agregar iconos personalizados si se necesita
-            });
-
-            resultadoDiv.innerHTML += '</ul>';
-        } else {
-            console.error("Error al obtener las mediciones:", data.error);
-            alert("No se pudieron obtener las mediciones.");
+                data.mediciones.forEach(medicion => {
+                    const { LocX, LocY, value, date, nodes_idnodes, gasType_idgasType, threshold_idthreshold } = medicion;
+                    const marker = L.marker([LocY, LocX], { icon: customIcon }).addTo(markerGroup)
+                        .bindPopup(`
+                            <b>Fecha:</b> ${date} <br>
+                            <b>Valor:</b> ${value} <br>
+                            <b>Nodo ID:</b> ${nodes_idnodes} <br>
+                            <b>Gas Tipo ID:</b> ${gasType_idgasType} <br>
+                            <b>Umbral ID:</b> ${threshold_idthreshold}
+                        `);
+                });
+            } else {
+                console.error("La respuesta no contiene un array de 'mediciones'");
+                alert("No se encontraron mediciones para el rango de fechas seleccionado.");
+            }
         }
     } catch (error) {
         console.error("Error al hacer la petición:", error);
         alert("Hubo un error al realizar la consulta.");
     }
 }
+
+
