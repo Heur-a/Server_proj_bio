@@ -486,12 +486,100 @@ const sendNewPasswordEmail = async (email) => {
         },
     });
 
+    const htmlContentNewPassword = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: 'Montserrat', sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 0;
+            }
+            .email-container {
+                max-width: 600px;
+                margin: 20px auto;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .header {
+                background-color: #3a5335;
+                color: #fff;
+                text-align: center;
+                padding: 20px;
+            }
+            .header img {
+                max-height: 10rem;
+                margin-top: -40px;
+                margin-bottom: -40px;
+            }
+            .body {
+                padding: 20px;
+                color: black;
+            }
+            .body p {
+                margin: 10px 0;
+            }
+            .button {
+                display: inline-block;
+                font-size: 20px;
+                color: #fff;
+                background-color: #3a5335;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                margin: 20px 0;
+            }
+            .footer {
+                text-align: center;
+                padding: 10px;
+                background-color: #f0f0f0;
+                font-size: 12px;
+                color: #666;
+            }
+            .im {
+                color: black;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="email-container">
+            <div class="header">
+                <img src="cid:logotipoozone" alt="Logo Ozone" />  
+            </div>
+            <div class="body">
+                <h1>Restablece tu contraseña</h1>
+                <p>Has solicitado restablecer tu contraseña. Esta es tu nueva contraseña:</p>
+                    <div class="code">${randomPassword}</div>
+                <p>Si no solicitaste este cambio, por favor ignora este correo.</p>
+            </div>
+            <div class="footer">
+                <p>Ozone | Todos los derechos reservados</p>
+            </div>
+        </div>
+    </body>
+    </html>
+`;
+
     // Create email
     const emailData = {
         from: process.env.EMAIL_USER,
         to: email,
-        subject: 'Ozone - New Password',
-        text: `Your new password is: ${randomPassword}`,
+        subject: 'Ozone - Recupera tu contraseña',
+        html: htmlContentNewPassword,
+        attachments: [{
+            filename: 'logotipo_modoClaro.png',
+            path: './src/public/img/logotipo_modoClaro.png',
+            cid: 'logotipoozone' //same cid value as in the html img src
+        }]
+        
     };
 
     // Change password, if successful send mail
@@ -676,9 +764,6 @@ const updateVerificationCode = async (email, code) => {
         throw new HttpError(500, error.message);
     }
 }
-
-
-
 
 export {
     loginUser,

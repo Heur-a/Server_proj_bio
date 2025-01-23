@@ -18,7 +18,7 @@ import {
     postMedicion,
     getUltimaMedicion,
     getMapaCalorData,
-    handleGetMedicionesDiarias
+    handleGetMedicionesDiarias, handleGetMedicionesRangoFechas
 } from '../controllers/medicionesController.js';
 import {verifyIdentity} from "../services/authService.js";  // Import the controller functions
 
@@ -63,7 +63,7 @@ router.get('/ultima', verifyIdentity, getUltimaMedicion);
 
 router.get("/diaria",verifyIdentity, handleGetMedicionesDiarias)
 
-
+router.get('/admin', verifyIdentity, handleGetMedicionesRangoFechas)
 
 
 // Export the router to be used in other modules

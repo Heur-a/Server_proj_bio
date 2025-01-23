@@ -75,3 +75,32 @@ async function registerUser(userData) {
         }
     })
 }
+function verify(event) {
+    event.preventDefault(); // Evita que se envíe el formulario de inmediato
+
+    // Seleccionar todos los campos del formulario
+    const fields = ['name', 'surname', 'email', 'telephone', 'options', 'description'];
+    let hasContent = false;
+
+    // Verificar si al menos uno de los campos tiene contenido
+    fields.forEach(fieldId => {
+        const value = document.getElementById(fieldId).value.trim();
+        if (value !== '' && value !== null) {
+            hasContent = true;
+        }
+    });
+
+    if (hasContent) {
+        // Mostrar el pop-up si hay al menos un campo relleno
+        const popup = document.getElementById('popup');
+        popup.classList.remove('hidden');
+    } else {
+        alert('Por favor, complete al menos un campo antes de enviar.');
+    }
+}
+
+function closePopup() {
+    // Ocultar el pop-up
+    const popup = document.getElementById('popup');
+    popup.classList.add('hidden');
+}

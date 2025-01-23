@@ -80,9 +80,17 @@
                         <input id="description" type="text">
                     </div>
                 </div>
-                <input class=boton type="submit" onclick="verify()"" value="Enviar">
+                <input class="boton" type="submit" onclick="verify(event)" value="Enviar">
             </form>        
-        </section>    
+        </section>  
+        <section id="popup" class="popup hidden">
+            <div class="popup-content">
+                <p>¡Su mensaje ha sido enviado correctamente!</p>
+                <p>Le responderemos en poco tiempo al correo electrónico indicado.</p>
+                <a href="index.html"><button onclick="closePopup()">Cerrar</button></a>
+            </div>
+        </section>
+          
     </main>
     
     <footer>
